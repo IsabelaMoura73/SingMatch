@@ -1,0 +1,180 @@
+{
+  "metadata": {
+    "origin": "piloto_curadoria_equipe",
+    "note": "Labels revisadas inicialmente pela equipe; vídeos aprovados no teste relatado em 2026-10-29."
+  },
+  "songs": [
+    {
+      "id": "FOR-001",
+      "title": "Asa Branca",
+      "artists": [
+        "Luiz Gonzaga"
+      ],
+      "genre": "forro",
+      "energy": 2,
+      "mood": "tranquila",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "tranquila",
+          "source": "curadoria_equipe_2026-10-29"
+        },
+        {
+          "attribute": "energia",
+          "value": "2",
+          "source": "curadoria_equipe_2026-10-29"
+        }
+      ],
+      "source": "singmatch_piloto",
+      "source_id": "FOR-001"
+    },
+    {
+      "id": "FOR-002",
+      "title": "Eu Só Quero um Xodó",
+      "artists": [
+        "Dominguinhos"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "festiva",
+      "duet_possible": true,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "festiva",
+          "source": "curadoria_equipe_2026-10-29"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_equipe_2026-10-29"
+        }
+      ],
+      "source": "singmatch_piloto",
+      "source_id": "FOR-002"
+    },
+    {
+      "id": "FOR-003",
+      "title": "Esperando na Janela",
+      "artists": [
+        "Gilberto Gil"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "romantica",
+      "duet_possible": true,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_equipe_2026-10-29"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_equipe_2026-10-29"
+        }
+      ],
+      "source": "singmatch_piloto",
+      "source_id": "FOR-003"
+    },
+    {
+      "id": "FOR-004",
+      "title": "O Xote das Meninas",
+      "artists": [
+        "Luiz Gonzaga"
+      ],
+      "genre": "forro",
+      "energy": 5,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_equipe_2026-10-29"
+        },
+        {
+          "attribute": "energia",
+          "value": "5",
+          "source": "curadoria_equipe_2026-10-29"
+        }
+      ],
+      "source": "singmatch_piloto",
+      "source_id": "FOR-004"
+    },
+    {
+      "id": "FOR-005",
+      "title": "Isso Aqui Tá Bom Demais",
+      "artists": [
+        "Dominguinhos"
+      ],
+      "genre": "forro",
+      "energy": 5,
+      "mood": "animada",
+      "duet_possible": true,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_equipe_2026-10-29"
+        },
+        {
+          "attribute": "energia",
+          "value": "5",
+          "source": "curadoria_equipe_2026-10-29"
+        }
+      ],
+      "source": "singmatch_piloto",
+      "source_id": "FOR-005"
+    }
+  ],
+  "karaoke_versions": [
+    {
+      "id": "KAR-FOR-001",
+      "song_id": "FOR-001",
+      "youtube_video_id": "tvAtWam6V0E",
+      "approved": true,
+      "verified_at": "2026-10-29",
+      "duration_seconds": null,
+      "rights_reviewed": false
+    },
+    {
+      "id": "KAR-FOR-002",
+      "song_id": "FOR-002",
+      "youtube_video_id": "sF1F6GS0ngs",
+      "approved": true,
+      "verified_at": "2026-10-29",
+      "duration_seconds": null,
+      "rights_reviewed": false
+    },
+    {
+      "id": "KAR-FOR-003",
+      "song_id": "FOR-003",
+      "youtube_video_id": "MLPnSyTZk9I",
+      "approved": true,
+      "verified_at": "2026-10-29",
+      "duration_seconds": null,
+      "rights_reviewed": false
+    },
+    {
+      "id": "KAR-FOR-004",
+      "song_id": "FOR-004",
+      "youtube_video_id": "ZFGBYMnc-MU",
+      "approved": true,
+      "verified_at": "2026-10-29",
+      "duration_seconds": null,
+      "rights_reviewed": false
+    },
+    {
+      "id": "KAR-FOR-005",
+      "song_id": "FOR-005",
+      "youtube_video_id": "IPI559tJ4HQ",
+      "approved": true,
+      "verified_at": "2026-10-29",
+      "duration_seconds": null,
+      "rights_reviewed": false
+    }
+  ]
+}
