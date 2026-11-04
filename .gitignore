@@ -18,3 +18,4 @@ resultados_llm_demo.json
 
 # Arquivos temporarios
 *.log
+/backend/.venv/
