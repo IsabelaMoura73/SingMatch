@@ -130,6 +130,8 @@ Retorne APENAS os campos do esquema estruturado recebido.
 - Para tags use o clima canônico e energia_baixa (1-2), energia_media (3), energia_alta (4-5).
 - Nunca invente gênero, época, intenção, dueto, veto ou energia ausente.
 - Uma preferência por solo não equivale a proibição de dueto. duet_allowed=false APENAS se o texto rejeita duetos; true se aceita explicitamente; null se desconhecido.
+- "Não quero cantar em dueto" é preferência de FORMATO: use duet_allowed=false; NÃO crie vetoes com category=tag e value=dueto/duetos/dupla (isso não é atributo da música).
+- O catálogo pode ter músicas que ACEITAM dueto, mas que também podem ser cantadas solo: isso não deve excluí-las de um roteiro solo.
 - Se uma frase for ambígua ou contraditória, preencha questions, sem adivinhar.
 - Preferências fora do catálogo podem aparecer, mas NÃO implicam disponibilidade de músicas.
 - Se nada foi dito sobre formato, preferred_format=indiferente.

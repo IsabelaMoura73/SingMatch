@@ -96,11 +96,23 @@ def eligible_candidates(
             seen_songs.add(v.song_id)
     if not approved:
         raise MatchingError(f"Não há vídeos aprovados para o gênero {genre!r}.")
+    # Restrições sobre o FORMATO de apresentação não são restrições
+    # sobre as músicas. Neste MVP, TODAS as apresentações são solo.
+    # Assim, "não quero dueto" nunca deve zerar os candidatos musicais.
+    # Conservar o veto no perfil para respeitá-lo quando duetos existirem.
+    solo_format_vetoes = {
+        "dueto", "duetos", "em dueto", "cantar em dueto",
+        "cantar duetos", "apresentacao em dueto", "dupla",
+        "duplas", "em dupla", "cantar em dupla",
+    }
     result = {}
     for participant_id, profile in profiles.items():
+        musical_vetoes = [veto for veto in profile.vetoes
+                          if not (veto.category == "tag"
+                                  and norm(veto.value) in solo_format_vetoes)]
         eligible = [v for v in approved if all(
             respects_veto(songs_by_id[v.song_id], veto, known_moods)
-            for veto in profile.vetoes
+            for veto in musical_vetoes
         )]
         eligible.sort(
             key=lambda v: -sum(matches_like(songs_by_id[v.song_id], like) for like in profile.likes)

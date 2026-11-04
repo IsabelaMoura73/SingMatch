@@ -11,6 +11,7 @@ from sqlalchemy import create_engine, pool
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from app.models import Base  # noqa: E402
+from app.database import normalize_database_url  # noqa: E402
 
 config = context.config
 if config.config_file_name is not None:
@@ -23,7 +24,7 @@ def get_url() -> str:
     url = os.getenv("DATABASE_URL")
     if not url:
         raise RuntimeError("DATABASE_URL ausente. Configure o ambiente antes da migração.")
-    return url
+    return normalize_database_url(url)
 
 
 def run_migrations_offline() -> None:

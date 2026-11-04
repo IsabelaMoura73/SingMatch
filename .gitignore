@@ -1,0 +1,20 @@
+# Variaveis de ambiente e segredos
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+
+# Frontend
+node_modules/
+frontend/dist/
+
+# Resultados locais
+resultados_llm_demo.json
+
+# Arquivos temporarios
+*.log
