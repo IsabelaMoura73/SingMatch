@@ -3,6 +3,11 @@
 Monorepo para o MVP da disciplina de Criatividade Computacional.
 Este **não** é o repositório do protótipo estático do PF 2.
 
+> **Etapa 7 (catálogo e letras):** o catálogo passou de 5 para dezenas de forrós, montado a partir
+> dos datasets BYRM e UFMG, e o player mostra a letra sincronizada sobre o vídeo original.
+> Ver [`docs/ETAPA7_CATALOGO_E_LETRAS.md`](docs/ETAPA7_CATALOGO_E_LETRAS.md).
+> As seções abaixo descrevem o Dia 1 e estão parcialmente desatualizadas.
+
 ## O que já funciona neste pacote
 
 - Organização de pastas para quatro frentes (dados, IA, backend, frontend).

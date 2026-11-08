@@ -43,6 +43,12 @@ class KaraokeVersionRow(Base):
     approved: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
     verified_at: Mapped[date | None] = mapped_column(Date)
     rights_reviewed: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+    # "karaoke": vídeo com letra embutida. "letra_sincronizada": vídeo original +
+    # LRC exibido pelo player do SingMatch (migração 0002).
+    kind: Mapped[str] = mapped_column(String(24), nullable=False, default="karaoke",
+                                      server_default="karaoke")
+    lyrics_lrc: Mapped[str | None] = mapped_column(Text)
+    lyrics_source: Mapped[str | None] = mapped_column(String(200))
 
 
 class SessionRow(Base):

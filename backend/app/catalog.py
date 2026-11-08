@@ -31,5 +31,14 @@ def get_catalog(db: Session, genre: str | None = None) -> tuple[list[Song], list
         "id": v.id, "song_id": v.song_id, "youtube_video_id": v.youtube_video_id,
         "duration_seconds": v.duration_seconds, "approved": v.approved,
         "verified_at": v.verified_at, "rights_reviewed": v.rights_reviewed,
+        "kind": v.kind or "karaoke", "lyrics_source": v.lyrics_source,
     }) for v in videos]
     return songs, versions
+
+
+def get_lyrics(db: Session, version_id: str) -> KaraokeVersionRow | None:
+    """Letra LRC de uma versão aprovada; None se não existir ou não tiver letra."""
+    row = db.get(KaraokeVersionRow, version_id)
+    if row is None or not row.approved or not row.lyrics_lrc:
+        return None
+    return row

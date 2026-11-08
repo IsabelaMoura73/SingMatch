@@ -4,6 +4,7 @@ import {
   type PreferenceCategory, type PreferenceLabel, type Profile, type Room,
   type Script, type ScriptItem, type ScriptProposal,
 } from './api'
+import { KaraokePlayer } from './KaraokePlayer'
 
 const STORAGE_KEY = 'singmatch:mvp:identity'
 type Identity =
@@ -115,7 +116,7 @@ function SongName({versionId, catalog}: {versionId: string; catalog: Catalog | n
   const video = catalog?.karaoke_versions.find(v => v.id === versionId)
   const song = catalog?.songs.find(s => s.id === video?.song_id)
   if (!song) return <strong>{versionId}</strong>
-  return <><strong>{song.title}</strong><span className="muted">{song.artists.join(', ')} · Energia {song.energy ?? '?'} / 5 {song.mood ? `· ${song.mood}` : ''}</span></>
+  return <><strong>{song.title}</strong><span className="muted">{song.artists.join(', ')} · Energia {song.energy ?? '?'} / 5 {song.mood ? `· ${song.mood}` : ''}{video?.kind === 'letra_sincronizada' ? ' · letra na tela' : ''}</span></>
 }
 
 function App() {
@@ -401,7 +402,7 @@ function App() {
                     {editVersion !== room.script.version && <div className="alert error">Outra versão foi salva. Cancele a edição e atualize a sala antes de continuar.</div>}
                     <label className="field">Título do roteiro<input maxLength={160} required value={proposal.title} onChange={e => setProposal(old => old ? {...old, title: e.target.value } : old)}/></label>
                     <div className="script-list">{proposal.items.map((item, i) => <div className="script-item" key={item.participant_ids.join('-')}>
-                      <div className="script-pos">{i+1}</div><div className="script-details"><span className="item-person">{participantName(item.participant_ids)}</span><label className="field"><span>Música para esta apresentação</span><select value={item.karaoke_version_id} onChange={e => changeItem(i, {karaoke_version_id: e.target.value})}>{eligibleVideos.map(video => <option key={video.id} value={video.id}>{songsById.get(video.song_id)?.title || video.id} — {songsById.get(video.song_id)?.artists.join(', ')}</option>)}</select></label></div>
+                      <div className="script-pos">{i+1}</div><div className="script-details"><span className="item-person">{participantName(item.participant_ids)}</span><label className="field"><span>Música para esta apresentação</span><select value={item.karaoke_version_id} onChange={e => changeItem(i, {karaoke_version_id: e.target.value})}>{eligibleVideos.map(video => <option key={video.id} value={video.id}>{songsById.get(video.song_id)?.title || video.id} — {songsById.get(video.song_id)?.artists.join(', ')}{video.kind === 'letra_sincronizada' ? ' (letra na tela)' : ' (karaokê)'}</option>)}</select></label></div>
                       <div className="order-actions"><button className="icon-btn" type="button" aria-label={`Subir apresentação de ${participantName(item.participant_ids)}`} onClick={() => moveItem(i, -1)} disabled={i === 0}>↑</button><button className="icon-btn" type="button" aria-label={`Descer apresentação de ${participantName(item.participant_ids)}`} onClick={() => moveItem(i, 1)} disabled={i === proposal.items.length-1}>↓</button></div>
                     </div>)}</div>
                     <div className="inline-actions"><button type="button" className="btn primary" disabled={pending !== null || editVersion !== room.script.version || !proposal.title.trim()} onClick={saveEdit}>{pending === 'save' ? 'Salvando...' : 'Salvar alterações ✓'}</button><button type="button" className="btn outline" onClick={() => { setEditing(false); setProposal(null) }}>Cancelar</button></div>
@@ -416,7 +417,7 @@ function App() {
                 </div>}
               </section>}
 
-              {identity.role === 'host' && room.script?.approved && room.script.input_revision === room.session.revision && !editing && <section className="paper-card player-card"><div className="card-title-row"><div><span className="eyebrow">03 · HORA DE CANTAR</span><h2>Player do organizador</h2></div><span className="state-tag done">Repertório aprovado</span></div><p className="muted">Reproduza os vídeos de karaokê na ordem do roteiro. O player aparece apenas aqui, no dispositivo do organizador.</p>
+              {identity.role === 'host' && room.script?.approved && room.script.input_revision === room.session.revision && !editing && <section className="paper-card player-card"><div className="card-title-row"><div><span className="eyebrow">03 · HORA DE CANTAR</span><h2>Player do organizador</h2></div><span className="state-tag done">Repertório aprovado</span></div><p className="muted">Reproduza na ordem do roteiro. Músicas com letra sincronizada mostram a letra abaixo do vídeo; use “Tela cheia” na TV ou projetor. O player aparece apenas aqui, no dispositivo do organizador.</p>
                 {playingIndex === null ? <button className="btn primary" type="button" onClick={() => setPlayingIndex(0)}>▶ Abrir o player</button> : <Player script={room.script} index={playingIndex} versions={versionsById} catalog={catalog} participantName={participantName} onSelect={setPlayingIndex}/>}
                 <p className="muted smaller">Vídeos incorporados via YouTube. A disponibilidade e permissões de reprodução podem mudar; a aprovação do piloto não equivale a revisão de direitos.</p>
               </section>}
@@ -442,7 +443,7 @@ function Player({script, index, versions, catalog, participantName, onSelect}: {
   const item = script.items[index]
   const version = versions.get(item?.karaoke_version_id)
   return <div className="player-layout"><div><div className="player-meta"><span>APRESENTAÇÃO {index+1} / {script.items.length}</span><strong>{participantName(item.participant_ids)}</strong></div>
-    {version ? <><div className="video-frame"><iframe key={version.youtube_video_id} src={`https://www.youtube.com/embed/${version.youtube_video_id}`} title="Vídeo de karaokê incorporado do YouTube" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen loading="lazy" /></div><a className="youtube-link" href={`https://www.youtube.com/watch?v=${version.youtube_video_id}`} target="_blank" rel="noopener noreferrer">Vídeo não carregou? Abrir no YouTube ↗</a></> : <div className="notice warn">Não há versão de vídeo disponível. Confira o catálogo.</div>}
+    {version ? <><KaraokePlayer key={version.id} version={version}/><a className="youtube-link" href={`https://www.youtube.com/watch?v=${version.youtube_video_id}`} target="_blank" rel="noopener noreferrer">Vídeo não carregou? Abrir no YouTube ↗</a></> : <div className="notice warn">Não há versão de vídeo disponível. Confira o catálogo.</div>}
     <div className="inline-actions"><button type="button" className="btn outline" disabled={index === 0} onClick={() => onSelect(index-1)}>← Anterior</button><button type="button" className="btn secondary" disabled={index === script.items.length-1} onClick={() => onSelect(index+1)}>Próxima apresentação →</button></div>
     </div><aside className="queue"><h3>Fila de apresentações</h3>{script.items.map((current, i) => <button key={i} type="button" className={`queue-item ${i === index ? 'selected' : ''}`} onClick={() => onSelect(i)}><span>{String(i+1).padStart(2, '0')}</span><div><strong>{participantName(current.participant_ids)}</strong><SongName versionId={current.karaoke_version_id} catalog={catalog}/></div></button>)}</aside>
   </div>

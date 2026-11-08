@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SingMatch · verificar vídeos</title>
+<style>
+  :root{font-family:system-ui,sans-serif;color:#452b2e;background:#fbf5e9}
+  body{margin:0;padding:24px;max-width:1100px;margin:auto}
+  h1{color:#692334;margin:0 0 6px}
+  p{line-height:1.5}
+  button{font:inherit;font-weight:700;padding:10px 16px;border-radius:8px;border:1px solid #752b40;background:#752b40;color:#fff;cursor:pointer}
+  button:disabled{opacity:.5}
+  table{border-collapse:collapse;width:100%;margin-top:16px;font-size:.85rem}
+  td,th{border-bottom:1px solid #e5d3c5;padding:6px 8px;text-align:left}
+  .ok{color:#2f6b3a;font-weight:700}.bloqueado{color:#a3262f;font-weight:700}.timeout{color:#8a5a14;font-weight:700}
+  #players{position:fixed;right:8px;bottom:8px;display:flex;gap:4px;opacity:.15;pointer-events:none}
+  textarea{width:100%;min-height:120px;margin-top:12px;font-family:ui-monospace,monospace;font-size:.8rem}
+</style>
+</head>
+<body>
+<h1>Verificar vídeos do catálogo</h1>
+<p>Toca cada vídeo <b>sem som</b> no player incorporado <b>neste domínio</b> e marca os que o YouTube bloqueia
+(erro 101/150: o dono não permite reprodução fora do YouTube). Abra esta página no site publicado antes da
+apresentação. Para testar IDs avulsos use <code>?ids=ID1,ID2</code>.</p>
+<button id="start">Verificar</button> <span id="status"></span>
+<table><thead><tr><th>Versão</th><th>Música</th><th>Vídeo</th><th>Resultado</th></tr></thead><tbody id="rows"></tbody></table>
+<textarea id="out" readonly placeholder="Resultado em JSON aparece aqui"></textarea>
+<button id="copy" type="button" disabled>Copiar JSON</button>
+<p>Depois: salve como <code>resultado.json</code> e rode <code>python3 scripts/registrar_verificacao.py resultado.json</code>.</p>
+<div id="players"></div>
+<script>
+const CONCURRENCY = 4, TIMEOUT_MS = 20000;
+const $ = id => document.getElementById(id);
+
+function loadApi() {
+  if (window.YT && window.YT.Player) return Promise.resolve();
+  return new Promise(resolve => {
+    window.onYouTubeIframeAPIReady = resolve;
+    const s = document.createElement('script'); s.src = 'https://www.youtube.com/iframe_api'; document.head.appendChild(s);
+  });
+}
+
+async function targets() {
+  const ids = new URLSearchParams(location.search).get('ids');
+  if (ids) return ids.split(',').filter(Boolean).map(v => ({ id: v, video: v, title: '(avulso)' }));
+  const cat = await fetch('/api/catalog?genre=forro').then(r => r.json());
+  const songs = new Map(cat.songs.map(s => [s.id, s]));
+  return cat.karaoke_versions.map(v => ({ id: v.id, video: v.youtube_video_id,
+    title: `${songs.get(v.song_id)?.title ?? '?'} — ${(songs.get(v.song_id)?.artists ?? []).join(', ')}` }));
+}
+
+function test(video) {
+  return new Promise(resolve => {
+    const box = document.createElement('div'); $('players').appendChild(box);
+    const el = document.createElement('div'); box.appendChild(el);
+    let done = false, player;
+    const finish = (result, code) => {
+      if (done) return; done = true; clearTimeout(timer);
+      try { player && player.destroy(); } catch (e) {}
+      box.remove(); resolve({ result, code });
+    };
+    const timer = setTimeout(() => finish('timeout'), TIMEOUT_MS);
+    player = new YT.Player(el, {
+      videoId: video, width: 320, height: 180,
+      playerVars: { autoplay: 1, mute: 1, playsinline: 1, origin: location.origin },
+      events: {
+        onReady: e => { e.target.mute(); e.target.playVideo(); },
+        onStateChange: e => { if (e.data === 1) finish('ok'); },
+        onError: e => finish('bloqueado', e.data),
+      },
+    });
+  });
+}
+
+$('copy').onclick = async () => {
+  try { await navigator.clipboard.writeText($('out').value); $('copy').textContent = 'Copiado ✓'; }
+  catch (e) { $('out').select(); }
+};
+
+$('start').onclick = async () => {
+  $('start').disabled = true; $('rows').innerHTML = '';
+  await loadApi();
+  const list = await targets();
+  const summary = { origem: location.origin, verificado_em: new Date().toISOString(), ok: [], bloqueados: [], timeout: [] };
+  let next = 0, finished = 0;
+  const rows = new Map(list.map(t => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${t.id}</td><td></td><td><a href="https://www.youtube.com/watch?v=${t.video}" target="_blank" rel="noopener">${t.video}</a></td><td>…</td>`;
+    tr.children[1].textContent = t.title; $('rows').appendChild(tr); return [t.id, tr];
+  }));
+  async function worker() {
+    while (next < list.length) {
+      const t = list[next++];
+      const { result, code } = await test(t.video);
+      const cell = rows.get(t.id).children[3];
+      cell.className = result; cell.textContent = result + (code ? ` (erro ${code})` : '');
+      (result === 'ok' ? summary.ok : result === 'bloqueado' ? summary.bloqueados : summary.timeout).push(t.video);
+      $('status').textContent = `${++finished}/${list.length}`;
+    }
+  }
+  await Promise.all(Array.from({ length: CONCURRENCY }, worker));
+  $('out').value = JSON.stringify(summary, null, 2);
+  $('copy').disabled = false;
+  window.__verificacao = summary;
+  $('status').textContent = `Concluído: ${summary.ok.length} ok, ${summary.bloqueados.length} bloqueados, ${summary.timeout.length} sem resposta.`;
+  $('start').disabled = false;
+};
+</script>
+</body>
+</html>

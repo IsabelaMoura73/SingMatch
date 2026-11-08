@@ -1,0 +1,4575 @@
+{
+  "metadata": {
+    "origin": "scripts/build_catalog.py",
+    "generated_at": "2026-11-08",
+    "sources": {
+      "byrm_zenodo_16617888": "BYRM: Brazilian YouTube Regional Music Dataset — Guimarães & de Freitas (UFAM), CC BY 4.0",
+      "ufmg_zenodo_12733931": "Conjunto de Dados de Séries Temporais de Músicas Brasileiras — Viana & Moro (UFMG), CC BY 4.0",
+      "pesquisa_lrclib_2026-11": "Lista de forrós montada por pesquisa assistida por IA, conferida no LRCLIB",
+      "lrclib.net": "Letras sincronizadas (LRC) da comunidade LRCLIB"
+    },
+    "note": "approved=true = o vídeo tocou no player incorporado (/verificar.html) e a letra tem a mesma duração da gravação (±3 s). Repetir /verificar.html no domínio publicado. Clima/energia vêm da fonte indicada em tags[].source."
+  },
+  "songs": [
+    {
+      "id": "BYRM-s2yhxUL4Hj4",
+      "title": "A Vida do Viajante",
+      "artists": [
+        "Luiz Gonzaga"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "saudosa",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "saudosa",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 163000,
+      "source": "byrm_zenodo_16617888",
+      "source_id": "s2yhxUL4Hj4"
+    },
+    {
+      "id": "BYRM-5cGErvfsLqQ",
+      "title": "Acauã",
+      "artists": [
+        "Luiz Gonzaga"
+      ],
+      "genre": "forro",
+      "energy": 2,
+      "mood": "tranquila",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "tranquila",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "2",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 177000,
+      "source": "byrm_zenodo_16617888",
+      "source_id": "5cGErvfsLqQ"
+    },
+    {
+      "id": "BYRM-sENF-1_WsiI",
+      "title": "Cortando Pano",
+      "artists": [
+        "Luiz Gonzaga"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 152000,
+      "source": "byrm_zenodo_16617888",
+      "source_id": "sENF-1_WsiI"
+    },
+    {
+      "id": "BYRM-Ll0dhIdQ01g",
+      "title": "No Meu Pé de Serra",
+      "artists": [
+        "Luiz Gonzaga"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "saudosa",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "saudosa",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 162000,
+      "source": "byrm_zenodo_16617888",
+      "source_id": "Ll0dhIdQ01g"
+    },
+    {
+      "id": "BYRM-YXjDXexEoHA",
+      "title": "Penerô Xerém",
+      "artists": [
+        "Luiz Gonzaga"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "festiva",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "festiva",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 162000,
+      "source": "byrm_zenodo_16617888",
+      "source_id": "YXjDXexEoHA"
+    },
+    {
+      "id": "BYRM-FHcacbyM-AI",
+      "title": "Sabiá",
+      "artists": [
+        "Luiz Gonzaga"
+      ],
+      "genre": "forro",
+      "energy": 2,
+      "mood": "saudosa",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "saudosa",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "2",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 144000,
+      "source": "byrm_zenodo_16617888",
+      "source_id": "FHcacbyM-AI"
+    },
+    {
+      "id": "BYRM-Ny43bLswavY",
+      "title": "Vem Morena",
+      "artists": [
+        "Luiz Gonzaga"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 194000,
+      "source": "byrm_zenodo_16617888",
+      "source_id": "Ny43bLswavY"
+    },
+    {
+      "id": "BYRM-CMiKdEpcreU",
+      "title": "Xote da Alegria",
+      "artists": [
+        "Falamansa"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 255825,
+      "source": "byrm_zenodo_16617888",
+      "source_id": "CMiKdEpcreU"
+    },
+    {
+      "id": "BYRM-Veeu7KSsZ4c",
+      "title": "Oh! Chuva",
+      "artists": [
+        "Falamansa"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 229000,
+      "source": "byrm_zenodo_16617888",
+      "source_id": "Veeu7KSsZ4c"
+    },
+    {
+      "id": "BYRM-LxQNmqmkgco",
+      "title": "Solução (Essa é pra Vocês)",
+      "artists": [
+        "Falamansa"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 228000,
+      "source": "byrm_zenodo_16617888",
+      "source_id": "LxQNmqmkgco"
+    },
+    {
+      "id": "BYRM-U4eX9D92sFI",
+      "title": "Pra Você",
+      "artists": [
+        "Falamansa"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 208000,
+      "source": "byrm_zenodo_16617888",
+      "source_id": "U4eX9D92sFI"
+    },
+    {
+      "id": "BYRM-l-KSfuOiuvM",
+      "title": "Fique Com A Saudade",
+      "artists": [
+        "Falamansa"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "sofrida",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "sofrida",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 231000,
+      "source": "byrm_zenodo_16617888",
+      "source_id": "l-KSfuOiuvM"
+    },
+    {
+      "id": "BYRM-X5xJSbNNO_8",
+      "title": "Forró De Sangue Novo",
+      "artists": [
+        "Falamansa"
+      ],
+      "genre": "forro",
+      "energy": 5,
+      "mood": "festiva",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "festiva",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "5",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 264000,
+      "source": "byrm_zenodo_16617888",
+      "source_id": "X5xJSbNNO_8"
+    },
+    {
+      "id": "BYRM-aZXOX7L7siQ",
+      "title": "Colo De Menina",
+      "artists": [
+        "Rastapé"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 204000,
+      "source": "byrm_zenodo_16617888",
+      "source_id": "aZXOX7L7siQ"
+    },
+    {
+      "id": "BYRM-MUph30VIvHY",
+      "title": "Xote Swingado",
+      "artists": [
+        "Rastapé"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 215000,
+      "source": "byrm_zenodo_16617888",
+      "source_id": "MUph30VIvHY"
+    },
+    {
+      "id": "BYRM-T33xDpb3sXA",
+      "title": "Namoro",
+      "artists": [
+        "Rastapé"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 230000,
+      "source": "byrm_zenodo_16617888",
+      "source_id": "T33xDpb3sXA"
+    },
+    {
+      "id": "BYRM-JEJxIY5Y4ZE",
+      "title": "Embalo Do Forró",
+      "artists": [
+        "Rastapé"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 215000,
+      "source": "byrm_zenodo_16617888",
+      "source_id": "JEJxIY5Y4ZE"
+    },
+    {
+      "id": "BYRM-CLU9_GdqBwo",
+      "title": "Beijo Roubado",
+      "artists": [
+        "Rastapé"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 219224,
+      "source": "byrm_zenodo_16617888",
+      "source_id": "CLU9_GdqBwo"
+    },
+    {
+      "id": "BYRM-OuKjgTCNb7Y",
+      "title": "Um Anjo Do Céu",
+      "artists": [
+        "Rastapé"
+      ],
+      "genre": "forro",
+      "energy": 2,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "2",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 222000,
+      "source": "byrm_zenodo_16617888",
+      "source_id": "OuKjgTCNb7Y"
+    },
+    {
+      "id": "BYRM-wHtx0Sa_y_I",
+      "title": "Coração Virado",
+      "artists": [
+        "Rastapé"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 231000,
+      "source": "byrm_zenodo_16617888",
+      "source_id": "wHtx0Sa_y_I"
+    },
+    {
+      "id": "BYRM-UshKkOVPlzE",
+      "title": "Preciso Do Teu Sorriso",
+      "artists": [
+        "Trio Virgulino"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 246000,
+      "source": "byrm_zenodo_16617888",
+      "source_id": "UshKkOVPlzE"
+    },
+    {
+      "id": "BYRM-8bOMhVi9ggM",
+      "title": "Coração",
+      "artists": [
+        "Dorgival Dantas"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "sofrida",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "sofrida",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 228000,
+      "source": "byrm_zenodo_16617888",
+      "source_id": "8bOMhVi9ggM"
+    },
+    {
+      "id": "BYRM-_iInrnvrtZA",
+      "title": "Até Mais Ver",
+      "artists": [
+        "Trio Forrozão"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 280000,
+      "source": "byrm_zenodo_16617888",
+      "source_id": "_iInrnvrtZA"
+    },
+    {
+      "id": "BYRM-O1RsEu-rylY",
+      "title": "Ela Nem Olhou pra Mim",
+      "artists": [
+        "Trio Forrozão"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "sofrida",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "sofrida",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 215000,
+      "source": "byrm_zenodo_16617888",
+      "source_id": "O1RsEu-rylY"
+    },
+    {
+      "id": "BYRM-qbgKlZQxIX0",
+      "title": "Em Plena Lua de Mel",
+      "artists": [
+        "Trio Forrozão"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 241000,
+      "source": "byrm_zenodo_16617888",
+      "source_id": "qbgKlZQxIX0"
+    },
+    {
+      "id": "UFMG-564471",
+      "title": "Primeiro Ponto",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "sofrida",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "sofrida",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "raiva",
+          "source": "ufmg_zenodo_12733931#linha=564471"
+        }
+      ],
+      "duration_ms": 174000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564471"
+    },
+    {
+      "id": "UFMG-564474",
+      "title": "Não é Nada Disso",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 5,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "5",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "raiva",
+          "source": "ufmg_zenodo_12733931#linha=564474"
+        }
+      ],
+      "duration_ms": 203000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564474"
+    },
+    {
+      "id": "UFMG-564477",
+      "title": "Alta Estação",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "sofrida",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "sofrida",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "alegria",
+          "source": "ufmg_zenodo_12733931#linha=564477"
+        }
+      ],
+      "duration_ms": 200646,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564477"
+    },
+    {
+      "id": "UFMG-564496",
+      "title": "Abre o Porta Malas",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 5,
+      "mood": "festiva",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "festiva",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "5",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "raiva",
+          "source": "ufmg_zenodo_12733931#linha=564496"
+        }
+      ],
+      "duration_ms": 231000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564496"
+    },
+    {
+      "id": "UFMG-564533",
+      "title": "Barba, Cabelo e Bigode",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 5,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "5",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "alegria",
+          "source": "ufmg_zenodo_12733931#linha=564533"
+        }
+      ],
+      "duration_ms": 192000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564533"
+    },
+    {
+      "id": "UFMG-564539",
+      "title": "Bla Bla Bla",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "sofrida",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "sofrida",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "tristeza",
+          "source": "ufmg_zenodo_12733931#linha=564539"
+        }
+      ],
+      "duration_ms": 264000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564539"
+    },
+    {
+      "id": "UFMG-564544",
+      "title": "Bumbum Granada",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 5,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "5",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "raiva",
+          "source": "ufmg_zenodo_12733931#linha=564544"
+        }
+      ],
+      "duration_ms": 166000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564544"
+    },
+    {
+      "id": "UFMG-564550",
+      "title": "Cara de Bobo",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "raiva",
+          "source": "ufmg_zenodo_12733931#linha=564550"
+        }
+      ],
+      "duration_ms": 202000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564550"
+    },
+    {
+      "id": "UFMG-564575",
+      "title": "Coração de Papel",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "sofrida",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "sofrida",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "raiva",
+          "source": "ufmg_zenodo_12733931#linha=564575"
+        }
+      ],
+      "duration_ms": 268000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564575"
+    },
+    {
+      "id": "UFMG-564614",
+      "title": "Endereço Certo da Paixão",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "alegria",
+          "source": "ufmg_zenodo_12733931#linha=564614"
+        }
+      ],
+      "duration_ms": 166000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564614"
+    },
+    {
+      "id": "UFMG-564622",
+      "title": "Esperando Você Voltar",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "sofrida",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "sofrida",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "raiva",
+          "source": "ufmg_zenodo_12733931#linha=564622"
+        }
+      ],
+      "duration_ms": 173000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564622"
+    },
+    {
+      "id": "UFMG-564674",
+      "title": "Fique Comigo Não Se Vá",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "alegria",
+          "source": "ufmg_zenodo_12733931#linha=564674"
+        }
+      ],
+      "duration_ms": 220000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564674"
+    },
+    {
+      "id": "UFMG-564686",
+      "title": "Hoje Tem Mel",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 5,
+      "mood": "festiva",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "festiva",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "5",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "raiva",
+          "source": "ufmg_zenodo_12733931#linha=564686"
+        }
+      ],
+      "duration_ms": 149000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564686"
+    },
+    {
+      "id": "UFMG-564702",
+      "title": "Jeito de Amar",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "sofrida",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "sofrida",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "alegria",
+          "source": "ufmg_zenodo_12733931#linha=564702"
+        }
+      ],
+      "duration_ms": 188612,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564702"
+    },
+    {
+      "id": "UFMG-564731",
+      "title": "Meu Som É Pau",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 5,
+      "mood": "festiva",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "festiva",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "5",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "raiva",
+          "source": "ufmg_zenodo_12733931#linha=564731"
+        }
+      ],
+      "duration_ms": 166556,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564731"
+    },
+    {
+      "id": "UFMG-564733",
+      "title": "Miga Sua Loka",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 5,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "5",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "raiva",
+          "source": "ufmg_zenodo_12733931#linha=564733"
+        }
+      ],
+      "duration_ms": 158000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564733"
+    },
+    {
+      "id": "UFMG-564738",
+      "title": "Mulher Doideira",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 5,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "5",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "alegria",
+          "source": "ufmg_zenodo_12733931#linha=564738"
+        }
+      ],
+      "duration_ms": 184000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564738"
+    },
+    {
+      "id": "UFMG-564762",
+      "title": "Naquele Mesmo Bar",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "sofrida",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "sofrida",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "raiva",
+          "source": "ufmg_zenodo_12733931#linha=564762"
+        }
+      ],
+      "duration_ms": 238000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564762"
+    },
+    {
+      "id": "UFMG-564791",
+      "title": "Pare Com Isso",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "tristeza",
+          "source": "ufmg_zenodo_12733931#linha=564791"
+        }
+      ],
+      "duration_ms": 209031,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564791"
+    },
+    {
+      "id": "UFMG-564797",
+      "title": "Pegadinha do Inglês",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 5,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "5",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "raiva",
+          "source": "ufmg_zenodo_12733931#linha=564797"
+        }
+      ],
+      "duration_ms": 230000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564797"
+    },
+    {
+      "id": "UFMG-564801",
+      "title": "Pequeno Celular",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "sofrida",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "sofrida",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "tristeza",
+          "source": "ufmg_zenodo_12733931#linha=564801"
+        }
+      ],
+      "duration_ms": 201000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564801"
+    },
+    {
+      "id": "UFMG-564824",
+      "title": "Prepare Seu Coração",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "sofrida",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "sofrida",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "tristeza",
+          "source": "ufmg_zenodo_12733931#linha=564824"
+        }
+      ],
+      "duration_ms": 244000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564824"
+    },
+    {
+      "id": "UFMG-564844",
+      "title": "Quero Você Tatá",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "alegria",
+          "source": "ufmg_zenodo_12733931#linha=564844"
+        }
+      ],
+      "duration_ms": 90000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564844"
+    },
+    {
+      "id": "UFMG-564851",
+      "title": "Roda O Copo Na Cabeça",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 5,
+      "mood": "festiva",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "festiva",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "5",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "raiva",
+          "source": "ufmg_zenodo_12733931#linha=564851"
+        }
+      ],
+      "duration_ms": 247000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564851"
+    },
+    {
+      "id": "UFMG-564856",
+      "title": "Se Deu Mal",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "alegria",
+          "source": "ufmg_zenodo_12733931#linha=564856"
+        }
+      ],
+      "duration_ms": 178000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564856"
+    },
+    {
+      "id": "UFMG-564873",
+      "title": "Sintonia e Desejo",
+      "artists": [
+        "Aviões do Forró",
+        "Ivete Sangalo"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "alegria",
+          "source": "ufmg_zenodo_12733931#linha=564873"
+        }
+      ],
+      "duration_ms": 225000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564873"
+    },
+    {
+      "id": "UFMG-564918",
+      "title": "Titular Absoluta",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "alegria",
+          "source": "ufmg_zenodo_12733931#linha=564918"
+        }
+      ],
+      "duration_ms": 227000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564918"
+    },
+    {
+      "id": "UFMG-564921",
+      "title": "Tô Limpando Você da Minha Vida",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "sofrida",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "sofrida",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "raiva",
+          "source": "ufmg_zenodo_12733931#linha=564921"
+        }
+      ],
+      "duration_ms": 203000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564921"
+    },
+    {
+      "id": "UFMG-564972",
+      "title": "Vou Deixar Ele Ir",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "sofrida",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "sofrida",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "tristeza",
+          "source": "ufmg_zenodo_12733931#linha=564972"
+        }
+      ],
+      "duration_ms": 139598,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564972"
+    },
+    {
+      "id": "UFMG-564978",
+      "title": "Vou te Pegar",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 5,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "5",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "raiva",
+          "source": "ufmg_zenodo_12733931#linha=564978"
+        }
+      ],
+      "duration_ms": 174000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564978"
+    },
+    {
+      "id": "PESQ-luiz-gonzaga-respeita-januario",
+      "title": "Respeita Januário",
+      "artists": [
+        "Luiz Gonzaga"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "festiva",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "festiva",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 152000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "luiz-gonzaga-respeita-januario"
+    },
+    {
+      "id": "PESQ-luiz-gonzaga-qui-nem-jilo",
+      "title": "Qui Nem Jiló",
+      "artists": [
+        "Luiz Gonzaga"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "saudosa",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "saudosa",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 168000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "luiz-gonzaga-qui-nem-jilo"
+    },
+    {
+      "id": "PESQ-luiz-gonzaga-paraiba",
+      "title": "Paraíba",
+      "artists": [
+        "Luiz Gonzaga"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 171720,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "luiz-gonzaga-paraiba"
+    },
+    {
+      "id": "PESQ-luiz-gonzaga-a-volta-da-asa-branca",
+      "title": "A Volta da Asa Branca",
+      "artists": [
+        "Luiz Gonzaga"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 164000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "luiz-gonzaga-a-volta-da-asa-branca"
+    },
+    {
+      "id": "PESQ-luiz-gonzaga-sao-joao-do-carneirinho",
+      "title": "São João do Carneirinho",
+      "artists": [
+        "Luiz Gonzaga"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "festiva",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "festiva",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 173000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "luiz-gonzaga-sao-joao-do-carneirinho"
+    },
+    {
+      "id": "PESQ-luiz-gonzaga-derramaro-o-gai",
+      "title": "Derramaro o Gai",
+      "artists": [
+        "Luiz Gonzaga"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "festiva",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "festiva",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 168000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "luiz-gonzaga-derramaro-o-gai"
+    },
+    {
+      "id": "PESQ-luiz-gonzaga-dezessete-e-setecentos",
+      "title": "Dezessete E Setecentos",
+      "artists": [
+        "Luiz Gonzaga"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 145000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "luiz-gonzaga-dezessete-e-setecentos"
+    },
+    {
+      "id": "PESQ-luiz-gonzaga-cintura-fina",
+      "title": "Cintura Fina",
+      "artists": [
+        "Luiz Gonzaga"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 148000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "luiz-gonzaga-cintura-fina"
+    },
+    {
+      "id": "PESQ-jackson-do-pandeiro-sebastiana",
+      "title": "Sebastiana",
+      "artists": [
+        "Jackson do Pandeiro"
+      ],
+      "genre": "forro",
+      "energy": 5,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "5",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 121000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "jackson-do-pandeiro-sebastiana"
+    },
+    {
+      "id": "PESQ-jackson-do-pandeiro-o-canto-da-ema",
+      "title": "O Canto da Ema",
+      "artists": [
+        "Jackson do Pandeiro"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 160000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "jackson-do-pandeiro-o-canto-da-ema"
+    },
+    {
+      "id": "PESQ-jackson-do-pandeiro-cantiga-do-sapo",
+      "title": "Cantiga do Sapo",
+      "artists": [
+        "Jackson do Pandeiro"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 167000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "jackson-do-pandeiro-cantiga-do-sapo"
+    },
+    {
+      "id": "PESQ-jackson-do-pandeiro-forro-em-campina",
+      "title": "Forró em Campina",
+      "artists": [
+        "Jackson do Pandeiro"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "festiva",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "festiva",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 141000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "jackson-do-pandeiro-forro-em-campina"
+    },
+    {
+      "id": "PESQ-dominguinhos-abri-a-porta",
+      "title": "Abri a Porta",
+      "artists": [
+        "Dominguinhos"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 141638,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "dominguinhos-abri-a-porta"
+    },
+    {
+      "id": "PESQ-dominguinhos-gostoso-demais",
+      "title": "Gostoso Demais",
+      "artists": [
+        "Dominguinhos"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 185000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "dominguinhos-gostoso-demais"
+    },
+    {
+      "id": "PESQ-gilberto-gil-tenho-sede",
+      "title": "Tenho Sede",
+      "artists": [
+        "Gilberto Gil"
+      ],
+      "genre": "forro",
+      "energy": 2,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "2",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 228000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "gilberto-gil-tenho-sede"
+    },
+    {
+      "id": "PESQ-elba-ramalho-banho-de-cheiro",
+      "title": "Banho de Cheiro",
+      "artists": [
+        "Elba Ramalho"
+      ],
+      "genre": "forro",
+      "energy": 5,
+      "mood": "festiva",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "festiva",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "5",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 237000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "elba-ramalho-banho-de-cheiro"
+    },
+    {
+      "id": "PESQ-elba-ramalho-bate-coracao",
+      "title": "Bate Coração",
+      "artists": [
+        "Elba Ramalho"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 221000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "elba-ramalho-bate-coracao"
+    },
+    {
+      "id": "PESQ-alceu-valenca-cavalo-de-pau",
+      "title": "Cavalo de Pau",
+      "artists": [
+        "Alceu Valença"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 276000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "alceu-valenca-cavalo-de-pau"
+    },
+    {
+      "id": "PESQ-alceu-valenca-anunciacao",
+      "title": "Anunciação",
+      "artists": [
+        "Alceu Valença"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 292900,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "alceu-valenca-anunciacao"
+    },
+    {
+      "id": "PESQ-genival-lacerda-severina-xique-xique",
+      "title": "Severina Xique Xique",
+      "artists": [
+        "Genival Lacerda"
+      ],
+      "genre": "forro",
+      "energy": 5,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "5",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 226000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "genival-lacerda-severina-xique-xique"
+    },
+    {
+      "id": "PESQ-genival-lacerda-radinho-de-pilha",
+      "title": "Radinho de Pilha",
+      "artists": [
+        "Genival Lacerda"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 188000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "genival-lacerda-radinho-de-pilha"
+    },
+    {
+      "id": "PESQ-sivuca-adeus-maria-fulo",
+      "title": "Adeus Maria Fulô",
+      "artists": [
+        "Sivuca"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "saudosa",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "saudosa",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 212000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "sivuca-adeus-maria-fulo"
+    },
+    {
+      "id": "PESQ-flavio-jose-espumas-ao-vento",
+      "title": "Espumas ao Vento",
+      "artists": [
+        "Flávio José"
+      ],
+      "genre": "forro",
+      "energy": 2,
+      "mood": "sofrida",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "sofrida",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "2",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 255000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "flavio-jose-espumas-ao-vento"
+    },
+    {
+      "id": "PESQ-flavio-jose-caboclo-sonhador",
+      "title": "Caboclo sonhador",
+      "artists": [
+        "Flávio José"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 173000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "flavio-jose-caboclo-sonhador"
+    },
+    {
+      "id": "PESQ-trio-nordestino-procurando-tu",
+      "title": "Procurando Tu",
+      "artists": [
+        "Trio Nordestino"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 193000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "trio-nordestino-procurando-tu"
+    },
+    {
+      "id": "PESQ-jorge-de-altinho-petrolina-juazeiro",
+      "title": "Petrolina-Juazeiro",
+      "artists": [
+        "Jorge de Altinho"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 203000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "jorge-de-altinho-petrolina-juazeiro"
+    },
+    {
+      "id": "PESQ-os-3-do-nordeste-e-proibido-cochilar",
+      "title": "É Proibido Cochilar",
+      "artists": [
+        "Os 3 do Nordeste"
+      ],
+      "genre": "forro",
+      "energy": 5,
+      "mood": "festiva",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "festiva",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "5",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 157000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "os-3-do-nordeste-e-proibido-cochilar"
+    },
+    {
+      "id": "PESQ-joao-do-vale-pisa-na-fulo",
+      "title": "Pisa na Fulô",
+      "artists": [
+        "João do Vale"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 143020,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "joao-do-vale-pisa-na-fulo"
+    },
+    {
+      "id": "PESQ-geraldo-azevedo-moca-bonita",
+      "title": "Moça Bonita",
+      "artists": [
+        "Geraldo Azevedo"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 132000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "geraldo-azevedo-moca-bonita"
+    },
+    {
+      "id": "PESQ-falamansa-avisa",
+      "title": "Avisa",
+      "artists": [
+        "Falamansa"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 355004,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "falamansa-avisa"
+    },
+    {
+      "id": "PESQ-falamansa-asas",
+      "title": "Asas",
+      "artists": [
+        "Falamansa"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 204000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "falamansa-asas"
+    },
+    {
+      "id": "PESQ-rastape-versos-sinceros",
+      "title": "Versos Sinceros",
+      "artists": [
+        "Rastapé"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 225000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "rastape-versos-sinceros"
+    },
+    {
+      "id": "PESQ-bicho-de-pe-nosso-xote",
+      "title": "Nosso Xote",
+      "artists": [
+        "Bicho de Pé"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 218000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "bicho-de-pe-nosso-xote"
+    },
+    {
+      "id": "PESQ-bicho-de-pe-essa-morena-arrasa",
+      "title": "Essa Morena Arrasa",
+      "artists": [
+        "Bicho de Pé"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 246000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "bicho-de-pe-essa-morena-arrasa"
+    },
+    {
+      "id": "PESQ-circulado-de-fulo-pedacinho-de-papel-de-pao",
+      "title": "Pedacinho de Papel de Pão",
+      "artists": [
+        "Circuladô de Fulô"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 227343,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "circulado-de-fulo-pedacinho-de-papel-de-pao"
+    },
+    {
+      "id": "PESQ-forrocacana-bola-de-meia",
+      "title": "Bola De Meia",
+      "artists": [
+        "Forróçacana"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "saudosa",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "saudosa",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 226000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "forrocacana-bola-de-meia"
+    },
+    {
+      "id": "PESQ-mestrinho-sete-meninas",
+      "title": "Sete Meninas",
+      "artists": [
+        "Mestrinho"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 201000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "mestrinho-sete-meninas"
+    },
+    {
+      "id": "PESQ-dorgival-dantas-tarde-demais",
+      "title": "Tarde Demais",
+      "artists": [
+        "Dorgival Dantas"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "sofrida",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "sofrida",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 251000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "dorgival-dantas-tarde-demais"
+    },
+    {
+      "id": "PESQ-santanna-o-cantador-papel-jogado-ao-vento",
+      "title": "Papel Jogado Ao Vento",
+      "artists": [
+        "Santanna O Cantador"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "sofrida",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "sofrida",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 235000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "santanna-o-cantador-papel-jogado-ao-vento"
+    },
+    {
+      "id": "PESQ-santanna-o-cantador-me-da-meu-coracao",
+      "title": "Me Dá Meu Coração",
+      "artists": [
+        "Santanna O Cantador"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "sofrida",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "sofrida",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 261000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "santanna-o-cantador-me-da-meu-coracao"
+    },
+    {
+      "id": "PESQ-targino-gondim-simplesmente-assim",
+      "title": "Simplesmente Assim",
+      "artists": [
+        "Targino Gondim"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 219000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "targino-gondim-simplesmente-assim"
+    },
+    {
+      "id": "PESQ-chambinho-do-acordeon-que-deus-me-livre",
+      "title": "Que Deus Me Livre",
+      "artists": [
+        "Chambinho do Acordeon"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 177000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "chambinho-do-acordeon-que-deus-me-livre"
+    },
+    {
+      "id": "PESQ-alceu-valenca-la-belle-de-jour",
+      "title": "La Belle de Jour",
+      "artists": [
+        "Alceu Valença"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 293000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "alceu-valenca-la-belle-de-jour"
+    },
+    {
+      "id": "PESQ-geraldo-azevedo-taxi-lunar",
+      "title": "Táxi Lunar",
+      "artists": [
+        "Geraldo Azevedo"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "tranquila",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "tranquila",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 229000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "geraldo-azevedo-taxi-lunar"
+    },
+    {
+      "id": "PESQ-geraldo-azevedo-chorando-e-cantando",
+      "title": "Chorando e Cantando",
+      "artists": [
+        "Geraldo Azevedo"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "saudosa",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "saudosa",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 250000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "geraldo-azevedo-chorando-e-cantando"
+    },
+    {
+      "id": "PESQ-fulo-de-mandacaru-brilho-do-teu-olhar",
+      "title": "Brilho do Teu Olhar",
+      "artists": [
+        "Fulô de Mandacaru"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 194011,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "fulo-de-mandacaru-brilho-do-teu-olhar"
+    },
+    {
+      "id": "PESQ-calcinha-preta-hoje-a-noite",
+      "title": "Hoje à Noite",
+      "artists": [
+        "Calcinha Preta"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 222000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "calcinha-preta-hoje-a-noite"
+    },
+    {
+      "id": "PESQ-calcinha-preta-magica",
+      "title": "Mágica",
+      "artists": [
+        "Calcinha Preta"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "sofrida",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "sofrida",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 253000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "calcinha-preta-magica"
+    },
+    {
+      "id": "PESQ-calcinha-preta-dois-amores-duas-paixoes",
+      "title": "Dois Amores, Duas Paixões",
+      "artists": [
+        "Calcinha Preta"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "sofrida",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "sofrida",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 223000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "calcinha-preta-dois-amores-duas-paixoes"
+    },
+    {
+      "id": "PESQ-calcinha-preta-adao-e-eva",
+      "title": "Adão e Eva",
+      "artists": [
+        "Calcinha Preta"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 247000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "calcinha-preta-adao-e-eva"
+    },
+    {
+      "id": "PESQ-calcinha-preta-agora-estou-sofrendo",
+      "title": "Agora Estou Sofrendo",
+      "artists": [
+        "Calcinha Preta"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "sofrida",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "sofrida",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 263000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "calcinha-preta-agora-estou-sofrendo"
+    },
+    {
+      "id": "PESQ-calcinha-preta-louca-por-ti",
+      "title": "Louca por Ti",
+      "artists": [
+        "Calcinha Preta"
+      ],
+      "genre": "forro",
+      "energy": 2,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "2",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 206000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "calcinha-preta-louca-por-ti"
+    },
+    {
+      "id": "PESQ-mastruz-com-leite-meu-vaqueiro-meu-peao",
+      "title": "Meu Vaqueiro, Meu Peão",
+      "artists": [
+        "Mastruz com Leite"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 193000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "mastruz-com-leite-meu-vaqueiro-meu-peao"
+    },
+    {
+      "id": "PESQ-limao-com-mel-anjo-querubim",
+      "title": "Anjo Querubim",
+      "artists": [
+        "Limão com Mel"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 186000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "limao-com-mel-anjo-querubim"
+    },
+    {
+      "id": "PESQ-limao-com-mel-um-sonho-de-amor",
+      "title": "Um Sonho de Amor",
+      "artists": [
+        "Limão com Mel"
+      ],
+      "genre": "forro",
+      "energy": 2,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "2",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 193000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "limao-com-mel-um-sonho-de-amor"
+    },
+    {
+      "id": "PESQ-magnificos-me-usa",
+      "title": "Me Usa",
+      "artists": [
+        "Magníficos"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 195268,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "magnificos-me-usa"
+    },
+    {
+      "id": "PESQ-desejo-de-menina-beijos-blues-e-poesia",
+      "title": "Beijos, Blues e Poesia",
+      "artists": [
+        "Desejo de Menina"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 193000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "desejo-de-menina-beijos-blues-e-poesia"
+    },
+    {
+      "id": "PESQ-desejo-de-menina-esperando-voce",
+      "title": "Esperando Você",
+      "artists": [
+        "Desejo de Menina"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "sofrida",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "sofrida",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 127000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "desejo-de-menina-esperando-voce"
+    }
+  ],
+  "karaoke_versions": [
+    {
+      "id": "LET-UAdu66EjXBo",
+      "song_id": "BYRM-s2yhxUL4Hj4",
+      "youtube_video_id": "UAdu66EjXBo",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 163,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-UAdu66EjXBo.lrc",
+      "lyrics_source": "lrclib.net#id=33268886",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-9ah8rxpxLrU",
+      "song_id": "BYRM-5cGErvfsLqQ",
+      "youtube_video_id": "9ah8rxpxLrU",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 177,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-9ah8rxpxLrU.lrc",
+      "lyrics_source": "lrclib.net#id=38383666",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-bpsc7RsHivY",
+      "song_id": "BYRM-sENF-1_WsiI",
+      "youtube_video_id": "bpsc7RsHivY",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 152,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-bpsc7RsHivY.lrc",
+      "lyrics_source": "lrclib.net#id=34474543",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-WSqgOwCUJeM",
+      "song_id": "BYRM-Ll0dhIdQ01g",
+      "youtube_video_id": "WSqgOwCUJeM",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 162,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-WSqgOwCUJeM.lrc",
+      "lyrics_source": "lrclib.net#id=38575583",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET--Q3FORO4mlw",
+      "song_id": "BYRM-YXjDXexEoHA",
+      "youtube_video_id": "-Q3FORO4mlw",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 162,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET--Q3FORO4mlw.lrc",
+      "lyrics_source": "lrclib.net#id=35617647",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-QtcpaTSSJS8",
+      "song_id": "BYRM-FHcacbyM-AI",
+      "youtube_video_id": "QtcpaTSSJS8",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 144,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-QtcpaTSSJS8.lrc",
+      "lyrics_source": "lrclib.net#id=23299874",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-b7SfJiDrVl8",
+      "song_id": "BYRM-Ny43bLswavY",
+      "youtube_video_id": "b7SfJiDrVl8",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 194,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-b7SfJiDrVl8.lrc",
+      "lyrics_source": "lrclib.net#id=32602442",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-CMiKdEpcreU",
+      "song_id": "BYRM-CMiKdEpcreU",
+      "youtube_video_id": "CMiKdEpcreU",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 256,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-CMiKdEpcreU.lrc",
+      "lyrics_source": "lrclib.net#id=25396611",
+      "video_origin": "dataset"
+    },
+    {
+      "id": "LET-Veeu7KSsZ4c",
+      "song_id": "BYRM-Veeu7KSsZ4c",
+      "youtube_video_id": "Veeu7KSsZ4c",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 229,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-Veeu7KSsZ4c.lrc",
+      "lyrics_source": "lrclib.net#id=30356435",
+      "video_origin": "dataset"
+    },
+    {
+      "id": "LET-LxQNmqmkgco",
+      "song_id": "BYRM-LxQNmqmkgco",
+      "youtube_video_id": "LxQNmqmkgco",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 228,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-LxQNmqmkgco.lrc",
+      "lyrics_source": "lrclib.net#id=13043350",
+      "video_origin": "dataset"
+    },
+    {
+      "id": "LET-U4eX9D92sFI",
+      "song_id": "BYRM-U4eX9D92sFI",
+      "youtube_video_id": "U4eX9D92sFI",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 208,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-U4eX9D92sFI.lrc",
+      "lyrics_source": "lrclib.net#id=10386345",
+      "video_origin": "dataset"
+    },
+    {
+      "id": "LET-l-KSfuOiuvM",
+      "song_id": "BYRM-l-KSfuOiuvM",
+      "youtube_video_id": "l-KSfuOiuvM",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 231,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-l-KSfuOiuvM.lrc",
+      "lyrics_source": "lrclib.net#id=30498846",
+      "video_origin": "dataset"
+    },
+    {
+      "id": "LET-X5xJSbNNO_8",
+      "song_id": "BYRM-X5xJSbNNO_8",
+      "youtube_video_id": "X5xJSbNNO_8",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 264,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-X5xJSbNNO_8.lrc",
+      "lyrics_source": "lrclib.net#id=27701511",
+      "video_origin": "dataset"
+    },
+    {
+      "id": "LET-aZXOX7L7siQ",
+      "song_id": "BYRM-aZXOX7L7siQ",
+      "youtube_video_id": "aZXOX7L7siQ",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 204,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-aZXOX7L7siQ.lrc",
+      "lyrics_source": "lrclib.net#id=11098454",
+      "video_origin": "dataset"
+    },
+    {
+      "id": "LET-MUph30VIvHY",
+      "song_id": "BYRM-MUph30VIvHY",
+      "youtube_video_id": "MUph30VIvHY",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 214,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-MUph30VIvHY.lrc",
+      "lyrics_source": "lrclib.net#id=14601415",
+      "video_origin": "dataset"
+    },
+    {
+      "id": "LET-T33xDpb3sXA",
+      "song_id": "BYRM-T33xDpb3sXA",
+      "youtube_video_id": "T33xDpb3sXA",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 230,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-T33xDpb3sXA.lrc",
+      "lyrics_source": "lrclib.net#id=9885142",
+      "video_origin": "dataset"
+    },
+    {
+      "id": "LET-JEJxIY5Y4ZE",
+      "song_id": "BYRM-JEJxIY5Y4ZE",
+      "youtube_video_id": "JEJxIY5Y4ZE",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 215,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-JEJxIY5Y4ZE.lrc",
+      "lyrics_source": "lrclib.net#id=12982937",
+      "video_origin": "dataset"
+    },
+    {
+      "id": "LET-CLU9_GdqBwo",
+      "song_id": "BYRM-CLU9_GdqBwo",
+      "youtube_video_id": "CLU9_GdqBwo",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 217,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-CLU9_GdqBwo.lrc",
+      "lyrics_source": "lrclib.net#id=20682604",
+      "video_origin": "dataset"
+    },
+    {
+      "id": "LET-OuKjgTCNb7Y",
+      "song_id": "BYRM-OuKjgTCNb7Y",
+      "youtube_video_id": "OuKjgTCNb7Y",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 222,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-OuKjgTCNb7Y.lrc",
+      "lyrics_source": "lrclib.net#id=12075883",
+      "video_origin": "dataset"
+    },
+    {
+      "id": "LET-wHtx0Sa_y_I",
+      "song_id": "BYRM-wHtx0Sa_y_I",
+      "youtube_video_id": "wHtx0Sa_y_I",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 230,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-wHtx0Sa_y_I.lrc",
+      "lyrics_source": "lrclib.net#id=36904166",
+      "video_origin": "dataset"
+    },
+    {
+      "id": "LET-UshKkOVPlzE",
+      "song_id": "BYRM-UshKkOVPlzE",
+      "youtube_video_id": "UshKkOVPlzE",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 246,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-UshKkOVPlzE.lrc",
+      "lyrics_source": "lrclib.net#id=9885150",
+      "video_origin": "dataset"
+    },
+    {
+      "id": "LET-iAJKL7nNK9M",
+      "song_id": "BYRM-8bOMhVi9ggM",
+      "youtube_video_id": "iAJKL7nNK9M",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 230,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-iAJKL7nNK9M.lrc",
+      "lyrics_source": "lrclib.net#id=12796275",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-_iInrnvrtZA",
+      "song_id": "BYRM-_iInrnvrtZA",
+      "youtube_video_id": "_iInrnvrtZA",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 281,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-_iInrnvrtZA.lrc",
+      "lyrics_source": "lrclib.net#id=12043526",
+      "video_origin": "dataset"
+    },
+    {
+      "id": "LET-O1RsEu-rylY",
+      "song_id": "BYRM-O1RsEu-rylY",
+      "youtube_video_id": "O1RsEu-rylY",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 215,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-O1RsEu-rylY.lrc",
+      "lyrics_source": "lrclib.net#id=15278602",
+      "video_origin": "dataset"
+    },
+    {
+      "id": "LET-qbgKlZQxIX0",
+      "song_id": "BYRM-qbgKlZQxIX0",
+      "youtube_video_id": "qbgKlZQxIX0",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 241,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-qbgKlZQxIX0.lrc",
+      "lyrics_source": "lrclib.net#id=15278628",
+      "video_origin": "dataset"
+    },
+    {
+      "id": "LET-ZaXl5echmTM",
+      "song_id": "UFMG-564471",
+      "youtube_video_id": "ZaXl5echmTM",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 174,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-ZaXl5echmTM.lrc",
+      "lyrics_source": "lrclib.net#id=11981385",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-_ede6aALBeY",
+      "song_id": "UFMG-564474",
+      "youtube_video_id": "_ede6aALBeY",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 203,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-_ede6aALBeY.lrc",
+      "lyrics_source": "lrclib.net#id=37651981",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-AhH0tvAhCuM",
+      "song_id": "UFMG-564477",
+      "youtube_video_id": "AhH0tvAhCuM",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 200,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-AhH0tvAhCuM.lrc",
+      "lyrics_source": "lrclib.net#id=27244023",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-5P9ABzO6clk",
+      "song_id": "UFMG-564496",
+      "youtube_video_id": "5P9ABzO6clk",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 231,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-5P9ABzO6clk.lrc",
+      "lyrics_source": "lrclib.net#id=28817834",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-kvrkW3-UtLs",
+      "song_id": "UFMG-564533",
+      "youtube_video_id": "kvrkW3-UtLs",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 192,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-kvrkW3-UtLs.lrc",
+      "lyrics_source": "lrclib.net#id=14138353",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-d2ESVoiV2Tk",
+      "song_id": "UFMG-564539",
+      "youtube_video_id": "d2ESVoiV2Tk",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 262,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-d2ESVoiV2Tk.lrc",
+      "lyrics_source": "lrclib.net#id=30402203",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-WNHJMqxjOGY",
+      "song_id": "UFMG-564544",
+      "youtube_video_id": "WNHJMqxjOGY",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 166,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-WNHJMqxjOGY.lrc",
+      "lyrics_source": "lrclib.net#id=23630506",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-8BifaBLqYC4",
+      "song_id": "UFMG-564550",
+      "youtube_video_id": "8BifaBLqYC4",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 202,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-8BifaBLqYC4.lrc",
+      "lyrics_source": "lrclib.net#id=36397673",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-3s9ochY_0Og",
+      "song_id": "UFMG-564575",
+      "youtube_video_id": "3s9ochY_0Og",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 268,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-3s9ochY_0Og.lrc",
+      "lyrics_source": "lrclib.net#id=11890837",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-K7w9zBzpWUA",
+      "song_id": "UFMG-564614",
+      "youtube_video_id": "K7w9zBzpWUA",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 166,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-K7w9zBzpWUA.lrc",
+      "lyrics_source": "lrclib.net#id=33002067",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-3ajp3rfuXeU",
+      "song_id": "UFMG-564622",
+      "youtube_video_id": "3ajp3rfuXeU",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 173,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-3ajp3rfuXeU.lrc",
+      "lyrics_source": "lrclib.net#id=38964648",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-CNghdDUF__E",
+      "song_id": "UFMG-564674",
+      "youtube_video_id": "CNghdDUF__E",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 221,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-CNghdDUF__E.lrc",
+      "lyrics_source": "lrclib.net#id=35757472",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-HqNzqNeUiL8",
+      "song_id": "UFMG-564686",
+      "youtube_video_id": "HqNzqNeUiL8",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 149,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-HqNzqNeUiL8.lrc",
+      "lyrics_source": "lrclib.net#id=12890862",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-GEmSgOzoc8Q",
+      "song_id": "UFMG-564702",
+      "youtube_video_id": "GEmSgOzoc8Q",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 187,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-GEmSgOzoc8Q.lrc",
+      "lyrics_source": "lrclib.net#id=24478669",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-3qhewal_kHo",
+      "song_id": "UFMG-564731",
+      "youtube_video_id": "3qhewal_kHo",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 167,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-3qhewal_kHo.lrc",
+      "lyrics_source": "lrclib.net#id=24029736",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-JfYRYbZyQ80",
+      "song_id": "UFMG-564733",
+      "youtube_video_id": "JfYRYbZyQ80",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 158,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-JfYRYbZyQ80.lrc",
+      "lyrics_source": "lrclib.net#id=13827327",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-qdd2nnRmCZ0",
+      "song_id": "UFMG-564738",
+      "youtube_video_id": "qdd2nnRmCZ0",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 184,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-qdd2nnRmCZ0.lrc",
+      "lyrics_source": "lrclib.net#id=12586911",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-5ha9fQGrpNw",
+      "song_id": "UFMG-564762",
+      "youtube_video_id": "5ha9fQGrpNw",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 239,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-5ha9fQGrpNw.lrc",
+      "lyrics_source": "lrclib.net#id=23290452",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-9tWLpkOXAlo",
+      "song_id": "UFMG-564791",
+      "youtube_video_id": "9tWLpkOXAlo",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 207,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-9tWLpkOXAlo.lrc",
+      "lyrics_source": "lrclib.net#id=13645474",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET--AHlkgsh9DQ",
+      "song_id": "UFMG-564797",
+      "youtube_video_id": "-AHlkgsh9DQ",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 229,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET--AHlkgsh9DQ.lrc",
+      "lyrics_source": "lrclib.net#id=21145358",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-aj-7ECxoyc0",
+      "song_id": "UFMG-564801",
+      "youtube_video_id": "aj-7ECxoyc0",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 201,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-aj-7ECxoyc0.lrc",
+      "lyrics_source": "lrclib.net#id=2829759",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-WzsumdBNMWw",
+      "song_id": "UFMG-564824",
+      "youtube_video_id": "WzsumdBNMWw",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 244,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-WzsumdBNMWw.lrc",
+      "lyrics_source": "lrclib.net#id=11844016",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-hFydGGffrIo",
+      "song_id": "UFMG-564844",
+      "youtube_video_id": "hFydGGffrIo",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 91,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-hFydGGffrIo.lrc",
+      "lyrics_source": "lrclib.net#id=12871171",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-c2LP7GJm8K4",
+      "song_id": "UFMG-564851",
+      "youtube_video_id": "c2LP7GJm8K4",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 247,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-c2LP7GJm8K4.lrc",
+      "lyrics_source": "lrclib.net#id=36400421",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-Ah8Vv2uL6vY",
+      "song_id": "UFMG-564856",
+      "youtube_video_id": "Ah8Vv2uL6vY",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 176,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-Ah8Vv2uL6vY.lrc",
+      "lyrics_source": "lrclib.net#id=24055333",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-BkjEEV-QG-U",
+      "song_id": "UFMG-564873",
+      "youtube_video_id": "BkjEEV-QG-U",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 222,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-BkjEEV-QG-U.lrc",
+      "lyrics_source": "lrclib.net#id=12618903",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-N7oLbbj1ttI",
+      "song_id": "UFMG-564918",
+      "youtube_video_id": "N7oLbbj1ttI",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 226,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-N7oLbbj1ttI.lrc",
+      "lyrics_source": "lrclib.net#id=38767303",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-GsBf39ih5Wk",
+      "song_id": "UFMG-564921",
+      "youtube_video_id": "GsBf39ih5Wk",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 205,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-GsBf39ih5Wk.lrc",
+      "lyrics_source": "lrclib.net#id=13724119",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-eAg_gv6DLRc",
+      "song_id": "UFMG-564972",
+      "youtube_video_id": "eAg_gv6DLRc",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 140,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-eAg_gv6DLRc.lrc",
+      "lyrics_source": "lrclib.net#id=24045646",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-9wULHlFlXeE",
+      "song_id": "UFMG-564978",
+      "youtube_video_id": "9wULHlFlXeE",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 176,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-9wULHlFlXeE.lrc",
+      "lyrics_source": "lrclib.net#id=12065110",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-IVRkvVbZeSM",
+      "song_id": "PESQ-luiz-gonzaga-respeita-januario",
+      "youtube_video_id": "IVRkvVbZeSM",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 152,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-IVRkvVbZeSM.lrc",
+      "lyrics_source": "lrclib.net#id=38832491",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-80TYS8BMlIY",
+      "song_id": "PESQ-luiz-gonzaga-qui-nem-jilo",
+      "youtube_video_id": "80TYS8BMlIY",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 168,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-80TYS8BMlIY.lrc",
+      "lyrics_source": "lrclib.net#id=4487695",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-HfaavPq4_EA",
+      "song_id": "PESQ-luiz-gonzaga-paraiba",
+      "youtube_video_id": "HfaavPq4_EA",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 171,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-HfaavPq4_EA.lrc",
+      "lyrics_source": "lrclib.net#id=21665408",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-aCN0GLDnpRU",
+      "song_id": "PESQ-luiz-gonzaga-a-volta-da-asa-branca",
+      "youtube_video_id": "aCN0GLDnpRU",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 164,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-aCN0GLDnpRU.lrc",
+      "lyrics_source": "lrclib.net#id=4484763",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-hDwzeHVdEEs",
+      "song_id": "PESQ-luiz-gonzaga-sao-joao-do-carneirinho",
+      "youtube_video_id": "hDwzeHVdEEs",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 174,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-hDwzeHVdEEs.lrc",
+      "lyrics_source": "lrclib.net#id=37680796",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-pEBhvtsFCIU",
+      "song_id": "PESQ-luiz-gonzaga-derramaro-o-gai",
+      "youtube_video_id": "pEBhvtsFCIU",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 171,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-pEBhvtsFCIU.lrc",
+      "lyrics_source": "lrclib.net#id=11221684",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-TJEKBodetAU",
+      "song_id": "PESQ-luiz-gonzaga-dezessete-e-setecentos",
+      "youtube_video_id": "TJEKBodetAU",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 145,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-TJEKBodetAU.lrc",
+      "lyrics_source": "lrclib.net#id=6203135",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-wQ_NSwZjPk8",
+      "song_id": "PESQ-luiz-gonzaga-cintura-fina",
+      "youtube_video_id": "wQ_NSwZjPk8",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 149,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-wQ_NSwZjPk8.lrc",
+      "lyrics_source": "lrclib.net#id=33674809",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-eBC-z8BY9jY",
+      "song_id": "PESQ-jackson-do-pandeiro-sebastiana",
+      "youtube_video_id": "eBC-z8BY9jY",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 120,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-eBC-z8BY9jY.lrc",
+      "lyrics_source": "lrclib.net#id=35162469",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-xs-SDu_TtaQ",
+      "song_id": "PESQ-jackson-do-pandeiro-o-canto-da-ema",
+      "youtube_video_id": "xs-SDu_TtaQ",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 160,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-xs-SDu_TtaQ.lrc",
+      "lyrics_source": "lrclib.net#id=35162389",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-3neu3zAw3yw",
+      "song_id": "PESQ-jackson-do-pandeiro-cantiga-do-sapo",
+      "youtube_video_id": "3neu3zAw3yw",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 166,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-3neu3zAw3yw.lrc",
+      "lyrics_source": "lrclib.net#id=31421777",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-ADbHNHpzuAk",
+      "song_id": "PESQ-jackson-do-pandeiro-forro-em-campina",
+      "youtube_video_id": "ADbHNHpzuAk",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 141,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-ADbHNHpzuAk.lrc",
+      "lyrics_source": "lrclib.net#id=12987189",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-ZPqq1ov7c1Q",
+      "song_id": "PESQ-dominguinhos-abri-a-porta",
+      "youtube_video_id": "ZPqq1ov7c1Q",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 140,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-ZPqq1ov7c1Q.lrc",
+      "lyrics_source": "lrclib.net#id=15996826",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-YbUmOG2uxT0",
+      "song_id": "PESQ-dominguinhos-gostoso-demais",
+      "youtube_video_id": "YbUmOG2uxT0",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 183,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-YbUmOG2uxT0.lrc",
+      "lyrics_source": "lrclib.net#id=28136882",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-hMYb_EdosNs",
+      "song_id": "PESQ-gilberto-gil-tenho-sede",
+      "youtube_video_id": "hMYb_EdosNs",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 228,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-hMYb_EdosNs.lrc",
+      "lyrics_source": "lrclib.net#id=9569515",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-pQUy73OUMiM",
+      "song_id": "PESQ-elba-ramalho-banho-de-cheiro",
+      "youtube_video_id": "pQUy73OUMiM",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 238,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-pQUy73OUMiM.lrc",
+      "lyrics_source": "lrclib.net#id=32391800",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-LKaM5eG93mM",
+      "song_id": "PESQ-elba-ramalho-bate-coracao",
+      "youtube_video_id": "LKaM5eG93mM",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 220,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-LKaM5eG93mM.lrc",
+      "lyrics_source": "lrclib.net#id=28729676",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-1isFENP1Jak",
+      "song_id": "PESQ-alceu-valenca-cavalo-de-pau",
+      "youtube_video_id": "1isFENP1Jak",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 276,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-1isFENP1Jak.lrc",
+      "lyrics_source": "lrclib.net#id=37655096",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-Q2G4cWO89qg",
+      "song_id": "PESQ-alceu-valenca-anunciacao",
+      "youtube_video_id": "Q2G4cWO89qg",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 294,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-Q2G4cWO89qg.lrc",
+      "lyrics_source": "lrclib.net#id=20468214",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-L-EVaf3LtJ0",
+      "song_id": "PESQ-genival-lacerda-severina-xique-xique",
+      "youtube_video_id": "L-EVaf3LtJ0",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 226,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-L-EVaf3LtJ0.lrc",
+      "lyrics_source": "lrclib.net#id=8796873",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-b2gHqXAdEKw",
+      "song_id": "PESQ-genival-lacerda-radinho-de-pilha",
+      "youtube_video_id": "b2gHqXAdEKw",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 188,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-b2gHqXAdEKw.lrc",
+      "lyrics_source": "lrclib.net#id=28311212",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-veMMXjYPSPs",
+      "song_id": "PESQ-sivuca-adeus-maria-fulo",
+      "youtube_video_id": "veMMXjYPSPs",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 211,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-veMMXjYPSPs.lrc",
+      "lyrics_source": "lrclib.net#id=14414234",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-8fX1_mEQbOQ",
+      "song_id": "PESQ-flavio-jose-espumas-ao-vento",
+      "youtube_video_id": "8fX1_mEQbOQ",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 255,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-8fX1_mEQbOQ.lrc",
+      "lyrics_source": "lrclib.net#id=13124865",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-se_Z2gU4QL8",
+      "song_id": "PESQ-flavio-jose-caboclo-sonhador",
+      "youtube_video_id": "se_Z2gU4QL8",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 175,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-se_Z2gU4QL8.lrc",
+      "lyrics_source": "lrclib.net#id=12569355",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-r-ItEPeN3pQ",
+      "song_id": "PESQ-trio-nordestino-procurando-tu",
+      "youtube_video_id": "r-ItEPeN3pQ",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 193,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-r-ItEPeN3pQ.lrc",
+      "lyrics_source": "lrclib.net#id=13940861",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-q3QQxswet2Q",
+      "song_id": "PESQ-jorge-de-altinho-petrolina-juazeiro",
+      "youtube_video_id": "q3QQxswet2Q",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 200,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-q3QQxswet2Q.lrc",
+      "lyrics_source": "lrclib.net#id=27861449",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-uOGFPT2_NOE",
+      "song_id": "PESQ-os-3-do-nordeste-e-proibido-cochilar",
+      "youtube_video_id": "uOGFPT2_NOE",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 156,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-uOGFPT2_NOE.lrc",
+      "lyrics_source": "lrclib.net#id=34978075",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-X3KYXq9-LK8",
+      "song_id": "PESQ-joao-do-vale-pisa-na-fulo",
+      "youtube_video_id": "X3KYXq9-LK8",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 143,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-X3KYXq9-LK8.lrc",
+      "lyrics_source": "lrclib.net#id=25436601",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-s3nAWCcZNdM",
+      "song_id": "PESQ-geraldo-azevedo-moca-bonita",
+      "youtube_video_id": "s3nAWCcZNdM",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 133,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-s3nAWCcZNdM.lrc",
+      "lyrics_source": "lrclib.net#id=30631966",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-r6IBRHzt2RI",
+      "song_id": "PESQ-falamansa-avisa",
+      "youtube_video_id": "r6IBRHzt2RI",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 355,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-r6IBRHzt2RI.lrc",
+      "lyrics_source": "lrclib.net#id=24409919",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-Gi1KyOq6-oI",
+      "song_id": "PESQ-falamansa-asas",
+      "youtube_video_id": "Gi1KyOq6-oI",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 204,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-Gi1KyOq6-oI.lrc",
+      "lyrics_source": "lrclib.net#id=35463853",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-068sKjTrwuc",
+      "song_id": "PESQ-rastape-versos-sinceros",
+      "youtube_video_id": "068sKjTrwuc",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 224,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-068sKjTrwuc.lrc",
+      "lyrics_source": "lrclib.net#id=5110079",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-ni8S1ZTvVEc",
+      "song_id": "PESQ-bicho-de-pe-nosso-xote",
+      "youtube_video_id": "ni8S1ZTvVEc",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 219,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-ni8S1ZTvVEc.lrc",
+      "lyrics_source": "lrclib.net#id=39676099",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-81TMzApoM0Q",
+      "song_id": "PESQ-bicho-de-pe-essa-morena-arrasa",
+      "youtube_video_id": "81TMzApoM0Q",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 247,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-81TMzApoM0Q.lrc",
+      "lyrics_source": "lrclib.net#id=15230198",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-zzoKQ27keeE",
+      "song_id": "PESQ-circulado-de-fulo-pedacinho-de-papel-de-pao",
+      "youtube_video_id": "zzoKQ27keeE",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 227,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-zzoKQ27keeE.lrc",
+      "lyrics_source": "lrclib.net#id=24580193",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-H7o_e8wrMnw",
+      "song_id": "PESQ-forrocacana-bola-de-meia",
+      "youtube_video_id": "H7o_e8wrMnw",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 226,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-H7o_e8wrMnw.lrc",
+      "lyrics_source": "lrclib.net#id=14031930",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-t7Uz6LAEFcM",
+      "song_id": "PESQ-mestrinho-sete-meninas",
+      "youtube_video_id": "t7Uz6LAEFcM",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 201,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-t7Uz6LAEFcM.lrc",
+      "lyrics_source": "lrclib.net#id=12929046",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-W-AV0LSEOKA",
+      "song_id": "PESQ-dorgival-dantas-tarde-demais",
+      "youtube_video_id": "W-AV0LSEOKA",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 251,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-W-AV0LSEOKA.lrc",
+      "lyrics_source": "lrclib.net#id=34542236",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-Lpg_BF2Nnq4",
+      "song_id": "PESQ-santanna-o-cantador-papel-jogado-ao-vento",
+      "youtube_video_id": "Lpg_BF2Nnq4",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 236,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-Lpg_BF2Nnq4.lrc",
+      "lyrics_source": "lrclib.net#id=12412414",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-jOY0qiOoywA",
+      "song_id": "PESQ-santanna-o-cantador-me-da-meu-coracao",
+      "youtube_video_id": "jOY0qiOoywA",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 261,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-jOY0qiOoywA.lrc",
+      "lyrics_source": "lrclib.net#id=36043307",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-WFwMavxIvsg",
+      "song_id": "PESQ-targino-gondim-simplesmente-assim",
+      "youtube_video_id": "WFwMavxIvsg",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 219,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-WFwMavxIvsg.lrc",
+      "lyrics_source": "lrclib.net#id=13772935",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-hxFQWt2YOqA",
+      "song_id": "PESQ-chambinho-do-acordeon-que-deus-me-livre",
+      "youtube_video_id": "hxFQWt2YOqA",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 179,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-hxFQWt2YOqA.lrc",
+      "lyrics_source": "lrclib.net#id=39060679",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-Lurh6bzT5u4",
+      "song_id": "PESQ-alceu-valenca-la-belle-de-jour",
+      "youtube_video_id": "Lurh6bzT5u4",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 295,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-Lurh6bzT5u4.lrc",
+      "lyrics_source": "lrclib.net#id=35423695",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-UQADaG50Fgs",
+      "song_id": "PESQ-geraldo-azevedo-taxi-lunar",
+      "youtube_video_id": "UQADaG50Fgs",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 228,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-UQADaG50Fgs.lrc",
+      "lyrics_source": "lrclib.net#id=29790102",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-h5enQ6dOGfQ",
+      "song_id": "PESQ-geraldo-azevedo-chorando-e-cantando",
+      "youtube_video_id": "h5enQ6dOGfQ",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 249,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-h5enQ6dOGfQ.lrc",
+      "lyrics_source": "lrclib.net#id=38081760",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-19ZYYb8I3XY",
+      "song_id": "PESQ-fulo-de-mandacaru-brilho-do-teu-olhar",
+      "youtube_video_id": "19ZYYb8I3XY",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 197,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-19ZYYb8I3XY.lrc",
+      "lyrics_source": "lrclib.net#id=24107620",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-SionHn6JGkg",
+      "song_id": "PESQ-calcinha-preta-hoje-a-noite",
+      "youtube_video_id": "SionHn6JGkg",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 222,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-SionHn6JGkg.lrc",
+      "lyrics_source": "lrclib.net#id=35243508",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-t_igZoSUwGc",
+      "song_id": "PESQ-calcinha-preta-magica",
+      "youtube_video_id": "t_igZoSUwGc",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 253,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-t_igZoSUwGc.lrc",
+      "lyrics_source": "lrclib.net#id=31155944",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-Mi0WJYy-86o",
+      "song_id": "PESQ-calcinha-preta-dois-amores-duas-paixoes",
+      "youtube_video_id": "Mi0WJYy-86o",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 223,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-Mi0WJYy-86o.lrc",
+      "lyrics_source": "lrclib.net#id=14514047",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-t9AX8MpxVG4",
+      "song_id": "PESQ-calcinha-preta-adao-e-eva",
+      "youtube_video_id": "t9AX8MpxVG4",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 247,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-t9AX8MpxVG4.lrc",
+      "lyrics_source": "lrclib.net#id=38382478",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-AkjqLJAs4Ds",
+      "song_id": "PESQ-calcinha-preta-agora-estou-sofrendo",
+      "youtube_video_id": "AkjqLJAs4Ds",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 263,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-AkjqLJAs4Ds.lrc",
+      "lyrics_source": "lrclib.net#id=37643098",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-qftBo2EVces",
+      "song_id": "PESQ-calcinha-preta-louca-por-ti",
+      "youtube_video_id": "qftBo2EVces",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 206,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-qftBo2EVces.lrc",
+      "lyrics_source": "lrclib.net#id=38124184",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-m59V8EX8aVM",
+      "song_id": "PESQ-mastruz-com-leite-meu-vaqueiro-meu-peao",
+      "youtube_video_id": "m59V8EX8aVM",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 193,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-m59V8EX8aVM.lrc",
+      "lyrics_source": "lrclib.net#id=13034731",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-GXqUCAyTadk",
+      "song_id": "PESQ-limao-com-mel-anjo-querubim",
+      "youtube_video_id": "GXqUCAyTadk",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 186,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-GXqUCAyTadk.lrc",
+      "lyrics_source": "lrclib.net#id=37020599",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-8_s7_2mNnqM",
+      "song_id": "PESQ-limao-com-mel-um-sonho-de-amor",
+      "youtube_video_id": "8_s7_2mNnqM",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 193,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-8_s7_2mNnqM.lrc",
+      "lyrics_source": "lrclib.net#id=37929737",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-8tzhHzV05_0",
+      "song_id": "PESQ-magnificos-me-usa",
+      "youtube_video_id": "8tzhHzV05_0",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 195,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-8tzhHzV05_0.lrc",
+      "lyrics_source": "lrclib.net#id=24499233",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-ALRxRQdnEfo",
+      "song_id": "PESQ-desejo-de-menina-beijos-blues-e-poesia",
+      "youtube_video_id": "ALRxRQdnEfo",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 193,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-ALRxRQdnEfo.lrc",
+      "lyrics_source": "lrclib.net#id=11435578",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-gymHk5Jil9c",
+      "song_id": "PESQ-desejo-de-menina-esperando-voce",
+      "youtube_video_id": "gymHk5Jil9c",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 128,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-gymHk5Jil9c.lrc",
+      "lyrics_source": "lrclib.net#id=35417995",
+      "video_origin": "busca_youtube"
+    }
+  ]
+}

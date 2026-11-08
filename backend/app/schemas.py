@@ -44,6 +44,9 @@ class Song(ContractModel):
     source_id: str = Field(min_length=1)
 
 
+VersionKind = Literal["karaoke", "letra_sincronizada"]
+
+
 class KaraokeVersion(ContractModel):
     id: str = Field(min_length=1)
     song_id: str = Field(min_length=1)
@@ -52,6 +55,16 @@ class KaraokeVersion(ContractModel):
     approved: bool = False
     verified_at: date | None = None
     rights_reviewed: bool = False
+    # karaoke = vídeo já traz a letra; letra_sincronizada = vídeo original e o
+    # player do SingMatch mostra o LRC (ver GET /api/karaoke_versions/{id}/lyrics).
+    kind: VersionKind = "karaoke"
+    lyrics_source: str | None = Field(default=None, max_length=200)
+
+
+class LyricsResponse(ContractModel):
+    karaoke_version_id: str
+    lrc: str = Field(min_length=1)
+    source: str | None = None
 
 
 # --- Preferências; informação ausente NÃO é inferida ---

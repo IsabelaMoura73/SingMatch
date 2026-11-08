@@ -14,7 +14,7 @@ from sqlalchemy import select, update
 from sqlalchemy.orm import Session
 
 from app.api_schemas import CatalogResponse, ParticipantPrivate, ScriptResponse, SessionState
-from app.catalog import get_catalog
+from app.catalog import get_catalog, get_lyrics
 from app.database import get_db
 from app.llm import LLMServiceError, compor_roteiro_solo, interpretar_perfil
 from app.matching import MatchingError, eligible_candidates, norm, validate_solo_script
@@ -22,7 +22,7 @@ from app.models import ParticipantRow, ScriptRow, SessionRow
 from app.schemas import (
     ApproveScriptRequest, ConfirmProfileRequest, CreateSessionRequest,
     CreateSessionResponse, EditScriptRequest, InterpretRequest, InterpretResponse,
-    JoinSessionRequest, JoinSessionResponse, ParticipantPublic, ProfileConfirmed,
+    JoinSessionRequest, JoinSessionResponse, LyricsResponse, ParticipantPublic, ProfileConfirmed,
     ProfileDraft, ScriptItem, ScriptProposal, ScriptSnapshot, SessionPublic,
 )
 from app.security import check_token, hash_token, new_token, read_bearer
@@ -197,6 +197,15 @@ def get_session_state(session_id: str, db: Session = DB, token: str = BEARER):
 def list_catalog(genre: str = "forro", db: Session = DB):
     songs, versions = get_catalog(db, genre)
     return CatalogResponse(songs=songs, karaoke_versions=versions)
+
+
+@router.get("/karaoke_versions/{version_id}/lyrics", response_model=LyricsResponse)
+def version_lyrics(version_id: str, db: Session = DB):
+    """LRC da versão 'letra_sincronizada'; o catálogo não carrega as letras para ficar leve."""
+    row = get_lyrics(db, version_id)
+    if row is None:
+        raise not_found("Esta versão não tem letra sincronizada.")
+    return LyricsResponse(karaoke_version_id=row.id, lrc=row.lyrics_lrc, source=row.lyrics_source)
 
 
 @router.get("/participants/{participant_id}/profile", response_model=ParticipantPrivate)
