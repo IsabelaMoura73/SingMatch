@@ -9,3 +9,4 @@
 frontend/node_modules
 frontend/dist
 resultados_llm_demo.json
+data/.cache

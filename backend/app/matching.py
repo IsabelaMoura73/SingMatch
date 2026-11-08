@@ -89,6 +89,8 @@ def eligible_candidates(
                     and norm(songs_by_id[v.song_id].genre) == norm(genre)]
     # Uma versão por obra no MVP. Uma segunda versão da MESMA música pode ser
     # fallback técnico, mas não deve contar como escolha distinta do roteiro.
+    # Karaokê de verdade (instrumental) vem antes da versão "cante junto" da mesma música.
+    approved_all.sort(key=lambda v: (v.kind != "karaoke", v.id))
     approved, seen_songs = [], set()
     for v in approved_all:
         if v.song_id not in seen_songs:

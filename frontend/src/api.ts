@@ -44,7 +44,12 @@ export type Song = {
 export type KaraokeVersion = {
   id: string; song_id: string; youtube_video_id: string; approved: boolean
   rights_reviewed: boolean; verified_at: string | null
+  duration_seconds: number | null
+  /** karaoke = vídeo já traz a letra; letra_sincronizada = o player mostra o LRC. */
+  kind: 'karaoke' | 'letra_sincronizada'
+  lyrics_source: string | null
 }
+export type Lyrics = { karaoke_version_id: string; lrc: string; source: string | null }
 export type Catalog = { songs: Song[]; karaoke_versions: KaraokeVersion[] }
 export type OwnProfile = {
   id: string; name: string; text: string | null
@@ -82,6 +87,7 @@ const json = (value: unknown) => JSON.stringify(value)
 export const api = {
   health: () => request<{status: string}>('/api/health'),
   catalog: () => request<Catalog>('/api/catalog?genre=forro'),
+  lyrics: (versionId: string) => request<Lyrics>(`/api/karaoke_versions/${encodeURIComponent(versionId)}/lyrics`),
   create: (intention: string) => request<{session: Session; host_token: string}>('/api/sessions', {
     method: 'POST', body: json({ genre: 'forro', intention }),
   }),

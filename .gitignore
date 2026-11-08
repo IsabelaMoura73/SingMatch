@@ -19,3 +19,7 @@ resultados_llm_demo.json
 # Arquivos temporarios
 *.log
 /backend/.venv/
+
+# Cache HTTP do scripts/build_catalog.py
+data/.cache/
+*.tsbuildinfo

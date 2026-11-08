@@ -1,0 +1,1251 @@
+{
+  "source": "curadoria_ia_2026-11-08_revisar",
+  "note": "Clima e energia PROPOSTOS por IA a partir do trecho da letra (data/letras) e do estilo da faixa (xote, baião, arrasta-pé, forró eletrônico). Revisar em equipe. Energia 1-5: 1-2 lenta, 3 média (xote), 4-5 dançante. Climas: animada, festiva (São João/festa), romantica, tranquila, saudosa (saudade da terra/pessoa), sofrida (dor de cotovelo).",
+  "songs": {
+    "BYRM-Ip4rXk805-M": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "baião acelerado; 'Vamos simbora!'"
+    },
+    "BYRM-sJlnOWEqLYM": {
+      "mood": "festiva",
+      "energy": 4,
+      "evidence": "'No lume da fogueira / Numa noite de forró'"
+    },
+    "BYRM-lH4YEcmk95s": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "'Tô tão feliz / Hoje eu tô rindo à toa'"
+    },
+    "BYRM-7PP1zmP5_0o": {
+      "mood": "festiva",
+      "energy": 5,
+      "evidence": "'Hoje é dia de folia ... cair na brincadeira'"
+    },
+    "BYRM-s2yhxUL4Hj4": {
+      "mood": "saudosa",
+      "energy": 3,
+      "evidence": "'Guardando as recordações / Das terras onde passei'"
+    },
+    "BYRM-5cGErvfsLqQ": {
+      "mood": "tranquila",
+      "energy": 2,
+      "evidence": "toada lenta; 'No silêncio das tardes agoirando'"
+    },
+    "BYRM-ITKUy09Grx4": {
+      "mood": "saudosa",
+      "energy": 3,
+      "evidence": "'Adeus Pernambuco / A saudade é de matar'"
+    },
+    "BYRM-sENF-1_WsiI": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "humor; 'Errei no corte, seu Zé Mariano'"
+    },
+    "BYRM-vUUbKS7QdKM": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "'Dei um tiro de amor no coração de Mariá'"
+    },
+    "BYRM-mdsjZfYclZ4": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "'Só falta o carinho / Que você não quer me dar'"
+    },
+    "BYRM-Ll0dhIdQ01g": {
+      "mood": "saudosa",
+      "energy": 3,
+      "evidence": "'Ai, que saudades tenho / Eu vou voltar pro meu sertão'"
+    },
+    "BYRM-YXjDXexEoHA": {
+      "mood": "festiva",
+      "energy": 4,
+      "evidence": "'Oi pisa o milho / Penerô xerém'"
+    },
+    "BYRM-FHcacbyM-AI": {
+      "mood": "saudosa",
+      "energy": 2,
+      "evidence": "'Perguntando por meu bem ... coração vazio'"
+    },
+    "BYRM-loVvYiRv9n4": {
+      "mood": "festiva",
+      "energy": 4,
+      "evidence": "'Sanfona, zabumba, fogueira e quentão'"
+    },
+    "BYRM-xLo7Ab9rFT8": {
+      "mood": "saudosa",
+      "energy": 3,
+      "evidence": "'Quando a saudade invade o coração da gente'"
+    },
+    "BYRM-CMiKdEpcreU": {
+      "mood": "animada",
+      "energy": 3,
+      "evidence": "xote; 'Pra que chorar sua mágoa'"
+    },
+    "BYRM-Veeu7KSsZ4c": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "'Experimente tomar banho de chuva'"
+    },
+    "BYRM-LxQNmqmkgco": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "'Que dança é essa? ... Vamo nessa!'"
+    },
+    "BYRM-U4eX9D92sFI": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "'o quanto eu gosto de você'"
+    },
+    "BYRM-l-KSfuOiuvM": {
+      "mood": "sofrida",
+      "energy": 3,
+      "evidence": "'fique com a saudade que te resta agora'"
+    },
+    "BYRM-X5xJSbNNO_8": {
+      "mood": "festiva",
+      "energy": 5,
+      "evidence": "'hoje vai ter forró, ter gandaieira'"
+    },
+    "BYRM-aZXOX7L7siQ": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "'Só quero colo de menina'"
+    },
+    "BYRM-MUph30VIvHY": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "'Tem que ter corpo colado'"
+    },
+    "BYRM-T33xDpb3sXA": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "'Pra Deus me dar o seu amor'"
+    },
+    "BYRM-JEJxIY5Y4ZE": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "'Todo mundo quer dançar, ninguém passa a noite só'"
+    },
+    "BYRM-CLU9_GdqBwo": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "'Roubar um beijo'"
+    },
+    "BYRM-OuKjgTCNb7Y": {
+      "mood": "romantica",
+      "energy": 2,
+      "evidence": "'Que é pra eu cuidar / Que é pra eu amar'"
+    },
+    "BYRM-o3j5mbMlzFE": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "'Quando eu sinto o seu abraço'"
+    },
+    "BYRM-wHtx0Sa_y_I": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "'Confesso que fiquei apaixonado'"
+    },
+    "BYRM-ro7GkfWCG2A": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "'Eu dou a cara à tapa por você'"
+    },
+    "BYRM-CtzkrQtgdKk": {
+      "mood": "animada",
+      "energy": 3,
+      "evidence": "'quem ri por último ri melhor' (ao vivo)"
+    },
+    "BYRM-UshKkOVPlzE": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "'Não posso mais viver / Sem os teus beijos'"
+    },
+    "BYRM-8bOMhVi9ggM": {
+      "mood": "sofrida",
+      "energy": 3,
+      "evidence": "'Alguém que só quis me ver chorar'"
+    },
+    "BYRM-_iInrnvrtZA": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "'Se eu morasse aqui pertinho, nêga'"
+    },
+    "BYRM-O1RsEu-rylY": {
+      "mood": "sofrida",
+      "energy": 3,
+      "evidence": "'Passei horas no espelho ... E ela nem olhou pra mim'"
+    },
+    "BYRM-qbgKlZQxIX0": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "'Olha todo mundo já está comentando'"
+    },
+    "BYRM-a_nT6SQy9qE": {
+      "mood": "animada",
+      "energy": 5,
+      "evidence": "'dançando pagode russo na boate Cossacou'"
+    },
+    "BYRM-Ny43bLswavY": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "'Vem, morena, vem dançar / Quero ver tu requebrar'"
+    },
+    "BYRM-QPm5sSe8mIA": {
+      "mood": "sofrida",
+      "energy": 3,
+      "evidence": "'Meu sofrimento não tem explicação'"
+    },
+    "BYRM-gXQkDytJTG8": {
+      "mood": "sofrida",
+      "energy": 3,
+      "evidence": "'Sofro até te esquecer'"
+    },
+    "BYRM-bAZQCczXxik": {
+      "mood": "sofrida",
+      "energy": 3,
+      "evidence": "'Quase que acabou com a minha vida'"
+    },
+    "BYRM-biAayIXkxa0": {
+      "mood": "sofrida",
+      "energy": 3,
+      "evidence": "'Eu desconheço um amor tão covarde'"
+    },
+    "UFMG-564471": {
+      "mood": "sofrida",
+      "energy": 3,
+      "evidence": "'nós dois sabemos não dá certo ... ponto final'"
+    },
+    "UFMG-564474": {
+      "mood": "animada",
+      "energy": 5,
+      "evidence": "duplo sentido; 'É da bicicleta que eu estou falando'"
+    },
+    "UFMG-564477": {
+      "mood": "sofrida",
+      "energy": 4,
+      "evidence": "'Vivo sofrendo em prantos, em pleno e total abandono'"
+    },
+    "UFMG-564478": {
+      "mood": "sofrida",
+      "energy": 4,
+      "evidence": "'Quando eu te procurei você nem ligou pra mim'"
+    },
+    "UFMG-564479": {
+      "mood": "animada",
+      "energy": 5,
+      "evidence": "'Me deixa maluca / Tira o mel da fruta'"
+    },
+    "UFMG-564486": {
+      "mood": "sofrida",
+      "energy": 4,
+      "evidence": "'seu coração bate pro outro cara que sou eu'"
+    },
+    "UFMG-564500": {
+      "mood": "sofrida",
+      "energy": 4,
+      "evidence": "'Te digo adeus pra nunca mais'"
+    },
+    "UFMG-564539": {
+      "mood": "sofrida",
+      "energy": 4,
+      "evidence": "'esse amor / Que só me fez chorar'"
+    },
+    "UFMG-564575": {
+      "mood": "sofrida",
+      "energy": 3,
+      "evidence": "'amor infiel, coração de papel'"
+    },
+    "UFMG-564584": {
+      "mood": "animada",
+      "energy": 5,
+      "evidence": "'Tá dodói o umbiguinho' (brincadeira)"
+    },
+    "UFMG-564666": {
+      "mood": "festiva",
+      "energy": 5,
+      "evidence": "'Hoje é lá em casa / Festa na piscina'"
+    },
+    "UFMG-564673": {
+      "mood": "sofrida",
+      "energy": 4,
+      "evidence": "'Vai pagar por tudo o que me fez'"
+    },
+    "UFMG-564686": {
+      "mood": "festiva",
+      "energy": 5,
+      "evidence": "'Mulherada ligando, marcando o bangs pra beber'"
+    },
+    "UFMG-564691": {
+      "mood": "saudosa",
+      "energy": 4,
+      "evidence": "'Mudou de telefone ... foi morar no interior da Bahia'"
+    },
+    "UFMG-564701": {
+      "mood": "romantica",
+      "energy": 4,
+      "evidence": "'De novo um beijo seu, beijo gostoso'"
+    },
+    "UFMG-564703": {
+      "mood": "sofrida",
+      "energy": 4,
+      "evidence": "'Já tomei porres por você'"
+    },
+    "UFMG-564718": {
+      "mood": "sofrida",
+      "energy": 4,
+      "evidence": "'Me desprezar, me ver sofrer'"
+    },
+    "UFMG-564738": {
+      "mood": "animada",
+      "energy": 5,
+      "evidence": "'Mulher doideira' (dançante)"
+    },
+    "UFMG-564754": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "'Talvez se eu tivesse um carro importado'"
+    },
+    "UFMG-564762": {
+      "mood": "sofrida",
+      "energy": 3,
+      "evidence": "'Tomando todas tentando não lembrar da gente'"
+    },
+    "UFMG-564791": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "'Pare com isso, de me devorar com esse olhar selvagem'"
+    },
+    "UFMG-564801": {
+      "mood": "sofrida",
+      "energy": 3,
+      "evidence": "'O telefone chama mas não quer me atender'"
+    },
+    "UFMG-564824": {
+      "mood": "sofrida",
+      "energy": 4,
+      "evidence": "'Chora, chora ... Vai ficar sozinho'"
+    },
+    "UFMG-564850": {
+      "mood": "sofrida",
+      "energy": 3,
+      "evidence": "'você não se importa de me ver chorar'"
+    },
+    "UFMG-564857": {
+      "mood": "sofrida",
+      "energy": 4,
+      "evidence": "arrocha; 'Me esqueceu, só que eu não te esqueci'"
+    },
+    "UFMG-564874": {
+      "mood": "sofrida",
+      "energy": 3,
+      "evidence": "'Só fiz chorar ... Por alguém que não me ama'"
+    },
+    "UFMG-564937": {
+      "mood": "sofrida",
+      "energy": 4,
+      "evidence": "'Com o mesmo papo de sempre ... Não tem mais tempo pra gente'"
+    },
+    "UFMG-564943": {
+      "mood": "animada",
+      "energy": 5,
+      "evidence": "'Ela é um avião ... Esse eu sei pilotar'"
+    },
+    "UFMG-564974": {
+      "mood": "animada",
+      "energy": 5,
+      "evidence": "'Não vou te dar o gostinho de me ver sofrer'"
+    },
+    "UFMG-564978": {
+      "mood": "animada",
+      "energy": 5,
+      "evidence": "'Vou te pegar / Vou te jogar na cama'"
+    },
+    "PESQ-luiz-gonzaga-assum-preto": {
+      "mood": "tranquila",
+      "energy": 2,
+      "evidence": "estilo/conhecimento da faixa: toada clássica, lenta"
+    },
+    "PESQ-luiz-gonzaga-respeita-januario": {
+      "mood": "festiva",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: baião festivo"
+    },
+    "PESQ-luiz-gonzaga-qui-nem-jilo": {
+      "mood": "saudosa",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: baião clássico"
+    },
+    "PESQ-luiz-gonzaga-baiao": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: baião fundador (1946)"
+    },
+    "PESQ-luiz-gonzaga-paraiba": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: baião, 'Paraíba masculina'"
+    },
+    "PESQ-luiz-gonzaga-riacho-do-navio": {
+      "mood": "saudosa",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: baião clássico"
+    },
+    "PESQ-luiz-gonzaga-a-volta-da-asa-branca": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: baião, continuação de Asa Branca"
+    },
+    "PESQ-luiz-gonzaga-xote-dos-cabeludos": {
+      "mood": "animada",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: xote bem-humorado"
+    },
+    "PESQ-luiz-gonzaga-olha-pro-ceu": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: marcha junina"
+    },
+    "PESQ-luiz-gonzaga-sao-joao-na-roca": {
+      "mood": "festiva",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: hino junino"
+    },
+    "PESQ-luiz-gonzaga-sao-joao-do-carneirinho": {
+      "mood": "festiva",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: marcha junina"
+    },
+    "PESQ-luiz-gonzaga-derramaro-o-gai": {
+      "mood": "festiva",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: forró de festa"
+    },
+    "PESQ-luiz-gonzaga-forro-de-mane-vito": {
+      "mood": "animada",
+      "energy": 5,
+      "evidence": "estilo/conhecimento da faixa: forró arretado"
+    },
+    "PESQ-luiz-gonzaga-numa-sala-de-reboco": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: forró dançante"
+    },
+    "PESQ-luiz-gonzaga-imbalanca": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: forró dançante"
+    },
+    "PESQ-luiz-gonzaga-dezessete-e-setecentos": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: forró bem-humorado"
+    },
+    "PESQ-luiz-gonzaga-baiao-de-dois": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: baião"
+    },
+    "PESQ-luiz-gonzaga-danado-de-bom": {
+      "mood": "festiva",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: forró festivo"
+    },
+    "PESQ-luiz-gonzaga-cintura-fina": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: xote dançante"
+    },
+    "PESQ-luiz-gonzaga-suplica-cearense": {
+      "mood": "tranquila",
+      "energy": 2,
+      "evidence": "estilo/conhecimento da faixa: toada lenta"
+    },
+    "PESQ-luiz-gonzaga-forro-no-escuro": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: forró clássico"
+    },
+    "PESQ-jackson-do-pandeiro-sebastiana": {
+      "mood": "animada",
+      "energy": 5,
+      "evidence": "estilo/conhecimento da faixa: rojão rápido"
+    },
+    "PESQ-jackson-do-pandeiro-o-canto-da-ema": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: forró/rojão"
+    },
+    "PESQ-jackson-do-pandeiro-forro-em-limoeiro": {
+      "mood": "animada",
+      "energy": 5,
+      "evidence": "estilo/conhecimento da faixa: forró"
+    },
+    "PESQ-jackson-do-pandeiro-cantiga-do-sapo": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: coco/forró"
+    },
+    "PESQ-jackson-do-pandeiro-forro-em-campina": {
+      "mood": "festiva",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: forró de Campina Grande"
+    },
+    "PESQ-dominguinhos-de-volta-pro-aconchego": {
+      "mood": "romantica",
+      "energy": 2,
+      "evidence": "estilo/conhecimento da faixa: xote romântico"
+    },
+    "PESQ-dominguinhos-abri-a-porta": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: forró"
+    },
+    "PESQ-dominguinhos-gostoso-demais": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: xote romântico"
+    },
+    "PESQ-dominguinhos-quem-me-levara-sou-eu": {
+      "mood": "saudosa",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: xote"
+    },
+    "PESQ-gilberto-gil-lamento-sertanejo": {
+      "mood": "saudosa",
+      "energy": 2,
+      "evidence": "estilo/conhecimento da faixa: toada/xote lento"
+    },
+    "PESQ-gilberto-gil-oia-eu-aqui-de-novo": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: xote"
+    },
+    "PESQ-gilberto-gil-chiclete-com-banana": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: rojão de Jackson do Pandeiro"
+    },
+    "PESQ-gilberto-gil-tenho-sede": {
+      "mood": "romantica",
+      "energy": 2,
+      "evidence": "estilo/conhecimento da faixa: xote de Dominguinhos"
+    },
+    "PESQ-elba-ramalho-banho-de-cheiro": {
+      "mood": "festiva",
+      "energy": 5,
+      "evidence": "estilo/conhecimento da faixa: forró festivo"
+    },
+    "PESQ-elba-ramalho-bate-coracao": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: forró festivo"
+    },
+    "PESQ-elba-ramalho-ai-que-saudade-d-oce": {
+      "mood": "saudosa",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: xote"
+    },
+    "PESQ-elba-ramalho-forro-do-xenhenhem": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: forró"
+    },
+    "PESQ-elba-ramalho-do-jeito-que-a-gente-gosta": {
+      "mood": "festiva",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: forró"
+    },
+    "PESQ-alceu-valenca-morena-tropicana": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: baião pop"
+    },
+    "PESQ-alceu-valenca-coracao-bobo": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: xote pop"
+    },
+    "PESQ-alceu-valenca-cavalo-de-pau": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: forró"
+    },
+    "PESQ-alceu-valenca-anunciacao": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: toada, coro de multidão"
+    },
+    "PESQ-genival-lacerda-severina-xique-xique": {
+      "mood": "animada",
+      "energy": 5,
+      "evidence": "estilo/conhecimento da faixa: forró bem-humorado"
+    },
+    "PESQ-genival-lacerda-radinho-de-pilha": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: forró bem-humorado"
+    },
+    "PESQ-fagner-ultimo-pau-de-arara": {
+      "mood": "saudosa",
+      "energy": 2,
+      "evidence": "estilo/conhecimento da faixa: toada/baião"
+    },
+    "PESQ-clara-nunes-feira-de-mangaio": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: forró de feira"
+    },
+    "PESQ-sivuca-adeus-maria-fulo": {
+      "mood": "saudosa",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: baião"
+    },
+    "PESQ-flavio-jose-espumas-ao-vento": {
+      "mood": "sofrida",
+      "energy": 2,
+      "evidence": "estilo/conhecimento da faixa: xote romântico"
+    },
+    "PESQ-flavio-jose-me-diz-amor": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: xote"
+    },
+    "PESQ-flavio-jose-caboclo-sonhador": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: forró"
+    },
+    "PESQ-petrucio-amorim-tareco-e-mariola": {
+      "mood": "saudosa",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: forró; gravação do autor (sucesso de Flávio José)"
+    },
+    "PESQ-trio-nordestino-procurando-tu": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: forró"
+    },
+    "PESQ-jorge-de-altinho-petrolina-juazeiro": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: forró"
+    },
+    "PESQ-os-3-do-nordeste-e-proibido-cochilar": {
+      "mood": "festiva",
+      "energy": 5,
+      "evidence": "estilo/conhecimento da faixa: forró"
+    },
+    "PESQ-ney-matogrosso-homem-com-h": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: forró (Antônio Barros)"
+    },
+    "PESQ-joao-do-vale-pisa-na-fulo": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: xote/forró"
+    },
+    "PESQ-geraldo-azevedo-moca-bonita": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: forró"
+    },
+    "PESQ-falamansa-xote-dos-milagres": {
+      "mood": "animada",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: hino do forró universitário"
+    },
+    "PESQ-falamansa-avisa": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: xote universitário"
+    },
+    "PESQ-falamansa-asas": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: xote romântico"
+    },
+    "PESQ-rastape-versos-sinceros": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: xote romântico"
+    },
+    "PESQ-bicho-de-pe-nosso-xote": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: hino do forró universitário (1 id é versão Superstar)"
+    },
+    "PESQ-bicho-de-pe-nas-nuvens": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: xote romântico"
+    },
+    "PESQ-bicho-de-pe-essa-morena-arrasa": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: forró universitário"
+    },
+    "PESQ-circulado-de-fulo-som-de-bob": {
+      "mood": "animada",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: xote universitário"
+    },
+    "PESQ-circulado-de-fulo-pedacinho-de-papel-de-pao": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: xote romântico"
+    },
+    "PESQ-forrocacana-bola-de-meia": {
+      "mood": "saudosa",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: forró universitário"
+    },
+    "PESQ-forrocacana-forro-no-malagueta": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: forró universitário (c/ Zeca Baleiro)"
+    },
+    "PESQ-forrocacana-menina-mulher-da-pele-preta": {
+      "mood": "romantica",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: forró universitário (Jorge Ben)"
+    },
+    "PESQ-trio-dona-zefa-a-cinturinha-dela": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: forró pé de serra"
+    },
+    "PESQ-mariana-aydar-te-faco-um-cafune": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: xote romântico (c/ Mestrinho)"
+    },
+    "PESQ-mariana-aydar-ninguem-segura-o-nosso-amor": {
+      "mood": "romantica",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: forró (c/ Mestrinho)"
+    },
+    "PESQ-mariana-aydar-boy-lixo": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: forró bem-humorado"
+    },
+    "PESQ-mariana-aydar-pras-bandas-de-la": {
+      "mood": "saudosa",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: forró"
+    },
+    "PESQ-flavio-jose-seu-olhar-nao-mente": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: xote romântico"
+    },
+    "PESQ-mestrinho-mala-e-cuia": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: forró (c/ João Gomes e Jota.pê)"
+    },
+    "PESQ-mestrinho-sete-meninas": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: forró (Dominguinhos)"
+    },
+    "PESQ-dorgival-dantas-tarde-demais": {
+      "mood": "sofrida",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: forró romântico (ids incluem dueto c/ Gustavo Mioto)"
+    },
+    "PESQ-dorgival-dantas-eu-so-quero-te-amar": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: forró romântico"
+    },
+    "PESQ-lucy-alves-aquarela-nordestina": {
+      "mood": "saudosa",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: baião"
+    },
+    "PESQ-flavio-jose-pra-voce-voltar-pra-mim": {
+      "mood": "sofrida",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: xote romântico"
+    },
+    "PESQ-santanna-o-cantador-mensageiro-beija-flor": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: xote romântico"
+    },
+    "PESQ-santanna-o-cantador-tampa-de-pedra": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: forró"
+    },
+    "PESQ-santanna-o-cantador-papel-jogado-ao-vento": {
+      "mood": "sofrida",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: xote"
+    },
+    "PESQ-santanna-o-cantador-me-da-meu-coracao": {
+      "mood": "sofrida",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: forró romântico"
+    },
+    "PESQ-targino-gondim-simplesmente-assim": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: xote"
+    },
+    "PESQ-chambinho-do-acordeon-que-deus-me-livre": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: forró"
+    },
+    "PESQ-elba-ramalho-caldeirao-dos-mitos": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: forró"
+    },
+    "PESQ-elba-ramalho-xamego": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: xote"
+    },
+    "PESQ-alceu-valenca-la-belle-de-jour": {
+      "mood": "romantica",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: MPB pernambucana"
+    },
+    "PESQ-geraldo-azevedo-taxi-lunar": {
+      "mood": "tranquila",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: MPB nordestina"
+    },
+    "PESQ-geraldo-azevedo-chorando-e-cantando": {
+      "mood": "saudosa",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: MPB nordestina"
+    },
+    "PESQ-fulo-de-mandacaru-brilho-do-teu-olhar": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: xote romântico"
+    },
+    "PESQ-quinteto-violado-vozes-da-seca": {
+      "mood": "tranquila",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: baião (Luiz Gonzaga/Zé Dantas)"
+    },
+    "PESQ-calcinha-preta-hoje-a-noite": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: clássico (versão de Alone)"
+    },
+    "PESQ-calcinha-preta-magica": {
+      "mood": "sofrida",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: sofrência clássica"
+    },
+    "PESQ-calcinha-preta-dois-amores-duas-paixoes": {
+      "mood": "sofrida",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: romântica clássica"
+    },
+    "PESQ-calcinha-preta-adao-e-eva": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: clássico; ao vivo também famosa"
+    },
+    "PESQ-calcinha-preta-agora-estou-sofrendo": {
+      "mood": "sofrida",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: sofrência clássica"
+    },
+    "PESQ-calcinha-preta-louca-por-ti": {
+      "mood": "romantica",
+      "energy": 2,
+      "evidence": "estilo/conhecimento da faixa: versão de Dust in the Wind"
+    },
+    "PESQ-mastruz-com-leite-meu-vaqueiro-meu-peao": {
+      "mood": "romantica",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: clássico anos 90"
+    },
+    "PESQ-mastruz-com-leite-flor-do-mamulengo": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: clássico anos 90"
+    },
+    "PESQ-limao-com-mel-anjo-querubim": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: romântica clássica"
+    },
+    "PESQ-limao-com-mel-um-sonho-de-amor": {
+      "mood": "romantica",
+      "energy": 2,
+      "evidence": "estilo/conhecimento da faixa: versão de The Boxer"
+    },
+    "PESQ-limao-com-mel-de-janeiro-a-janeiro": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: romântica clássica"
+    },
+    "PESQ-magnificos-me-usa": {
+      "mood": "romantica",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: hit anos 2000"
+    },
+    "PESQ-desejo-de-menina-diga-sim-pra-mim": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: romântica clássica"
+    },
+    "PESQ-desejo-de-menina-beijos-blues-e-poesia": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: romântica clássica"
+    },
+    "PESQ-desejo-de-menina-esperando-voce": {
+      "mood": "sofrida",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: romântica clássica"
+    },
+    "PESQ-garota-safada-sou-ciumento-mesmo": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: só versão ao vivo (a famosa)"
+    },
+    "PESQ-wesley-safadao-camarote": {
+      "mood": "festiva",
+      "energy": 5,
+      "evidence": "estilo/conhecimento da faixa: hit 2014"
+    },
+    "PESQ-wesley-safadao-aquele-1": {
+      "mood": "sofrida",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: hit 2015 (c/ Marcos & Belutti)"
+    },
+    "PESQ-wesley-safadao-ar-condicionado-no-15": {
+      "mood": "romantica",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: hit 2015"
+    },
+    "PESQ-wesley-safadao-meu-coracao-deu-pt": {
+      "mood": "sofrida",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: hit 2016"
+    },
+    "PESQ-wesley-safadao-ninguem-e-de-ferro": {
+      "mood": "festiva",
+      "energy": 5,
+      "evidence": "estilo/conhecimento da faixa: hit de paredão"
+    },
+    "PESQ-wesley-safadao-ele-e-ele-eu-sou-eu": {
+      "mood": "sofrida",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: hit Wesley"
+    },
+    "PESQ-wesley-safadao-coracao-machucado": {
+      "mood": "sofrida",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: sofrência Wesley"
+    },
+    "PESQ-wesley-safadao-sonhei-que-tava-me-casando": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: hit Wesley"
+    },
+    "PESQ-wesley-safadao-so-pra-castigar": {
+      "mood": "sofrida",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: hit 2019"
+    },
+    "PESQ-xand-aviao-borrachinha": {
+      "mood": "animada",
+      "energy": 5,
+      "evidence": "estilo/conhecimento da faixa: Xand solo"
+    },
+    "PESQ-solange-almeida-se-e-pra-gente-ficar": {
+      "mood": "romantica",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: Solange solo (feat. Wesley Safadão)"
+    },
+    "PESQ-brasas-do-forro-todo-o-tempo-e-pouco-pra-te-amar": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: romântica clássica"
+    },
+    "PESQ-brasas-do-forro-de-coracao-pra-coracao": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: romântica clássica"
+    },
+    "PESQ-mano-walter-nao-deixo-nao": {
+      "mood": "romantica",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: hit vaquejada"
+    },
+    "PESQ-jonas-esticado-investe-em-mim": {
+      "mood": "sofrida",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: sofrência"
+    },
+    "PESQ-os-baroes-da-pisadinha-basta-voce-me-ligar": {
+      "mood": "sofrida",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: hit 2020 (feat. Xand Avião)"
+    },
+    "PESQ-os-baroes-da-pisadinha-ta-rocheda": {
+      "mood": "festiva",
+      "energy": 5,
+      "evidence": "estilo/conhecimento da faixa: hit 2020"
+    },
+    "PESQ-os-baroes-da-pisadinha-ja-que-me-ensinou-a-beber": {
+      "mood": "sofrida",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: hit 2020"
+    },
+    "PESQ-os-baroes-da-pisadinha-esquema-preferido": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: hit 2020"
+    },
+    "PESQ-os-baroes-da-pisadinha-recairei": {
+      "mood": "sofrida",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: hit; só versões ao vivo (a famosa)"
+    },
+    "PESQ-os-baroes-da-pisadinha-chupadinha": {
+      "mood": "animada",
+      "energy": 5,
+      "evidence": "estilo/conhecimento da faixa: hit Barões"
+    },
+    "PESQ-joao-gomes-meu-pedaco-de-pecado": {
+      "mood": "romantica",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: hit 2021"
+    },
+    "PESQ-joao-gomes-dengo": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: hit João Gomes"
+    },
+    "PESQ-joao-gomes-aquelas-coisas": {
+      "mood": "sofrida",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: hit João Gomes"
+    },
+    "PESQ-joao-gomes-eu-tenho-a-senha": {
+      "mood": "romantica",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: hit João Gomes; 369s = versão do DVD ao vivo"
+    },
+    "PESQ-joao-gomes-se-for-amor": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: c/ Vitor Fernandes"
+    },
+    "PESQ-ze-vaqueiro-leticia": {
+      "mood": "sofrida",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: hit 2021"
+    },
+    "PESQ-ze-vaqueiro-volta-comigo-bb": {
+      "mood": "sofrida",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: hit 2020"
+    },
+    "PESQ-ze-vaqueiro-eu-tenho-medo": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: conhecida como 'Tenho Medo'"
+    },
+    "PESQ-tarcisio-do-acordeon-meia-noite-voce-tem-meu-whatsapp": {
+      "mood": "sofrida",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: hit 2020"
+    },
+    "PESQ-tarcisio-do-acordeon-protecao-de-tela": {
+      "mood": "sofrida",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: hit Tarcísio"
+    },
+    "PESQ-tarcisio-do-acordeon-nega": {
+      "mood": "romantica",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: hit Tarcísio"
+    },
+    "PESQ-vitor-fernandes-acaso": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: piseiro romântico"
+    },
+    "PESQ-vitor-fernandes-bebe-vem-me-procurar": {
+      "mood": "sofrida",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: feat. Wesley Safadão"
+    },
+    "PESQ-nattan-morena": {
+      "mood": "romantica",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: hit Nattan"
+    },
+    "PESQ-nattan-love-gostosinho": {
+      "mood": "animada",
+      "energy": 5,
+      "evidence": "estilo/conhecimento da faixa: c/ Felipe Amorim; só versão ao vivo"
+    },
+    "PESQ-felipe-amorim-toca-o-trompete": {
+      "mood": "festiva",
+      "energy": 5,
+      "evidence": "estilo/conhecimento da faixa: hit 2023"
+    },
+    "PESQ-eric-land-chorei-na-vaquejada": {
+      "mood": "sofrida",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: c/ Tarcísio do Acordeon"
+    },
+    "PESQ-matheus-fernandes-baby-me-atende": {
+      "mood": "sofrida",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: hit 2021 (c/ Dilsinho)"
+    },
+    "PESQ-matheus-fernandes-balanco-da-rede": {
+      "mood": "romantica",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: hit (c/ Xand Avião)"
+    },
+    "PESQ-avine-vinny-coracao-cachorro": {
+      "mood": "sofrida",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: hit (c/ Matheus Fernandes)"
+    },
+    "PESQ-mari-fernandez-nao-nao-vou": {
+      "mood": "sofrida",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: hit Mari Fernandez"
+    },
+    "PESQ-mari-fernandez-agonia": {
+      "mood": "sofrida",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: sofrência piseiro"
+    },
+    "PESQ-unha-pintada-ze-da-recaida": {
+      "mood": "sofrida",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa: sofrência piseiro"
+    },
+    "UFMG-564496": {
+      "mood": "festiva",
+      "energy": 5,
+      "evidence": "estilo/conhecimento da faixa (forró eletrônico)"
+    },
+    "UFMG-564544": {
+      "mood": "animada",
+      "energy": 5,
+      "evidence": "estilo/conhecimento da faixa (forró eletrônico)"
+    },
+    "UFMG-564550": {
+      "mood": "romantica",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa (forró eletrônico)"
+    },
+    "UFMG-564598": {
+      "mood": "sofrida",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa (forró eletrônico)"
+    },
+    "UFMG-564614": {
+      "mood": "romantica",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa (forró eletrônico)"
+    },
+    "UFMG-564674": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa (forró eletrônico)"
+    },
+    "UFMG-564702": {
+      "mood": "sofrida",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa (forró eletrônico)"
+    },
+    "UFMG-564731": {
+      "mood": "festiva",
+      "energy": 5,
+      "evidence": "estilo/conhecimento da faixa (forró eletrônico)"
+    },
+    "UFMG-564733": {
+      "mood": "animada",
+      "energy": 5,
+      "evidence": "estilo/conhecimento da faixa (forró eletrônico)"
+    },
+    "UFMG-564797": {
+      "mood": "animada",
+      "energy": 5,
+      "evidence": "estilo/conhecimento da faixa (forró eletrônico)"
+    },
+    "UFMG-564800": {
+      "mood": "sofrida",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa (forró eletrônico)"
+    },
+    "UFMG-564844": {
+      "mood": "romantica",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa (forró eletrônico)"
+    },
+    "UFMG-564851": {
+      "mood": "festiva",
+      "energy": 5,
+      "evidence": "estilo/conhecimento da faixa (forró eletrônico)"
+    },
+    "UFMG-564856": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa (forró eletrônico)"
+    },
+    "UFMG-564873": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa (forró eletrônico)"
+    },
+    "UFMG-564918": {
+      "mood": "romantica",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa (forró eletrônico)"
+    },
+    "UFMG-564921": {
+      "mood": "sofrida",
+      "energy": 4,
+      "evidence": "estilo/conhecimento da faixa (forró eletrônico)"
+    },
+    "UFMG-564972": {
+      "mood": "sofrida",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa (forró eletrônico)"
+    },
+    "PESQ-luiz-gonzaga-juazeiro": {
+      "mood": "saudosa",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: baião clássico"
+    },
+    "PESQ-amelinha-mulher-nova-bonita-e-carinhosa-faz-o-homem-gemer-": {
+      "mood": "animada",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa: xote longo (~6 min)"
+    },
+    "UFMG-564533": {
+      "mood": "animada",
+      "energy": 5,
+      "evidence": "estilo/conhecimento da faixa (forró eletrônico dançante)"
+    },
+    "UFMG-564622": {
+      "mood": "sofrida",
+      "energy": 3,
+      "evidence": "estilo/conhecimento da faixa (título: espera pela volta)"
+    }
+  }
+}
