@@ -82,7 +82,7 @@ UPLOAD_WORDS = {"ao", "vivo", "dvd", "vol", "oficial", "official", "clipe", "cli
 ARTIST_ALIASES = {"avioes do forro": ["xand aviao", "solange almeida", "avioes", "aviao"]}
 
 
-def video_matches(title: str, artists: list[str], video_title: str, channel: str) -> bool:
+def video_matches(title: str, artists: list[str], video_title: str, channel: str, exact: bool = False) -> bool:
     """O upload precisa ser a música (não outra que contenha o título) do artista principal."""
     if "/" in video_title and "/" not in title:
         return False  # pot-pourri
@@ -103,7 +103,7 @@ def video_matches(title: str, artists: list[str], video_title: str, channel: str
     missing = sum(max(0, n - sum(c for w, c in words.items() if same(w, word))) for word, n in wanted.items())
     extra = sum(c for w, c in words.items() if not any(same(w, x) for x in wanted))
     # Título curto ("Me Acha", "Dói Dói") não pode perder palavra nenhuma: "Me Perdoa" não é "Me Acha".
-    allowed_missing = 1 if sum(wanted.values()) >= 3 else 0
+    allowed_missing = 1 if sum(wanted.values()) >= 3 and not exact else 0
     return missing <= allowed_missing and extra <= 2
 
 
@@ -327,6 +327,30 @@ def video_options(http: Http, title: str, artists: list[str], lyrics: list[dict]
     return options
 
 
+KARAOKE_MARK = re.compile(r"karaok|karaoqu|videok[eê]|v[íi]deok[eê]", re.I)
+# Karaokê "com voz guia" ou cover não serve: a ideia é a pessoa cantar sozinha.
+KARAOKE_BAD = re.compile(r"voz ?guia|com voz|backing|cover|remix|piseiro|ao vivo|tutorial|aula|reac", re.I)
+KARAOKE_NOISE = re.compile(r"karaok[eê]s?|karaoque|v[íi]deok[eê]|vers[aã]o|playback|instrumental|cante|cantar|"
+                           r"com letra|legendado|viol[aã]o|base|\bhd\b|\b4k\b", re.I)
+
+
+def karaoke_options(http: Http, title: str, artists: list[str], duration: int | None,
+                    blocked: set[str]) -> list[dict]:
+    """Até 3 vídeos de karaokê da música (título e artista no nome, duração parecida)."""
+    found = []
+    for r in youtube_search(http, f"{title} {artists[0]} karaokê"):
+        if not KARAOKE_MARK.search(r["title"]) or KARAOKE_BAD.search(r["title"]):
+            continue
+        if r["video_id"] in blocked or (duration and abs(r["duration"] - duration) > 45):
+            continue
+        if not video_matches(title, artists, KARAOKE_NOISE.sub(" ", r["title"]), "", exact=True):
+            continue
+        found.append(r)
+        if len(found) == 3:
+            break
+    return found
+
+
 def clean_lrc(lrc: str) -> str:
     lines = []
     for raw in lrc.splitlines():
@@ -385,6 +409,7 @@ def main() -> None:
     parser.add_argument("--cache", type=Path, default=DATA / ".cache")
     parser.add_argument("--offline", action="store_true")
     parser.add_argument("--workers", type=int, default=6, help="requisições em paralelo na pré-busca")
+    parser.add_argument("--sem-karaoke", action="store_true", help="não procurar vídeos de karaokê")
     args = parser.parse_args()
     sys.stdout.reconfigure(encoding="utf-8")
     letras_dir = args.saida.parent / "letras"
@@ -504,6 +529,34 @@ def main() -> None:
             "lyrics_source": f"{LRCLIB_SOURCE}#id={res['lyrics']['id']}",
             "video_origin": res["video_origin"],
         })
+
+    # Karaokê de verdade (instrumental com letra no vídeo), quando existir e tocar.
+    # Fica com id KAR-*, que o matching escolhe antes da versão LET-* (cante junto).
+    if not args.sem_karaoke:
+        by_id = {s["id"]: s for s in songs}
+        targets = [(s, next(v for v in versions if v["song_id"] == s["id"])) for s in songs]
+        if not args.offline and args.workers > 1:
+            from concurrent.futures import ThreadPoolExecutor
+            with ThreadPoolExecutor(args.workers) as pool:
+                list(pool.map(lambda t: karaoke_options(http, t[0]["title"], t[0]["artists"], t[1]["duration_seconds"],
+                                                        blocked_videos), targets))
+        karaoke_count = 0
+        for song, letra in targets:
+            options = [o for o in karaoke_options(http, song["title"], song["artists"], letra["duration_seconds"],
+                                                  blocked_videos) if o["video_id"] not in used_videos]
+            chosen = next((o for o in options if o["video_id"] in ok_videos), None)
+            if chosen is None:
+                to_verify += [o["video_id"] for o in options if o["video_id"] not in to_verify]
+                continue
+            used_videos.add(chosen["video_id"])
+            karaoke_count += 1
+            versions.append({
+                "id": f"KAR-{chosen['video_id']}", "song_id": by_id[song["id"]]["id"],
+                "youtube_video_id": chosen["video_id"], "kind": "karaoke",
+                "duration_seconds": chosen["duration"], "approved": True, "verified_at": today,
+                "rights_reviewed": False, "video_origin": "busca_youtube_karaoke",
+            })
+        print(f"{karaoke_count} músicas novas também têm karaokê de verdade (versão principal).")
 
     catalog = {
         "metadata": {

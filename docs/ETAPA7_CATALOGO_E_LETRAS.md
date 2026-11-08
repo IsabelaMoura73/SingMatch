@@ -7,13 +7,15 @@ um jeito eficiente de obter vídeos com letra.
 
 | Antes | Depois |
 |---|---|
-| 5 músicas com vídeo de karaokê achado à mão | 5 do piloto + 113 novas = **118 músicas** de forró |
+| 5 músicas com vídeo de karaokê achado à mão | 5 do piloto + 131 novas = **136 músicas** de forró (32 com karaokê de verdade) |
 | Cada vídeo novo exigia buscar e testar um karaokê no YouTube | `scripts/build_catalog.py` monta o catálogo sozinho a partir dos datasets |
 | O player era um `<iframe>` simples | Player com a YouTube IFrame API: mostra a **letra sincronizada** abaixo do vídeo, com efeito de karaokê, ajuste de sincronia e tela cheia |
 
-> **Karaokê × cante junto.** As 5 músicas do piloto são **karaokê** de verdade (vídeo instrumental com
-> a letra embutida). As 113 novas são **cante junto**: a gravação original, **com a voz do cantor**, e a
-> letra sincronizada desenhada pelo player. O player mostra o selo "Vídeo de karaokê" ou "Letra
+> **Karaokê × cante junto.** 32 músicas têm **karaokê** de verdade (vídeo instrumental com a letra
+> embutida): as 5 do piloto e 27 novas achadas por busca ("título artista karaokê", título exato, sem
+> "voz guia"/"backing vocal", verificado no player). As outras 104 são **cante junto**: a gravação
+> original, **com a voz do cantor**, e a letra sincronizada desenhada pelo player. Toda música nova tem a
+> versão cante junto; quando há karaokê (`KAR-*`), o matching o escolhe primeiro. O player mostra o selo "Vídeo de karaokê" ou "Letra
 > sincronizada · voz original". No banco, isso fica em `karaoke_versions.kind`.
 
 ## Como o "vídeo de letra" é gerado

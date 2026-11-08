@@ -1,6 +1,6 @@
 # Relatório do catálogo ampliado
 
-Gerado por `scripts/build_catalog.py` em 2026-11-08. **113** músicas novas entraram no catálogo.
+Gerado por `scripts/build_catalog.py` em 2026-11-08. **131** músicas novas entraram no catálogo.
 
 | Fonte | ID na fonte | Título | Artistas | Situação |
 |---|---|---|---|---|
@@ -175,7 +175,7 @@ Gerado por `scripts/build_catalog.py` em 2026-11-08. **113** músicas novas entr
 | UFMG | `564530` | Balançando O Esqueleto | Aviões do Forró | fora do limite --ufmg-max (menos visualizações) |
 | UFMG | `564531` | Banca de Flores | Aviões do Forró | letra existe (durações [200, 201]s) mas nenhum vídeo liberado com a mesma duração |
 | UFMG | `564532` | Banho de Chuva (em Forró) | Aviões do Forró | sem letra sincronizada no LRCLIB |
-| UFMG | `564533` | Barba, Cabelo e Bigode | Aviões do Forró | OK · vídeo kvrkW3-UtLs (busca_youtube) · LRCLIB 14138353 |
+| UFMG | `564533` | Barba, Cabelo e Bigode | Aviões do Forró | fora do limite --ufmg-max (menos visualizações) |
 | UFMG | `564534` | Barco Sem Destino | Aviões do Forró | sem letra sincronizada no LRCLIB |
 | UFMG | `564535` | Barriguinha | Aviões do Forró | sem letra sincronizada no LRCLIB |
 | UFMG | `564536` | Beber E Raparigar | Aviões do Forró | sem letra sincronizada no LRCLIB |
@@ -360,7 +360,7 @@ Gerado por `scripts/build_catalog.py` em 2026-11-08. **113** músicas novas entr
 | UFMG | `564715` | Mamãe Tá Dodoi | Aviões do Forró | sem letra sincronizada no LRCLIB |
 | UFMG | `564716` | Maria Gasolina | Aviões do Forró | sem letra sincronizada no LRCLIB |
 | UFMG | `564717` | Mauricinho | Aviões do Forró | sem letra sincronizada no LRCLIB |
-| UFMG | `564718` | Me Acha | Aviões do Forró | letra existe (durações [180, 181]s) mas nenhum vídeo liberado com a mesma duração |
+| UFMG | `564718` | Me Acha | Aviões do Forró | OK · vídeo B2tPGFHjkyE (busca_youtube) · LRCLIB 12948189 |
 | UFMG | `564719` | Me Adora | Aviões do Forró | sem letra sincronizada no LRCLIB |
 | UFMG | `564720` | Me Ame Mais Me Deixe Livre | Aviões do Forró | sem letra sincronizada no LRCLIB |
 | UFMG | `564721` | Me Calei | Aviões do Forró | sem letra sincronizada no LRCLIB |
@@ -737,47 +737,47 @@ Gerado por `scripts/build_catalog.py` em 2026-11-08. **113** músicas novas entr
 | Pesquisa | `desejo-de-menina-beijos-blues-e-poesia` | Beijos, Blues e Poesia | Desejo de Menina | OK · vídeo ALRxRQdnEfo (busca_youtube) · LRCLIB 11435578 |
 | Pesquisa | `desejo-de-menina-esperando-voce` | Esperando Você | Desejo de Menina | OK · vídeo gymHk5Jil9c (busca_youtube) · LRCLIB 35417995 |
 | Pesquisa | `garota-safada-sou-ciumento-mesmo` | Sou Ciumento Mesmo | Garota Safada | letra existe (durações [213]s) mas nenhum vídeo liberado com a mesma duração |
-| Pesquisa | `wesley-safadao-camarote` | Camarote | Wesley Safadão | aguardando verificação no navegador (1 vídeos) |
+| Pesquisa | `wesley-safadao-camarote` | Camarote | Wesley Safadão | OK · vídeo 9F2RxBt_4Eg (busca_youtube) · LRCLIB 14251527 |
 | Pesquisa | `wesley-safadao-aquele-1` | Aquele 1% | Wesley Safadão | letra existe (durações [176, 177, 181, 187, 188, 198]s) mas nenhum vídeo liberado com a mesma duração |
 | Pesquisa | `wesley-safadao-ar-condicionado-no-15` | Ar Condicionado no 15 | Wesley Safadão | letra existe (durações [159, 167, 168, 170, 171, 172]s) mas nenhum vídeo liberado com a mesma duração |
-| Pesquisa | `wesley-safadao-meu-coracao-deu-pt` | Meu Coração Deu PT | Wesley Safadão | aguardando verificação no navegador (1 vídeos) |
-| Pesquisa | `wesley-safadao-ninguem-e-de-ferro` | Ninguém É de Ferro | Wesley Safadão | aguardando verificação no navegador (1 vídeos) |
-| Pesquisa | `wesley-safadao-ele-e-ele-eu-sou-eu` | Ele É Ele, Eu Sou Eu | Wesley Safadão | aguardando verificação no navegador (2 vídeos) |
-| Pesquisa | `wesley-safadao-coracao-machucado` | Coração Machucado | Wesley Safadão | aguardando verificação no navegador (1 vídeos) |
-| Pesquisa | `wesley-safadao-sonhei-que-tava-me-casando` | Sonhei Que Tava Me Casando | Wesley Safadão | aguardando verificação no navegador (2 vídeos) |
-| Pesquisa | `wesley-safadao-so-pra-castigar` | Só Pra Castigar | Wesley Safadão | aguardando verificação no navegador (2 vídeos) |
+| Pesquisa | `wesley-safadao-meu-coracao-deu-pt` | Meu Coração Deu PT | Wesley Safadão | OK · vídeo rKPGGzy8ydc (busca_youtube) · LRCLIB 31856886 |
+| Pesquisa | `wesley-safadao-ninguem-e-de-ferro` | Ninguém É de Ferro | Wesley Safadão | OK · vídeo TEw6wc6prhg (busca_youtube) · LRCLIB 3528666 |
+| Pesquisa | `wesley-safadao-ele-e-ele-eu-sou-eu` | Ele É Ele, Eu Sou Eu | Wesley Safadão | OK · vídeo hK5jtRpsvK8 (busca_youtube) · LRCLIB 29720397 |
+| Pesquisa | `wesley-safadao-coracao-machucado` | Coração Machucado | Wesley Safadão | OK · vídeo V8aW-aAXovY (busca_youtube) · LRCLIB 24887533 |
+| Pesquisa | `wesley-safadao-sonhei-que-tava-me-casando` | Sonhei Que Tava Me Casando | Wesley Safadão | OK · vídeo 9d-40fIxlHE (busca_youtube) · LRCLIB 12083808 |
+| Pesquisa | `wesley-safadao-so-pra-castigar` | Só Pra Castigar | Wesley Safadão | OK · vídeo 3X2-uVV2Wm0 (busca_youtube) · LRCLIB 11537702 |
 | Pesquisa | `xand-aviao-borrachinha` | Borrachinha | Xand Avião | letra existe (durações [193, 194]s) mas nenhum vídeo liberado com a mesma duração |
 | Pesquisa | `solange-almeida-se-e-pra-gente-ficar` | Se é pra Gente Ficar | Solange Almeida | letra existe (durações [175, 176]s) mas nenhum vídeo liberado com a mesma duração |
 | Pesquisa | `brasas-do-forro-todo-o-tempo-e-pouco-pra-te-amar` | Todo o Tempo É Pouco pra Te Amar | Brasas do Forró | letra existe (durações [206]s) mas nenhum vídeo liberado com a mesma duração |
-| Pesquisa | `brasas-do-forro-de-coracao-pra-coracao` | De Coração pra Coração | Brasas do Forró | aguardando verificação no navegador (3 vídeos) |
-| Pesquisa | `mano-walter-nao-deixo-nao` | Não Deixo Não | Mano Walter | aguardando verificação no navegador (2 vídeos) |
+| Pesquisa | `brasas-do-forro-de-coracao-pra-coracao` | De Coração pra Coração | Brasas do Forró | OK · vídeo fm7rWlmbCJY (busca_youtube) · LRCLIB 11328575 |
+| Pesquisa | `mano-walter-nao-deixo-nao` | Não Deixo Não | Mano Walter | OK · vídeo tKlpwPZ74Uo (busca_youtube) · LRCLIB 10826222 |
 | Pesquisa | `jonas-esticado-investe-em-mim` | Investe Em Mim | Jonas Esticado | letra existe (durações [187, 201]s) mas nenhum vídeo liberado com a mesma duração |
 | Pesquisa | `os-baroes-da-pisadinha-basta-voce-me-ligar` | Basta Você Me Ligar | Os Barões da Pisadinha | letra existe (durações [150, 181, 182, 183]s) mas nenhum vídeo liberado com a mesma duração |
-| Pesquisa | `os-baroes-da-pisadinha-ta-rocheda` | Tá Rocheda | Os Barões da Pisadinha | aguardando verificação no navegador (1 vídeos) |
+| Pesquisa | `os-baroes-da-pisadinha-ta-rocheda` | Tá Rocheda | Os Barões da Pisadinha | OK · vídeo aC-f0Hk7VBg (busca_youtube) · LRCLIB 16059206 |
 | Pesquisa | `os-baroes-da-pisadinha-ja-que-me-ensinou-a-beber` | Já Que Me Ensinou a Beber | Os Barões da Pisadinha | letra existe (durações [158, 159, 160, 173, 225]s) mas nenhum vídeo liberado com a mesma duração |
 | Pesquisa | `os-baroes-da-pisadinha-esquema-preferido` | Esquema Preferido | Os Barões da Pisadinha | letra existe (durações [201, 202]s) mas nenhum vídeo liberado com a mesma duração |
 | Pesquisa | `os-baroes-da-pisadinha-recairei` | Recairei | Os Barões da Pisadinha | letra existe (durações [166, 167]s) mas nenhum vídeo liberado com a mesma duração |
 | Pesquisa | `os-baroes-da-pisadinha-chupadinha` | Chupadinha | Os Barões da Pisadinha | letra existe (durações [150, 168]s) mas nenhum vídeo liberado com a mesma duração |
 | Pesquisa | `joao-gomes-meu-pedaco-de-pecado` | Meu Pedaço de Pecado | João Gomes | letra existe (durações [157, 158, 159, 160, 161, 166]s) mas nenhum vídeo liberado com a mesma duração |
-| Pesquisa | `joao-gomes-dengo` | Dengo | João Gomes | aguardando verificação no navegador (1 vídeos) |
+| Pesquisa | `joao-gomes-dengo` | Dengo | João Gomes | OK · vídeo 4PKYdcZx0wo (busca_youtube) · LRCLIB 36213941 |
 | Pesquisa | `joao-gomes-aquelas-coisas` | Aquelas Coisas | João Gomes | letra existe (durações [134, 137, 145, 146, 147, 148]s) mas nenhum vídeo liberado com a mesma duração |
 | Pesquisa | `joao-gomes-eu-tenho-a-senha` | Eu Tenho a Senha | João Gomes | letra existe (durações [212, 369]s) mas nenhum vídeo liberado com a mesma duração |
 | Pesquisa | `joao-gomes-se-for-amor` | Se For Amor | João Gomes | letra existe (durações [239, 240, 243, 244, 270]s) mas nenhum vídeo liberado com a mesma duração |
 | Pesquisa | `ze-vaqueiro-leticia` | Letícia | Zé Vaqueiro | letra existe (durações [165, 168, 190]s) mas nenhum vídeo liberado com a mesma duração |
 | Pesquisa | `ze-vaqueiro-volta-comigo-bb` | Volta Comigo BB | Zé Vaqueiro | letra existe (durações [211]s) mas nenhum vídeo liberado com a mesma duração |
-| Pesquisa | `ze-vaqueiro-eu-tenho-medo` | Eu Tenho Medo | Zé Vaqueiro | aguardando verificação no navegador (3 vídeos) |
+| Pesquisa | `ze-vaqueiro-eu-tenho-medo` | Eu Tenho Medo | Zé Vaqueiro | OK · vídeo TRoXSnb9vN0 (busca_youtube) · LRCLIB 8336727 |
 | Pesquisa | `tarcisio-do-acordeon-meia-noite-voce-tem-meu-whatsapp` | Meia Noite (Você tem meu Whatsapp) | Tarcísio do Acordeon | letra existe (durações [238]s) mas nenhum vídeo liberado com a mesma duração |
-| Pesquisa | `tarcisio-do-acordeon-protecao-de-tela` | Proteção de Tela | Tarcísio do Acordeon | aguardando verificação no navegador (3 vídeos) |
-| Pesquisa | `tarcisio-do-acordeon-nega` | Nêga | Tarcísio do Acordeon | aguardando verificação no navegador (4 vídeos) |
-| Pesquisa | `vitor-fernandes-acaso` | Acaso | Vitor Fernandes | aguardando verificação no navegador (4 vídeos) |
+| Pesquisa | `tarcisio-do-acordeon-protecao-de-tela` | Proteção de Tela | Tarcísio do Acordeon | OK · vídeo edjih_b_NBQ (busca_youtube) · LRCLIB 9120348 |
+| Pesquisa | `tarcisio-do-acordeon-nega` | Nêga | Tarcísio do Acordeon | OK · vídeo hwrh-snJ62w (busca_youtube) · LRCLIB 31869339 |
+| Pesquisa | `vitor-fernandes-acaso` | Acaso | Vitor Fernandes | OK · vídeo jfZU53pb6Ok (busca_youtube) · LRCLIB 38489845 |
 | Pesquisa | `vitor-fernandes-bebe-vem-me-procurar` | Bebe Vem Me Procurar | Vitor Fernandes | letra existe (durações [140]s) mas nenhum vídeo liberado com a mesma duração |
-| Pesquisa | `nattan-morena` | Morena | Nattan | aguardando verificação no navegador (1 vídeos) |
+| Pesquisa | `nattan-morena` | Morena | Nattan | OK · vídeo 7dk7PF9hu4I (busca_youtube) · LRCLIB 9095605 |
 | Pesquisa | `nattan-love-gostosinho` | Love Gostosinho | Nattan | letra existe (durações [149, 163, 164]s) mas nenhum vídeo liberado com a mesma duração |
 | Pesquisa | `felipe-amorim-toca-o-trompete` | Toca o Trompete | Felipe Amorim | letra existe (durações [163, 165, 166]s) mas nenhum vídeo liberado com a mesma duração |
-| Pesquisa | `eric-land-chorei-na-vaquejada` | Chorei na Vaquejada | Eric Land | aguardando verificação no navegador (1 vídeos) |
+| Pesquisa | `eric-land-chorei-na-vaquejada` | Chorei na Vaquejada | Eric Land | OK · vídeo lxfMzZ2UwGk (busca_youtube) · LRCLIB 8560866 |
 | Pesquisa | `matheus-fernandes-baby-me-atende` | Baby Me Atende | Matheus Fernandes | letra existe (durações [225, 226]s) mas nenhum vídeo liberado com a mesma duração |
 | Pesquisa | `matheus-fernandes-balanco-da-rede` | Balanço da Rede | Matheus Fernandes | letra existe (durações [166, 167, 168, 169]s) mas nenhum vídeo liberado com a mesma duração |
 | Pesquisa | `avine-vinny-coracao-cachorro` | Coração Cachorro | Avine Vinny | letra existe (durações [123, 150, 151]s) mas nenhum vídeo liberado com a mesma duração |
 | Pesquisa | `mari-fernandez-nao-nao-vou` | Não, Não Vou | Mari Fernandez | letra existe (durações [173, 174]s) mas nenhum vídeo liberado com a mesma duração |
-| Pesquisa | `mari-fernandez-agonia` | Agonia | Mari Fernandez | aguardando verificação no navegador (1 vídeos) |
+| Pesquisa | `mari-fernandez-agonia` | Agonia | Mari Fernandez | OK · vídeo HMgHwJse5aU (busca_youtube) · LRCLIB 12947300 |
 | Pesquisa | `unha-pintada-ze-da-recaida` | Zé da Recaida | Unha Pintada | letra existe (durações [163]s) mas nenhum vídeo liberado com a mesma duração |

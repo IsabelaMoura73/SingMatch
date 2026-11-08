@@ -37,8 +37,11 @@ if expanded_path.is_file():
         assert m["mood"] and m["energy"] and 1 <= m["energy"] <= 5, f"{m['id']} sem clima/energia"
     for v in exp["karaoke_versions"]:
         assert v["song_id"] in exp_ids, v["id"]
-        assert v["kind"] == "letra_sincronizada", v["id"]
+        assert v["kind"] in ("letra_sincronizada", "karaoke"), v["id"]
+        if v["kind"] == "karaoke":
+            continue  # vídeo de karaokê já traz a letra
         lines = (DATA / v["lyrics_file"]).read_text(encoding="utf-8").splitlines()
         assert lines and all(LRC_LINE.match(x) for x in lines), f"LRC inválido em {v['lyrics_file']}"
-    print(f"OK: {len(exp_ids)} músicas e {len(exp['karaoke_versions'])} versões com letra sincronizada.")
+    kar = sum(1 for v in exp["karaoke_versions"] if v["kind"] == "karaoke")
+    print(f"OK: {len(exp_ids)} músicas novas, todas com letra sincronizada; {kar} também com karaokê.")
 print("Atenção: isso NÃO verifica incorporação atual nem direitos de uso.")

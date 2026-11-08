@@ -52,3 +52,12 @@ def test_lyrics_must_match_video_duration():
 
 def test_clean_lrc_keeps_only_timed_lines():
     assert clean_lrc("[ar:Fulano]\n[00:05.1]Linha\n\n[1:02.345]Outra\n") == "[00:05.10]Linha\n[01:02.34]Outra\n"
+
+
+def test_karaoke_title_must_be_exact():
+    from scripts.build_catalog import KARAOKE_NOISE
+    gonzaga = ["Luiz Gonzaga"]
+    wrong = KARAOKE_NOISE.sub(" ", "KARAOKÊ 🎤 - SÃO JOÃO NA ROÇA 🔥🌽 - LUIZ GONZAGA 🎉")
+    right = KARAOKE_NOISE.sub(" ", "Karaokê Dezessete e Setecentos - Luiz Gonzaga")
+    assert not video_matches("São João do Carneirinho", gonzaga, wrong, "", exact=True)
+    assert video_matches("Dezessete E Setecentos", gonzaga, right, "", exact=True)

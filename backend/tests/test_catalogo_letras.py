@@ -46,8 +46,10 @@ def test_expanded_catalog_matches_contracts_and_has_no_duplicates():
 
 
 def test_every_synced_version_has_valid_lrc_file():
-    for raw in EXPANDED["karaoke_versions"]:
-        assert raw["kind"] == "letra_sincronizada"
+    synced = [raw for raw in EXPANDED["karaoke_versions"] if raw["kind"] == "letra_sincronizada"]
+    # Toda música nova tem a versão "cante junto"; o karaokê é extra quando existe.
+    assert {raw["song_id"] for raw in synced} == {s["id"] for s in EXPANDED["songs"]}
+    for raw in synced:
         lines = (ROOT / "data" / raw["lyrics_file"]).read_text(encoding="utf-8").splitlines()
         assert len(lines) >= 8, raw["id"]
         assert all(LRC_LINE.match(line) for line in lines), raw["id"]
@@ -99,12 +101,13 @@ def test_catalog_endpoint_exposes_kind_but_not_lyrics(api):
     assert len(cat["songs"]) == 5 + len(EXPANDED["songs"])
     kinds = {v["id"]: v["kind"] for v in cat["karaoke_versions"]}
     assert kinds["KAR-FOR-001"] == "karaoke"
-    assert all(kinds[v["id"]] == "letra_sincronizada" for v in EXPANDED["karaoke_versions"])
+    assert all(kinds[v["id"]] == v["kind"] for v in EXPANDED["karaoke_versions"])
+    assert all(v["kind"] == "karaoke" for v in EXPANDED["karaoke_versions"] if v["id"].startswith("KAR-"))
     assert all("lyrics_lrc" not in v and "lrc" not in v for v in cat["karaoke_versions"])
 
 
 def test_lyrics_endpoint(api):
-    version = EXPANDED["karaoke_versions"][0]
+    version = next(v for v in EXPANDED["karaoke_versions"] if v["kind"] == "letra_sincronizada")
     resp = api.get(f"/api/karaoke_versions/{version['id']}/lyrics")
     assert resp.status_code == 200
     body = resp.json()
@@ -133,3 +136,14 @@ def test_blocked_video_is_replaced_on_old_db_or_approval_revoked():
         assert db.get(KaraokeVersionRow, "KAR-FOR-001").approved is False
         assert db.get(KaraokeVersionRow, "KAR-FOR-004").approved is True
     engine.dispose()
+
+
+def test_real_karaoke_is_preferred_over_sing_along():
+    songs, versions = _all_contracts()
+    with_karaoke = {v.song_id for v in versions if v.kind == "karaoke" and v.id.startswith("KAR-") and v.song_id.startswith(("BYRM", "UFMG", "PESQ"))}
+    assert with_karaoke, "nenhuma música nova com karaokê"
+    allowed = eligible_candidates("forro", {"p1": ProfileConfirmed()}, songs, versions)["p1"]
+    kind = {v.id: v.kind for v in versions}
+    song_of = {v.id: v.song_id for v in versions}
+    chosen = {song_of[v]: kind[v] for v in allowed}
+    assert all(chosen[s] == "karaoke" for s in with_karaoke)

@@ -786,37 +786,6 @@
       "source_id": "564496"
     },
     {
-      "id": "UFMG-564533",
-      "title": "Barba, Cabelo e Bigode",
-      "artists": [
-        "Aviões do Forró"
-      ],
-      "genre": "forro",
-      "energy": 5,
-      "mood": "animada",
-      "duet_possible": false,
-      "tags": [
-        {
-          "attribute": "clima",
-          "value": "animada",
-          "source": "curadoria_ia_2026-11-08_revisar"
-        },
-        {
-          "attribute": "energia",
-          "value": "5",
-          "source": "curadoria_ia_2026-11-08_revisar"
-        },
-        {
-          "attribute": "emocao_letra",
-          "value": "alegria",
-          "source": "ufmg_zenodo_12733931#linha=564533"
-        }
-      ],
-      "duration_ms": 192000,
-      "source": "ufmg_zenodo_12733931",
-      "source_id": "564533"
-    },
-    {
       "id": "UFMG-564539",
       "title": "Bla Bla Bla",
       "artists": [
@@ -1094,6 +1063,37 @@
       "duration_ms": 188612,
       "source": "ufmg_zenodo_12733931",
       "source_id": "564702"
+    },
+    {
+      "id": "UFMG-564718",
+      "title": "Me Acha",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "sofrida",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "sofrida",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "raiva",
+          "source": "ufmg_zenodo_12733931#linha=564718"
+        }
+      ],
+      "duration_ms": 181000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564718"
     },
     {
       "id": "UFMG-564731",
@@ -3099,6 +3099,474 @@
       "duration_ms": 127000,
       "source": "pesquisa_lrclib_2026-11",
       "source_id": "desejo-de-menina-esperando-voce"
+    },
+    {
+      "id": "PESQ-wesley-safadao-camarote",
+      "title": "Camarote",
+      "artists": [
+        "Wesley Safadão"
+      ],
+      "genre": "forro",
+      "energy": 5,
+      "mood": "festiva",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "festiva",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "5",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 190000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "wesley-safadao-camarote"
+    },
+    {
+      "id": "PESQ-wesley-safadao-meu-coracao-deu-pt",
+      "title": "Meu Coração Deu PT",
+      "artists": [
+        "Wesley Safadão"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "sofrida",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "sofrida",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 183000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "wesley-safadao-meu-coracao-deu-pt"
+    },
+    {
+      "id": "PESQ-wesley-safadao-ninguem-e-de-ferro",
+      "title": "Ninguém É de Ferro",
+      "artists": [
+        "Wesley Safadão"
+      ],
+      "genre": "forro",
+      "energy": 5,
+      "mood": "festiva",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "festiva",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "5",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 139000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "wesley-safadao-ninguem-e-de-ferro"
+    },
+    {
+      "id": "PESQ-wesley-safadao-ele-e-ele-eu-sou-eu",
+      "title": "Ele É Ele, Eu Sou Eu",
+      "artists": [
+        "Wesley Safadão"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "sofrida",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "sofrida",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 143000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "wesley-safadao-ele-e-ele-eu-sou-eu"
+    },
+    {
+      "id": "PESQ-wesley-safadao-coracao-machucado",
+      "title": "Coração Machucado",
+      "artists": [
+        "Wesley Safadão"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "sofrida",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "sofrida",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 224000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "wesley-safadao-coracao-machucado"
+    },
+    {
+      "id": "PESQ-wesley-safadao-sonhei-que-tava-me-casando",
+      "title": "Sonhei Que Tava Me Casando",
+      "artists": [
+        "Wesley Safadão"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 162000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "wesley-safadao-sonhei-que-tava-me-casando"
+    },
+    {
+      "id": "PESQ-wesley-safadao-so-pra-castigar",
+      "title": "Só Pra Castigar",
+      "artists": [
+        "Wesley Safadão"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "sofrida",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "sofrida",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 164000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "wesley-safadao-so-pra-castigar"
+    },
+    {
+      "id": "PESQ-brasas-do-forro-de-coracao-pra-coracao",
+      "title": "De Coração pra Coração",
+      "artists": [
+        "Brasas do Forró"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 271000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "brasas-do-forro-de-coracao-pra-coracao"
+    },
+    {
+      "id": "PESQ-mano-walter-nao-deixo-nao",
+      "title": "Não Deixo Não",
+      "artists": [
+        "Mano Walter"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 205000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "mano-walter-nao-deixo-nao"
+    },
+    {
+      "id": "PESQ-os-baroes-da-pisadinha-ta-rocheda",
+      "title": "Tá Rocheda",
+      "artists": [
+        "Os Barões da Pisadinha"
+      ],
+      "genre": "forro",
+      "energy": 5,
+      "mood": "festiva",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "festiva",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "5",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 203128,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "os-baroes-da-pisadinha-ta-rocheda"
+    },
+    {
+      "id": "PESQ-joao-gomes-dengo",
+      "title": "Dengo",
+      "artists": [
+        "João Gomes"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 154000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "joao-gomes-dengo"
+    },
+    {
+      "id": "PESQ-ze-vaqueiro-eu-tenho-medo",
+      "title": "Eu Tenho Medo",
+      "artists": [
+        "Zé Vaqueiro"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 217000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "ze-vaqueiro-eu-tenho-medo"
+    },
+    {
+      "id": "PESQ-tarcisio-do-acordeon-protecao-de-tela",
+      "title": "Proteção de Tela",
+      "artists": [
+        "Tarcísio do Acordeon"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "sofrida",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "sofrida",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 217000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "tarcisio-do-acordeon-protecao-de-tela"
+    },
+    {
+      "id": "PESQ-tarcisio-do-acordeon-nega",
+      "title": "Nêga",
+      "artists": [
+        "Tarcísio do Acordeon"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 259000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "tarcisio-do-acordeon-nega"
+    },
+    {
+      "id": "PESQ-vitor-fernandes-acaso",
+      "title": "Acaso",
+      "artists": [
+        "Vitor Fernandes"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 198000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "vitor-fernandes-acaso"
+    },
+    {
+      "id": "PESQ-nattan-morena",
+      "title": "Morena",
+      "artists": [
+        "Nattan"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 179000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "nattan-morena"
+    },
+    {
+      "id": "PESQ-eric-land-chorei-na-vaquejada",
+      "title": "Chorei na Vaquejada",
+      "artists": [
+        "Eric Land"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "sofrida",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "sofrida",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 151000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "eric-land-chorei-na-vaquejada"
+    },
+    {
+      "id": "PESQ-mari-fernandez-agonia",
+      "title": "Agonia",
+      "artists": [
+        "Mari Fernandez"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "sofrida",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "sofrida",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 160000,
+      "source": "pesquisa_lrclib_2026-11",
+      "source_id": "mari-fernandez-agonia"
     }
   ],
   "karaoke_versions": [
@@ -3480,19 +3948,6 @@
       "video_origin": "busca_youtube"
     },
     {
-      "id": "LET-kvrkW3-UtLs",
-      "song_id": "UFMG-564533",
-      "youtube_video_id": "kvrkW3-UtLs",
-      "kind": "letra_sincronizada",
-      "duration_seconds": 192,
-      "approved": true,
-      "verified_at": "2026-11-08",
-      "rights_reviewed": false,
-      "lyrics_file": "letras/LET-kvrkW3-UtLs.lrc",
-      "lyrics_source": "lrclib.net#id=14138353",
-      "video_origin": "busca_youtube"
-    },
-    {
       "id": "LET-d2ESVoiV2Tk",
       "song_id": "UFMG-564539",
       "youtube_video_id": "d2ESVoiV2Tk",
@@ -3607,6 +4062,19 @@
       "rights_reviewed": false,
       "lyrics_file": "letras/LET-GEmSgOzoc8Q.lrc",
       "lyrics_source": "lrclib.net#id=24478669",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-B2tPGFHjkyE",
+      "song_id": "UFMG-564718",
+      "youtube_video_id": "B2tPGFHjkyE",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 181,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-B2tPGFHjkyE.lrc",
+      "lyrics_source": "lrclib.net#id=12948189",
       "video_origin": "busca_youtube"
     },
     {
@@ -4570,6 +5038,537 @@
       "lyrics_file": "letras/LET-gymHk5Jil9c.lrc",
       "lyrics_source": "lrclib.net#id=35417995",
       "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-9F2RxBt_4Eg",
+      "song_id": "PESQ-wesley-safadao-camarote",
+      "youtube_video_id": "9F2RxBt_4Eg",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 191,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-9F2RxBt_4Eg.lrc",
+      "lyrics_source": "lrclib.net#id=14251527",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-rKPGGzy8ydc",
+      "song_id": "PESQ-wesley-safadao-meu-coracao-deu-pt",
+      "youtube_video_id": "rKPGGzy8ydc",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 183,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-rKPGGzy8ydc.lrc",
+      "lyrics_source": "lrclib.net#id=31856886",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-TEw6wc6prhg",
+      "song_id": "PESQ-wesley-safadao-ninguem-e-de-ferro",
+      "youtube_video_id": "TEw6wc6prhg",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 141,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-TEw6wc6prhg.lrc",
+      "lyrics_source": "lrclib.net#id=3528666",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-hK5jtRpsvK8",
+      "song_id": "PESQ-wesley-safadao-ele-e-ele-eu-sou-eu",
+      "youtube_video_id": "hK5jtRpsvK8",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 143,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-hK5jtRpsvK8.lrc",
+      "lyrics_source": "lrclib.net#id=29720397",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-V8aW-aAXovY",
+      "song_id": "PESQ-wesley-safadao-coracao-machucado",
+      "youtube_video_id": "V8aW-aAXovY",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 224,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-V8aW-aAXovY.lrc",
+      "lyrics_source": "lrclib.net#id=24887533",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-9d-40fIxlHE",
+      "song_id": "PESQ-wesley-safadao-sonhei-que-tava-me-casando",
+      "youtube_video_id": "9d-40fIxlHE",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 162,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-9d-40fIxlHE.lrc",
+      "lyrics_source": "lrclib.net#id=12083808",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-3X2-uVV2Wm0",
+      "song_id": "PESQ-wesley-safadao-so-pra-castigar",
+      "youtube_video_id": "3X2-uVV2Wm0",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 162,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-3X2-uVV2Wm0.lrc",
+      "lyrics_source": "lrclib.net#id=11537702",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-fm7rWlmbCJY",
+      "song_id": "PESQ-brasas-do-forro-de-coracao-pra-coracao",
+      "youtube_video_id": "fm7rWlmbCJY",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 270,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-fm7rWlmbCJY.lrc",
+      "lyrics_source": "lrclib.net#id=11328575",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-tKlpwPZ74Uo",
+      "song_id": "PESQ-mano-walter-nao-deixo-nao",
+      "youtube_video_id": "tKlpwPZ74Uo",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 205,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-tKlpwPZ74Uo.lrc",
+      "lyrics_source": "lrclib.net#id=10826222",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-aC-f0Hk7VBg",
+      "song_id": "PESQ-os-baroes-da-pisadinha-ta-rocheda",
+      "youtube_video_id": "aC-f0Hk7VBg",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 205,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-aC-f0Hk7VBg.lrc",
+      "lyrics_source": "lrclib.net#id=16059206",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-4PKYdcZx0wo",
+      "song_id": "PESQ-joao-gomes-dengo",
+      "youtube_video_id": "4PKYdcZx0wo",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 154,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-4PKYdcZx0wo.lrc",
+      "lyrics_source": "lrclib.net#id=36213941",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-TRoXSnb9vN0",
+      "song_id": "PESQ-ze-vaqueiro-eu-tenho-medo",
+      "youtube_video_id": "TRoXSnb9vN0",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 216,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-TRoXSnb9vN0.lrc",
+      "lyrics_source": "lrclib.net#id=8336727",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-edjih_b_NBQ",
+      "song_id": "PESQ-tarcisio-do-acordeon-protecao-de-tela",
+      "youtube_video_id": "edjih_b_NBQ",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 217,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-edjih_b_NBQ.lrc",
+      "lyrics_source": "lrclib.net#id=9120348",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-hwrh-snJ62w",
+      "song_id": "PESQ-tarcisio-do-acordeon-nega",
+      "youtube_video_id": "hwrh-snJ62w",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 260,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-hwrh-snJ62w.lrc",
+      "lyrics_source": "lrclib.net#id=31869339",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-jfZU53pb6Ok",
+      "song_id": "PESQ-vitor-fernandes-acaso",
+      "youtube_video_id": "jfZU53pb6Ok",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 197,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-jfZU53pb6Ok.lrc",
+      "lyrics_source": "lrclib.net#id=38489845",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-7dk7PF9hu4I",
+      "song_id": "PESQ-nattan-morena",
+      "youtube_video_id": "7dk7PF9hu4I",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 179,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-7dk7PF9hu4I.lrc",
+      "lyrics_source": "lrclib.net#id=9095605",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-lxfMzZ2UwGk",
+      "song_id": "PESQ-eric-land-chorei-na-vaquejada",
+      "youtube_video_id": "lxfMzZ2UwGk",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 151,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-lxfMzZ2UwGk.lrc",
+      "lyrics_source": "lrclib.net#id=8560866",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-HMgHwJse5aU",
+      "song_id": "PESQ-mari-fernandez-agonia",
+      "youtube_video_id": "HMgHwJse5aU",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 157,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-HMgHwJse5aU.lrc",
+      "lyrics_source": "lrclib.net#id=12947300",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "KAR-dG7waR5x4cs",
+      "song_id": "BYRM-s2yhxUL4Hj4",
+      "youtube_video_id": "dG7waR5x4cs",
+      "kind": "karaoke",
+      "duration_seconds": 186,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "busca_youtube_karaoke"
+    },
+    {
+      "id": "KAR-AE_bSIBZWck",
+      "song_id": "BYRM-Ll0dhIdQ01g",
+      "youtube_video_id": "AE_bSIBZWck",
+      "kind": "karaoke",
+      "duration_seconds": 126,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "busca_youtube_karaoke"
+    },
+    {
+      "id": "KAR-7YRFxj_gTKY",
+      "song_id": "BYRM-FHcacbyM-AI",
+      "youtube_video_id": "7YRFxj_gTKY",
+      "kind": "karaoke",
+      "duration_seconds": 155,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "busca_youtube_karaoke"
+    },
+    {
+      "id": "KAR-dj6kZMJu1x8",
+      "song_id": "BYRM-Ny43bLswavY",
+      "youtube_video_id": "dj6kZMJu1x8",
+      "kind": "karaoke",
+      "duration_seconds": 202,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "busca_youtube_karaoke"
+    },
+    {
+      "id": "KAR-JwH-nyCJq7U",
+      "song_id": "BYRM-CMiKdEpcreU",
+      "youtube_video_id": "JwH-nyCJq7U",
+      "kind": "karaoke",
+      "duration_seconds": 243,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "busca_youtube_karaoke"
+    },
+    {
+      "id": "KAR-ReZQy-xrJwM",
+      "song_id": "BYRM-Veeu7KSsZ4c",
+      "youtube_video_id": "ReZQy-xrJwM",
+      "kind": "karaoke",
+      "duration_seconds": 237,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "busca_youtube_karaoke"
+    },
+    {
+      "id": "KAR-A23eBbF8IbA",
+      "song_id": "UFMG-564921",
+      "youtube_video_id": "A23eBbF8IbA",
+      "kind": "karaoke",
+      "duration_seconds": 191,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "busca_youtube_karaoke"
+    },
+    {
+      "id": "KAR-1rtDJYlgGkA",
+      "song_id": "PESQ-luiz-gonzaga-respeita-januario",
+      "youtube_video_id": "1rtDJYlgGkA",
+      "kind": "karaoke",
+      "duration_seconds": 161,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "busca_youtube_karaoke"
+    },
+    {
+      "id": "KAR-F-hb8On6IZU",
+      "song_id": "PESQ-luiz-gonzaga-qui-nem-jilo",
+      "youtube_video_id": "F-hb8On6IZU",
+      "kind": "karaoke",
+      "duration_seconds": 181,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "busca_youtube_karaoke"
+    },
+    {
+      "id": "KAR-op_aPULi-tE",
+      "song_id": "PESQ-luiz-gonzaga-paraiba",
+      "youtube_video_id": "op_aPULi-tE",
+      "kind": "karaoke",
+      "duration_seconds": 175,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "busca_youtube_karaoke"
+    },
+    {
+      "id": "KAR-UhrfuBA1T4s",
+      "song_id": "PESQ-luiz-gonzaga-cintura-fina",
+      "youtube_video_id": "UhrfuBA1T4s",
+      "kind": "karaoke",
+      "duration_seconds": 155,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "busca_youtube_karaoke"
+    },
+    {
+      "id": "KAR-xgAFQDkCCS8",
+      "song_id": "PESQ-jackson-do-pandeiro-o-canto-da-ema",
+      "youtube_video_id": "xgAFQDkCCS8",
+      "kind": "karaoke",
+      "duration_seconds": 143,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "busca_youtube_karaoke"
+    },
+    {
+      "id": "KAR-7UPm8m6QO_Y",
+      "song_id": "PESQ-dominguinhos-gostoso-demais",
+      "youtube_video_id": "7UPm8m6QO_Y",
+      "kind": "karaoke",
+      "duration_seconds": 162,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "busca_youtube_karaoke"
+    },
+    {
+      "id": "KAR-o0LmEb3rLV8",
+      "song_id": "PESQ-gilberto-gil-tenho-sede",
+      "youtube_video_id": "o0LmEb3rLV8",
+      "kind": "karaoke",
+      "duration_seconds": 229,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "busca_youtube_karaoke"
+    },
+    {
+      "id": "KAR-vGQofV5-3H8",
+      "song_id": "PESQ-alceu-valenca-anunciacao",
+      "youtube_video_id": "vGQofV5-3H8",
+      "kind": "karaoke",
+      "duration_seconds": 326,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "busca_youtube_karaoke"
+    },
+    {
+      "id": "KAR-JTwVJSXQMzY",
+      "song_id": "PESQ-genival-lacerda-radinho-de-pilha",
+      "youtube_video_id": "JTwVJSXQMzY",
+      "kind": "karaoke",
+      "duration_seconds": 172,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "busca_youtube_karaoke"
+    },
+    {
+      "id": "KAR-_ADJ4KXKM5g",
+      "song_id": "PESQ-flavio-jose-espumas-ao-vento",
+      "youtube_video_id": "_ADJ4KXKM5g",
+      "kind": "karaoke",
+      "duration_seconds": 245,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "busca_youtube_karaoke"
+    },
+    {
+      "id": "KAR-ZRw9Px2fOdQ",
+      "song_id": "PESQ-calcinha-preta-magica",
+      "youtube_video_id": "ZRw9Px2fOdQ",
+      "kind": "karaoke",
+      "duration_seconds": 274,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "busca_youtube_karaoke"
+    },
+    {
+      "id": "KAR-1lCG_rqAv6o",
+      "song_id": "PESQ-calcinha-preta-dois-amores-duas-paixoes",
+      "youtube_video_id": "1lCG_rqAv6o",
+      "kind": "karaoke",
+      "duration_seconds": 225,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "busca_youtube_karaoke"
+    },
+    {
+      "id": "KAR-bU9Am_HrHEU",
+      "song_id": "PESQ-calcinha-preta-adao-e-eva",
+      "youtube_video_id": "bU9Am_HrHEU",
+      "kind": "karaoke",
+      "duration_seconds": 239,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "busca_youtube_karaoke"
+    },
+    {
+      "id": "KAR-MDUbisohV9M",
+      "song_id": "PESQ-calcinha-preta-agora-estou-sofrendo",
+      "youtube_video_id": "MDUbisohV9M",
+      "kind": "karaoke",
+      "duration_seconds": 227,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "busca_youtube_karaoke"
+    },
+    {
+      "id": "KAR-n9N7nzbTw98",
+      "song_id": "PESQ-calcinha-preta-louca-por-ti",
+      "youtube_video_id": "n9N7nzbTw98",
+      "kind": "karaoke",
+      "duration_seconds": 209,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "busca_youtube_karaoke"
+    },
+    {
+      "id": "KAR-S9GVUoA4Rb0",
+      "song_id": "PESQ-mastruz-com-leite-meu-vaqueiro-meu-peao",
+      "youtube_video_id": "S9GVUoA4Rb0",
+      "kind": "karaoke",
+      "duration_seconds": 230,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "busca_youtube_karaoke"
+    },
+    {
+      "id": "KAR-PWPz6BH3ASQ",
+      "song_id": "PESQ-limao-com-mel-anjo-querubim",
+      "youtube_video_id": "PWPz6BH3ASQ",
+      "kind": "karaoke",
+      "duration_seconds": 186,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "busca_youtube_karaoke"
+    },
+    {
+      "id": "KAR-IS7Ca_POrDo",
+      "song_id": "PESQ-limao-com-mel-um-sonho-de-amor",
+      "youtube_video_id": "IS7Ca_POrDo",
+      "kind": "karaoke",
+      "duration_seconds": 194,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "busca_youtube_karaoke"
+    },
+    {
+      "id": "KAR-nrOvHkF2TMQ",
+      "song_id": "PESQ-magnificos-me-usa",
+      "youtube_video_id": "nrOvHkF2TMQ",
+      "kind": "karaoke",
+      "duration_seconds": 218,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "busca_youtube_karaoke"
+    },
+    {
+      "id": "KAR-DG1xrd4FhXw",
+      "song_id": "PESQ-desejo-de-menina-beijos-blues-e-poesia",
+      "youtube_video_id": "DG1xrd4FhXw",
+      "kind": "karaoke",
+      "duration_seconds": 194,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "busca_youtube_karaoke"
     }
   ]
 }
