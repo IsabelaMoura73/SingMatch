@@ -1246,6 +1246,101 @@
       "mood": "sofrida",
       "energy": 3,
       "evidence": "estilo/conhecimento da faixa (título: espera pela volta)"
+    },
+    "BYRM-BpckPkFf1MQ": {
+      "mood": "saudosa",
+      "energy": 3,
+      "evidence": "'Com saudade desse amor / Nos olhos tá escrito'"
+    },
+    "UFMG-564489": {
+      "mood": "animada",
+      "energy": 5,
+      "evidence": "'A pegada forte e quente / O Avião vai aterrizar'"
+    },
+    "UFMG-564530": {
+      "mood": "animada",
+      "energy": 5,
+      "evidence": "'Vamos mexer o esqueleto / Mexendo daqui pra lá'"
+    },
+    "UFMG-564531": {
+      "mood": "sofrida",
+      "energy": 3,
+      "evidence": "'Vou lhe esperar naquele lugar / Eu te falei que não ia dar certo'"
+    },
+    "UFMG-564543": {
+      "mood": "sofrida",
+      "energy": 3,
+      "evidence": "'Te amar assim como eu te amei / Eu não sei por que você me deixou'"
+    },
+    "UFMG-564593": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "'Vai pro final da fila, por favor, me deixa em paz'"
+    },
+    "UFMG-564613": {
+      "mood": "animada",
+      "energy": 5,
+      "evidence": "'Ele já bebe, já fuma e já foge'"
+    },
+    "UFMG-564632": {
+      "mood": "sofrida",
+      "energy": 3,
+      "evidence": "'Sofro até te esquecer / Mas eu não vou chorar'"
+    },
+    "UFMG-564636": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "'Vem, vem me fazer feliz / Eu quero ser feliz com você'"
+    },
+    "UFMG-564645": {
+      "mood": "romantica",
+      "energy": 4,
+      "evidence": "'Eu tô te querendo / Sabe que ganhou meu coração'"
+    },
+    "UFMG-564728": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "'Meu coração só quer amar você'"
+    },
+    "UFMG-564729": {
+      "mood": "animada",
+      "energy": 5,
+      "evidence": "'Meu carro virou hotel / Vou dormir no banco de couro'"
+    },
+    "UFMG-564744": {
+      "mood": "festiva",
+      "energy": 5,
+      "evidence": "'Beber, dançar, curtir, zuar / Sem compromisso de quem ama'"
+    },
+    "UFMG-564766": {
+      "mood": "animada",
+      "energy": 5,
+      "evidence": "'Vai tocar no paredão e fazer enlouquecer'"
+    },
+    "UFMG-564779": {
+      "mood": "sofrida",
+      "energy": 4,
+      "evidence": "'Fique com ela / Eu não vou ficar chorando por quem não quer me amar'"
+    },
+    "UFMG-564823": {
+      "mood": "romantica",
+      "energy": 3,
+      "evidence": "'Não me deixe tão sozinha / Vem que eu preciso de carinho'"
+    },
+    "UFMG-564885": {
+      "mood": "animada",
+      "energy": 4,
+      "evidence": "'Solteiro não leva chifre / Pode ficar com quem quiser'"
+    },
+    "UFMG-564927": {
+      "mood": "animada",
+      "energy": 5,
+      "evidence": "'Toma! Toma! / Então toma aí, vai!'"
+    },
+    "UFMG-564966": {
+      "mood": "romantica",
+      "energy": 4,
+      "evidence": "'Vou me declarar nas vogais da paixão / Que no meu coração'"
     }
   }
 }
