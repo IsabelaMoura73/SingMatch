@@ -61,3 +61,30 @@ def test_karaoke_title_must_be_exact():
     right = KARAOKE_NOISE.sub(" ", "Karaokê Dezessete e Setecentos - Luiz Gonzaga")
     assert not video_matches("São João do Carneirinho", gonzaga, wrong, "", exact=True)
     assert video_matches("Dezessete E Setecentos", gonzaga, right, "", exact=True)
+
+
+def test_reviewed_karaoke_file_is_validated(tmp_path):
+    import json
+
+    from scripts.build_catalog import DATA, load_reviewed_karaoke
+
+    assert load_reviewed_karaoke(tmp_path / "nao_existe.json") == {}
+    ok = {"song_id": "PESQ-x", "youtube_video_id": "abcdefghijk", "duration_seconds": 180, "verificado_em": "2026-11-08"}
+    path = tmp_path / "k.json"
+    path.write_text(json.dumps({"aprovados": [ok]}), encoding="utf-8")
+    assert load_reviewed_karaoke(path)["PESQ-x"]["youtube_video_id"] == "abcdefghijk"
+    for bad in ({"youtube_video_id": "curto"}, {"duration_seconds": 20}):
+        path.write_text(json.dumps({"aprovados": [{**ok, **bad}]}), encoding="utf-8")
+        with pytest.raises(ValueError):
+            load_reviewed_karaoke(path)
+    # O arquivo real, se existir, aponta só para karaokês presentes no catálogo e nunca para vídeo
+    # comprovadamente bloqueado no player incorporado (/verificar.html).
+    real = DATA / "fontes" / "karaoke_revisado.json"
+    if real.is_file():
+        catalog = json.loads((DATA / "catalogo_forro.json").read_text(encoding="utf-8"))
+        kar = {(v["song_id"], v["youtube_video_id"]) for v in catalog["karaoke_versions"] if v["kind"] == "karaoke"}
+        checked = DATA / "fontes" / "videos_verificados.json"
+        blocked = set(json.loads(checked.read_text(encoding="utf-8")).get("bloqueados", [])) if checked.is_file() else set()
+        for song_id, entry in load_reviewed_karaoke(real).items():
+            assert (song_id, entry["youtube_video_id"]) in kar, song_id
+            assert entry["youtube_video_id"] not in blocked, song_id

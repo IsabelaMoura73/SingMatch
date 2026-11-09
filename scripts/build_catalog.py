@@ -351,6 +351,21 @@ def karaoke_options(http: Http, title: str, artists: list[str], duration: int | 
     return found
 
 
+def load_reviewed_karaoke(path: Path) -> dict[str, dict]:
+    """song_id -> karaokê aprovado por revisão humana/IA dos prints do player oficial.
+
+    Cobre músicas cujo karaokê a busca automática não acha (título diferente, duração fora
+    da janela de 45 s...). Cada entrada já tocou incorporada e teve a letra conferida na tela.
+    """
+    if not path.is_file():
+        return {}
+    entries = json.loads(path.read_text(encoding="utf-8"))["aprovados"]
+    for e in entries:
+        if not re.fullmatch(r"[A-Za-z0-9_-]{11}", e["youtube_video_id"]) or int(e["duration_seconds"]) < 60:
+            raise ValueError(f"karaokê revisado inválido: {e}")
+    return {e["song_id"]: e for e in entries}
+
+
 def clean_lrc(lrc: str) -> str:
     lines = []
     for raw in lrc.splitlines():
@@ -410,6 +425,9 @@ def main() -> None:
     parser.add_argument("--offline", action="store_true")
     parser.add_argument("--workers", type=int, default=6, help="requisições em paralelo na pré-busca")
     parser.add_argument("--sem-karaoke", action="store_true", help="não procurar vídeos de karaokê")
+    parser.add_argument("--karaoke-revisado", type=Path, default=DATA / "fontes" / "karaoke_revisado.json",
+                        help="karaokês aprovados por revisão de prints do player (usados quando a busca automática "
+                             "não acha um)")
     args = parser.parse_args()
     sys.stdout.reconfigure(encoding="utf-8")
     letras_dir = args.saida.parent / "letras"
@@ -540,11 +558,19 @@ def main() -> None:
             with ThreadPoolExecutor(args.workers) as pool:
                 list(pool.map(lambda t: karaoke_options(http, t[0]["title"], t[0]["artists"], t[1]["duration_seconds"],
                                                         blocked_videos), targets))
-        karaoke_count = 0
+        reviewed = load_reviewed_karaoke(args.karaoke_revisado)
+        karaoke_count = reviewed_count = 0
         for song, letra in targets:
             options = [o for o in karaoke_options(http, song["title"], song["artists"], letra["duration_seconds"],
                                                   blocked_videos) if o["video_id"] not in used_videos]
             chosen = next((o for o in options if o["video_id"] in ok_videos), None)
+            origin, verified_at = "busca_youtube_karaoke", today
+            if chosen is None:
+                manual = reviewed.get(song["id"])
+                if manual and manual["youtube_video_id"] not in used_videos | blocked_videos:
+                    chosen = {"video_id": manual["youtube_video_id"], "duration": manual["duration_seconds"]}
+                    origin, verified_at = "revisao_prints_player", manual["verificado_em"]
+                    reviewed_count += 1
             if chosen is None:
                 to_verify += [o["video_id"] for o in options if o["video_id"] not in to_verify]
                 continue
@@ -553,10 +579,11 @@ def main() -> None:
             versions.append({
                 "id": f"KAR-{chosen['video_id']}", "song_id": by_id[song["id"]]["id"],
                 "youtube_video_id": chosen["video_id"], "kind": "karaoke",
-                "duration_seconds": chosen["duration"], "approved": True, "verified_at": today,
-                "rights_reviewed": False, "video_origin": "busca_youtube_karaoke",
+                "duration_seconds": chosen["duration"], "approved": True, "verified_at": verified_at,
+                "rights_reviewed": False, "video_origin": origin,
             })
-        print(f"{karaoke_count} músicas novas também têm karaokê de verdade (versão principal).")
+        print(f"{karaoke_count} músicas novas também têm karaokê de verdade (versão principal), "
+              f"{reviewed_count} delas vindas de {args.karaoke_revisado.name}.")
 
     catalog = {
         "metadata": {

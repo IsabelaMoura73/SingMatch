@@ -1,0 +1,467 @@
+{
+  "nota": "Karaokês aprovados por revisão dos prints do player oficial do YouTube (30% e 60% do vídeo): um revisor escolhe, um segundo independente tenta refutar. Só vale para músicas em que a busca automática do build_catalog.py não achou karaokê. Reverificar a cada 30 dias.",
+  "aprovados": [
+    {
+      "song_id": "BYRM-l-KSfuOiuvM",
+      "title": "Fique Com A Saudade",
+      "artists": [
+        "Falamansa"
+      ],
+      "youtube_video_id": "39Wi25tnzvE",
+      "duration_seconds": 232,
+      "canal": "JJ Karaokê",
+      "titulo_video": "Fique com a saudade - Falamansa - Karaokê",
+      "verificado_em": "2026-11-08",
+      "evidencia": {
+        "player": "IFrame Player API, tocou incorporado (Chrome, http://localhost)",
+        "prints_em_segundos": [
+          71,
+          140
+        ],
+        "revisor_1": "Karaokê JJ com letra destacada; versos 'Negue todo o seu orgulho / Que eu te asseguro nunca te deixar' conferem",
+        "revisor_2_nao_refutou": "JJ Karaokê, cabeçalho 'FIQUE COM A SAUDADE - Falamansa'; letra com destaque colorido ('Não houver partida / Quero viver mais / Chega perto do meu peito'; 'Negue todo o seu orgulho / Que eu te asseguro nunca te deixar') confere. Não consegui refutar."
+      }
+    },
+    {
+      "song_id": "BYRM-aZXOX7L7siQ",
+      "title": "Colo De Menina",
+      "artists": [
+        "Rastapé"
+      ],
+      "youtube_video_id": "QhbKV9Z1oy0",
+      "duration_seconds": 209,
+      "canal": "Karaokê Club",
+      "titulo_video": "RASTAPÉ - COLO DE MENINA ( KARAOKE )",
+      "verificado_em": "2026-11-08",
+      "evidencia": {
+        "player": "IFrame Player API, tocou incorporado (Chrome, http://localhost)",
+        "prints_em_segundos": [
+          64,
+          127
+        ],
+        "revisor_1": "Karaokê com letra destacada ('Num outro dia a gente se vê', 'Teu coração'), canal Karaokê Club, título KARAOKE",
+        "revisor_2_nao_refutou": "Screenshots show karaoke-style lyric lines with colour highlighting ('Num outro dia / A gente se vê / Teu coração', 'E tento sair / Dessa rotina'), not a performance. Title 'RASTAPÉ - COLO DE MENINA ( KARAOKE )' on the Karaokê Club channel names the song and says karaoke. Nothing announces a lead vocal. The lyric fragments fit the song, so all criteria hold."
+      }
+    },
+    {
+      "song_id": "BYRM-8bOMhVi9ggM",
+      "title": "Coração",
+      "artists": [
+        "Dorgival Dantas"
+      ],
+      "youtube_video_id": "yfnOqv8O97U",
+      "duration_seconds": 251,
+      "canal": "Clubinho do Karaokê",
+      "titulo_video": "Coração - Dorgival Dantas - Karaokê",
+      "verificado_em": "2026-11-08",
+      "evidencia": {
+        "player": "IFrame Player API, tocou incorporado (Chrome, http://localhost)",
+        "prints_em_segundos": [
+          77,
+          152
+        ],
+        "revisor_1": "Karaokê do Clubinho do Karaokê com letra colorida; título confere com a música",
+        "revisor_2_nao_refutou": "Screenshots show colour-highlighted karaoke lyrics ('Eu vou provar do seu carinho / Nunca mais', 'Alguém que só quis me ver sofrer / Alguém que só quis me ver chorar'). These lines belong to Dorgival Dantas's 'Coração'. Title 'Coração - Dorgival Dantas - Karaokê' on the Clubinho do Karaokê channel. Nothing indicates a guide vocal."
+      }
+    },
+    {
+      "song_id": "UFMG-564477",
+      "title": "Alta Estação",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "youtube_video_id": "G9rz2tdDPwg",
+      "duration_seconds": 196,
+      "canal": "GP Karaokê",
+      "titulo_video": "Karaokê Aviões do Forró - Alta Estação",
+      "verificado_em": "2026-11-08",
+      "evidencia": {
+        "player": "IFrame Player API, tocou incorporado (Chrome, http://localhost)",
+        "prints_em_segundos": [
+          60,
+          119
+        ],
+        "revisor_1": "Karaokê com letra destacada ('A chuva já passou é alta estação'), canal GP Karaokê",
+        "revisor_2_nao_refutou": "Screenshots show karaoke lyrics with highlighting ('Vem e tira essa angústia do meu coração / A chuva já passou é alta estação', 'Me salva... Vem me tirar desse castigo'). These are the lyrics of 'Alta Estação' by Aviões do Forró. Title 'Karaokê Aviões do Forró - Alta Estação' on the GP Karaokê channel. Nothing indicates a voice version."
+      }
+    },
+    {
+      "song_id": "PESQ-elba-ramalho-banho-de-cheiro",
+      "title": "Banho de Cheiro",
+      "artists": [
+        "Elba Ramalho"
+      ],
+      "youtube_video_id": "q_ItEMbrWW0",
+      "duration_seconds": 196,
+      "canal": "Canto do KaraoKe",
+      "titulo_video": "3555 Banho De Cheiro - Elba Ramalho (Karaoke)",
+      "verificado_em": "2026-11-08",
+      "evidencia": {
+        "player": "IFrame Player API, tocou incorporado (Chrome, http://localhost)",
+        "prints_em_segundos": [
+          60,
+          119
+        ],
+        "revisor_1": "Karaokê Canto do KaraoKe com letra colorida; 'Sem colher, sem comer' e 'Que charme bonito' conferem",
+        "revisor_2_nao_refutou": "Não refutado; os critérios foram atendidos. No metadado do player (player_e.json), o título é \"3555 Banho De Cheiro - Elba Ramalho (Karaoke)\", o canal é \"Canto do KaraoKe\" e a duração é cerca de 3:16. O número 3555 indica um código de catálogo de karaokê. Nada no título ou no canal anuncia \"com voz\", \"voz guia\", \"cover\" ou \"com <cantor>\". As duas capturas estão legíveis e mostram legenda de karaokê com destaque progressivo de cor sobre fundos de paisagem genéricos. Não aparece nenhum cantor e a imagem não é uma capa estática. Aos 30% (1:00) aparece \"Sem colher, sem comer, / sem...\". Aos 60% (1:57) aparece \"Que charme bonito / foi o santo que deu\". Os trechos condizem com a letra de \"Banho de Cheiro\" (Carlos Fernando), e o próprio vídeo é identificado como essa música. Ressalva: não consegui confirmar a letra palavra por palavra, porque a consulta à web não era permitida. Também não é possível confirmar pelas imagens se o áudio é só instrumental, mas nada indica voz guia."
+      }
+    },
+    {
+      "song_id": "PESQ-elba-ramalho-bate-coracao",
+      "title": "Bate Coração",
+      "artists": [
+        "Elba Ramalho"
+      ],
+      "youtube_video_id": "oxo_BQQxcnQ",
+      "duration_seconds": 206,
+      "canal": "Karaokê ( tim mim junior )",
+      "titulo_video": "Elba Ramalho Bate Coração Karaoke",
+      "verificado_em": "2026-11-08",
+      "evidencia": {
+        "player": "IFrame Player API, tocou incorporado (Chrome, http://localhost)",
+        "prints_em_segundos": [
+          63,
+          125
+        ],
+        "revisor_1": "Karaokê com letra na tela ('Oi tum tum tum bate coração', 'As águas só deságuam para o mar')",
+        "revisor_2_nao_refutou": "Screenshots show karaoke-style on-screen lyrics ('Oi, tum, tum, tum / Bate coração / Que eu morro de amor', 'As águas / Só deságuam para o mar'). These are the lyrics of Elba Ramalho's 'Bate Coração'. Title 'Elba Ramalho Bate Coração Karaoke' on a channel named Karaokê (tim mim junior). No 'com voz', cover or medley in this video's title (the pot-pourri thumbnail is only a suggested video)."
+      }
+    },
+    {
+      "song_id": "PESQ-genival-lacerda-severina-xique-xique",
+      "title": "Severina Xique Xique",
+      "artists": [
+        "Genival Lacerda"
+      ],
+      "youtube_video_id": "lZ8koqazW1E",
+      "duration_seconds": 208,
+      "canal": "CFM Karaokê",
+      "titulo_video": "SEVERINA XIQUE-XIQUE - kARAOKÊ COMPLETO ( VERSÃO ACÚSTICA )",
+      "verificado_em": "2026-11-08",
+      "evidencia": {
+        "player": "IFrame Player API, tocou incorporado (Chrome, http://localhost)",
+        "prints_em_segundos": [
+          64,
+          126
+        ],
+        "revisor_1": "Karaokê CFM (versão acústica) com letra destacada 'Ele tá de olho é na boutique dela'; arranjo diferente aceitável",
+        "revisor_2_nao_refutou": "Canal CFM Karaokê, título 'Karaokê completo (versão acústica)'; as duas screenshots mostram a linha do refrão 'Ele tá de olho é na boutique dela!' com destaque de cor no estilo karaokê. A mesma linha aparece nas duas porque o refrão se repete. Arranjo acústico, mas ainda é karaokê. Não consegui refutar."
+      }
+    },
+    {
+      "song_id": "PESQ-flavio-jose-caboclo-sonhador",
+      "title": "Caboclo sonhador",
+      "artists": [
+        "Flávio José"
+      ],
+      "youtube_video_id": "VNQhHcR6NN0",
+      "duration_seconds": 179,
+      "canal": "flbeto duokê",
+      "titulo_video": "🎤 Caboclo Sonhador - Flávio José -  Karaokê tv+",
+      "verificado_em": "2026-11-08",
+      "evidencia": {
+        "player": "IFrame Player API, tocou incorporado (Chrome, http://localhost)",
+        "prints_em_segundos": [
+          55,
+          109
+        ],
+        "revisor_1": "Karaokê com letra rolando na tela ('Rei do Cangaço', 'Coração tão sertanejo') que confere; título indica Karaokê; duração 2:59",
+        "revisor_2_nao_refutou": "Título 'Karaokê tv+' e logo KARAOKÊ no vídeo; a letra rola na tela ('Rei do Cangaço', 'Em meu regaço / Iluminado em pensamentos', 'Coração tão sertanejo', 'Vejam como anda') e confere com Caboclo Sonhador. Duração 2:59 compatível. Ressalva menor: o nome do canal 'duokê' é ambíguo, mas nada no título anuncia voz guia. Não consegui refutar."
+      }
+    },
+    {
+      "song_id": "PESQ-bicho-de-pe-nosso-xote",
+      "title": "Nosso Xote",
+      "artists": [
+        "Bicho de Pé"
+      ],
+      "youtube_video_id": "Z5ZBfqWLDZY",
+      "duration_seconds": 226,
+      "canal": "Karaokê ( tim mim junior )",
+      "titulo_video": "Bicho de Pé Nosso xote Karaoke",
+      "verificado_em": "2026-11-08",
+      "evidencia": {
+        "player": "IFrame Player API, tocou incorporado (Chrome, http://localhost)",
+        "prints_em_segundos": [
+          69,
+          137
+        ],
+        "revisor_1": "Karaokê com letra na tela ('moreno chega mais pra cá', 'oi oi oi', 'nos braços deste moreno') de Nosso Xote; título indica karaoke; duração próxima.",
+        "revisor_2_nao_refutou": "Both screenshots show karaoke-style lyrics on screen, with highlighting, from Nosso Xote: 'moreno chega mais pra ca', 'meu dengo vem me chamegar', 'oi oi oi', 'e foi nos bracos deste moreno que eu forroziei ate o dia clarear'. The title and the channel both say Karaoke. All criteria hold."
+      }
+    },
+    {
+      "song_id": "PESQ-geraldo-azevedo-taxi-lunar",
+      "title": "Táxi Lunar",
+      "artists": [
+        "Geraldo Azevedo"
+      ],
+      "youtube_video_id": "qjymVahxfbA",
+      "duration_seconds": 236,
+      "canal": "VALDATA KARAOKE MUSICAL",
+      "titulo_video": "Táxi Lunar    Elba Ramalho, Geraldo Azevedo e Zé Ramalho   Karaoke",
+      "verificado_em": "2026-11-08",
+      "evidencia": {
+        "player": "IFrame Player API, tocou incorporado (Chrome, http://localhost)",
+        "prints_em_segundos": [
+          72,
+          143
+        ],
+        "revisor_1": "Karaokê VALDATA com letra destacada ('Pela sua cabeleira vermelha', 'um táxi pra estação lunar'), título indica Karaoke, duração próxima",
+        "revisor_2_nao_refutou": "Both screenshots show karaoke lyric text with red/white highlighting. The lyrics match Táxi Lunar: 'Pela sua cabeleira vermelha / Pelos raios desse sol lilás / Pelo fogo do seu corpo' and 'Apenas apanhei a beira mar / Um táxi pra estação lunar'. The title says Karaoke, the channel is VALDATA KARAOKE MUSICAL and the on-screen file name is a .mid, which means an instrumental MIDI backing. Duration 236s vs 228s. All four criteria hold."
+      }
+    },
+    {
+      "song_id": "PESQ-geraldo-azevedo-chorando-e-cantando",
+      "title": "Chorando e Cantando",
+      "artists": [
+        "Geraldo Azevedo"
+      ],
+      "youtube_video_id": "SrQFTFeYSVQ",
+      "duration_seconds": 279,
+      "canal": "Sua Voz e Violão",
+      "titulo_video": "Geraldo Azevedo - Chorando e cantando (Quando fevereiro chegar...) -  Karokê Violao",
+      "verificado_em": "2026-11-08",
+      "evidencia": {
+        "player": "IFrame Player API, tocou incorporado (Chrome, http://localhost)",
+        "prints_em_segundos": [
+          85,
+          169
+        ],
+        "revisor_1": "Karaokê de violão com letra destacada ('Faz crer, faz desacreditar de tudo', 'Ninguém verá o que eu sonhei'); arranjo diferente mas aceitável.",
+        "revisor_2_nao_refutou": "The lyrics are highlighted on screen over a guitar backing: 'Faz crer, faz desacreditar de tudo e depois, depois amor', 'Ninguem, ninguem vera o que eu sonhei, so voce meu amor'. These are the correct lyrics of Chorando e Cantando. The title says 'Karoke Violao' and the channel is Sua Voz e Violao, which points to an instrumental to sing over. The guitar-only arrangement is still acceptable."
+      }
+    },
+    {
+      "song_id": "PESQ-calcinha-preta-hoje-a-noite",
+      "title": "Hoje à Noite",
+      "artists": [
+        "Calcinha Preta"
+      ],
+      "youtube_video_id": "vO4F-6cnhVA",
+      "duration_seconds": 221,
+      "canal": "GP Karaokê",
+      "titulo_video": "Karaokê Calcinha Preta - Hoje à Noite",
+      "verificado_em": "2026-11-08",
+      "evidencia": {
+        "player": "IFrame Player API, tocou incorporado (Chrome, http://localhost)",
+        "prints_em_segundos": [
+          68,
+          134
+        ],
+        "revisor_1": "Karaokê GP com letra em destaque colorido ('Amor, eu sempre estive sozinha'), título nomeia a música, duração 221s vs 222s",
+        "revisor_2_nao_refutou": "Both screenshots show karaoke lyric lines with colour highlighting ('E agora', 'Eu sempre estive sozinha', 'Até lhe conhecer', 'Amor / Por você é demais...') and a '>>>>>' cue marker. The title 'Karaokê Calcinha Preta - Hoje à Noite' on the GP Karaokê channel names the song and says karaoke, with no voice-guide note. Duration 221s vs 222s. The lyrics fit a Calcinha Preta romantic ballad and nothing points to a different song, though I could not check every line from memory."
+      }
+    },
+    {
+      "song_id": "PESQ-wesley-safadao-camarote",
+      "title": "Camarote",
+      "artists": [
+        "Wesley Safadão"
+      ],
+      "youtube_video_id": "HToPirOp7Yg",
+      "duration_seconds": 180,
+      "canal": "Clubinho do Karaokê",
+      "titulo_video": "Wesley Safadão Camarote (Arrocha) Karaokê",
+      "verificado_em": "2026-11-08",
+      "evidencia": {
+        "player": "IFrame Player API, tocou incorporado (Chrome, http://localhost)",
+        "prints_em_segundos": [
+          56,
+          110
+        ],
+        "revisor_1": "Clubinho do Karaokê com letra destacada de Camarote ('Sem ninguém na geladeira', 'Jogou nossa história num poço sem fundo'); versão arrocha aceitável.",
+        "revisor_2_nao_refutou": "Clubinho do Karaoke video titled 'Camarote (Arrocha) Karaoke', with highlighted karaoke lyrics in both screenshots: 'Sem ninguem na geladeira / E voce de bobeira', 'Jogou nossa historia num poco sem fundo'. These match my memory of Camarote, but I am not fully sure of the exact wording. It is an arrocha arrangement of the same song, not a different song or a medley. All criteria hold."
+      }
+    },
+    {
+      "song_id": "PESQ-wesley-safadao-ele-e-ele-eu-sou-eu",
+      "title": "Ele É Ele, Eu Sou Eu",
+      "artists": [
+        "Wesley Safadão"
+      ],
+      "youtube_video_id": "ijDHjFWIAMo",
+      "duration_seconds": 165,
+      "canal": "Singer! Karaokê",
+      "titulo_video": "Ele é Ele, Eu Sou Eu - Wesley Safadão, Barões da Pisadinha (Karaokê Version)",
+      "verificado_em": "2026-11-08",
+      "evidencia": {
+        "player": "IFrame Player API, tocou incorporado (Chrome, http://localhost)",
+        "prints_em_segundos": [
+          51,
+          101
+        ],
+        "revisor_1": "Singer! Karaokê com letra destacada ('Ele é ele, eu sou eu', 'Tá com trauma de se entregar'); duração compatível.",
+        "revisor_2_nao_refutou": "Singer! Karaoke video titled '(Karaoke Version)', with highlighted karaoke lyrics: 'Por que sofreu! Ele e ele eu sou eu', 'Ta com trauma de se entregar, tem medo de quebrar a cara, entendo ele te fez sofrer, mas por favor nao me compara'. These are the correct lyrics. All criteria hold."
+      }
+    },
+    {
+      "song_id": "PESQ-os-baroes-da-pisadinha-ta-rocheda",
+      "title": "Tá Rocheda",
+      "artists": [
+        "Os Barões da Pisadinha"
+      ],
+      "youtube_video_id": "8POQA83Yl-Y",
+      "duration_seconds": 210,
+      "canal": "CMF PRODUÇÕES",
+      "titulo_video": "KARAOKE PISADINHA - BAROES DA PISADINHA - TA ROCHEDA",
+      "verificado_em": "2026-11-08",
+      "evidencia": {
+        "player": "IFrame Player API, tocou incorporado (Chrome, http://localhost)",
+        "prints_em_segundos": [
+          64,
+          127
+        ],
+        "revisor_1": "Karaokê com letra destacada de Tá Rocheda ('Tá rocheda, tô nem vendo', 'Ela aceitou o convite'); título indica karaoke",
+        "revisor_2_nao_refutou": "Ambos os prints mostram letra em estilo karaokê com destaque colorido ('Tá rocheda, tô nem vendo', 'mais bandida do mundo', 'Ela aceitou o convite, a gente foi cair na farra'), que é a letra de Tá Rocheda. O título diz 'KARAOKE PISADINHA'. Não é medley nem tem voz guia anunciada."
+      }
+    },
+    {
+      "song_id": "PESQ-joao-gomes-dengo",
+      "title": "Dengo",
+      "artists": [
+        "João Gomes"
+      ],
+      "youtube_video_id": "_SCxLu9-i58",
+      "duration_seconds": 165,
+      "canal": "Singer! Karaokê",
+      "titulo_video": "Dengo - João Gomes (Karaokê Version)",
+      "verificado_em": "2026-11-08",
+      "evidencia": {
+        "player": "IFrame Player API, tocou incorporado (Chrome, http://localhost)",
+        "prints_em_segundos": [
+          51,
+          101
+        ],
+        "revisor_1": "Karaokê Version com letra destacada de Dengo ('Tô precisando de dengo', 'vida de farra')",
+        "revisor_2_nao_refutou": "Ambos os prints mostram letra em estilo karaokê com destaque ('Tô precisando de dengo, não vê?', 'Mas eu não quero mais essa vida de farra'), que bate com Dengo de João Gomes. O título diz 'Karaokê Version' e o canal é 'Singer! Karaokê'."
+      }
+    },
+    {
+      "song_id": "PESQ-ze-vaqueiro-eu-tenho-medo",
+      "title": "Eu Tenho Medo",
+      "artists": [
+        "Zé Vaqueiro"
+      ],
+      "youtube_video_id": "pdDa6waEdVQ",
+      "duration_seconds": 219,
+      "canal": "Singer! Karaokê",
+      "titulo_video": "Eu Tenho Medo - Zé Vaqueiro (Karaokê Version)",
+      "verificado_em": "2026-11-08",
+      "evidencia": {
+        "player": "IFrame Player API, tocou incorporado (Chrome, http://localhost)",
+        "prints_em_segundos": [
+          67,
+          133
+        ],
+        "revisor_1": "Karaokê Version com letra destacada de Eu Tenho Medo ('Tenho medo de alguém me machucar')",
+        "revisor_2_nao_refutou": "Ambos os prints mostram letra em estilo karaokê com destaque ('Tenho medo de alguém me machucar', 'Eu tenho medo de me entregar', 'Eu tô com medo de me apaixonar'), que bate com Eu Tenho Medo de Zé Vaqueiro. O título diz 'Karaokê Version' e o canal é 'Singer! Karaokê'."
+      }
+    },
+    {
+      "song_id": "PESQ-tarcisio-do-acordeon-protecao-de-tela",
+      "title": "Proteção de Tela",
+      "artists": [
+        "Tarcísio do Acordeon"
+      ],
+      "youtube_video_id": "XniI5wBZkEQ",
+      "duration_seconds": 217,
+      "canal": "Karaokezinho",
+      "titulo_video": "Proteção de Tela, Tarcísio do Acordeon - Karaokê",
+      "verificado_em": "2026-11-08",
+      "evidencia": {
+        "player": "IFrame Player API, tocou incorporado (Chrome, http://localhost)",
+        "prints_em_segundos": [
+          67,
+          132
+        ],
+        "revisor_1": "Karaokê com letra de Proteção de Tela ('Na minha proteção de tela', 'Ouvindo Tarcísio')",
+        "revisor_2_nao_refutou": "Ambos os prints mostram letra em estilo karaokê ('Na minha proteção de tela', 'E tome cana na minha goela', 'Ouvindo Tarcísio'), que bate com Proteção de Tela. O título diz 'Karaokê' e o canal é 'Karaokezinho'. A duração (217 s) é igual à do original."
+      }
+    },
+    {
+      "song_id": "PESQ-tarcisio-do-acordeon-nega",
+      "title": "Nêga",
+      "artists": [
+        "Tarcísio do Acordeon"
+      ],
+      "youtube_video_id": "dufhRG03hBk",
+      "duration_seconds": 233,
+      "canal": "karaokê Daora",
+      "titulo_video": "Nega - Tarcísio do Acordeon - Karaokê / Playback",
+      "verificado_em": "2026-11-08",
+      "evidencia": {
+        "player": "IFrame Player API, tocou incorporado (Chrome, http://localhost)",
+        "prints_em_segundos": [
+          71,
+          141
+        ],
+        "revisor_1": "Karaokê/playback com letra de Nêga ('Me dê mais uma chance', 'É só uma fase ruim'); duração dentro da margem",
+        "revisor_2_nao_refutou": "Ambos os prints mostram letra em tela em estilo karaokê ('Me dê mais uma chance', 'É só uma fase ruim', 'Te juro meu amor, eu só queria te amar'), coerente com Nêga de Tarcísio do Acordeon. O título diz 'Karaokê / Playback'. O vídeo é cerca de 26 s mais curto que o original (3:54 contra 4:20), provavelmente um corte, mas isso não reprova por nenhum critério."
+      }
+    },
+    {
+      "song_id": "PESQ-vitor-fernandes-acaso",
+      "title": "Acaso",
+      "artists": [
+        "Vitor Fernandes"
+      ],
+      "youtube_video_id": "lOHkMOcGSvM",
+      "duration_seconds": 261,
+      "canal": "Portal Dos playbacks",
+      "titulo_video": "karaokê da musica Acaso (Vitor Fernandes)",
+      "verificado_em": "2026-11-08",
+      "evidencia": {
+        "player": "IFrame Player API, tocou incorporado (Chrome, http://localhost)",
+        "prints_em_segundos": [
+          80,
+          158
+        ],
+        "revisor_1": "Karaokê com letra de Acaso na tela (canal Portal Dos playbacks); duração maior, mas letra confere",
+        "revisor_2_nao_refutou": "Ambos os prints mostram letra em estilo karaokê com destaque vermelho ('Vai deixar o acaso tomar conta', 'Minha menina eu te peço então volta'), que é a letra de Acaso. O título diz 'karaokê' e o canal é Portal Dos playbacks. A duração maior (4:20) não invalida."
+      }
+    },
+    {
+      "song_id": "PESQ-nattan-morena",
+      "title": "Morena",
+      "artists": [
+        "Nattan"
+      ],
+      "youtube_video_id": "LQGiRgxAQbM",
+      "duration_seconds": 181,
+      "canal": "Singer! Karaokê",
+      "titulo_video": "Morena - Nattan (Karaokê Version)",
+      "verificado_em": "2026-11-08",
+      "evidencia": {
+        "player": "IFrame Player API, tocou incorporado (Chrome, http://localhost)",
+        "prints_em_segundos": [
+          56,
+          110
+        ],
+        "revisor_1": "Karaoke Version (Singer! Karaokê) com letra destacada de Morena, duração confere",
+        "revisor_2_nao_refutou": "Karaokê do Singer! Karaokê ('Karaokê Version') com letra destacada em amarelo nos dois prints ('Você não sente pena pelo amor de Deus / Me traz de volta ao teu amor'; 'Pelo bem do meu coração'). O título nomeia Morena - Nattan e a duração bate (3:02 vs 179s)."
+      }
+    },
+    {
+      "song_id": "PESQ-eric-land-chorei-na-vaquejada",
+      "title": "Chorei na Vaquejada",
+      "artists": [
+        "Eric Land"
+      ],
+      "youtube_video_id": "Iu3jJzUA6eU",
+      "duration_seconds": 160,
+      "canal": "Antonio Show Produções",
+      "titulo_video": "KARAOKÊ - CHOREI NA VAQUEJADA - ERIC LAND E TARCÍSIO DO ACORDEON",
+      "verificado_em": "2026-11-08",
+      "evidencia": {
+        "player": "IFrame Player API, tocou incorporado (Chrome, http://localhost)",
+        "prints_em_segundos": [
+          50,
+          98
+        ],
+        "revisor_1": "Karaokê com letra de Chorei na Vaquejada na tela, duração próxima",
+        "revisor_2_nao_refutou": "O título traz 'KARAOKÊ - CHOREI NA VAQUEJADA'. Os dois prints mostram letra em estilo karaokê com destaque amarelo: 'Saudade da minha morena, eu chorei' e 'Tô na vaquejada mas com a mente nela', que é a letra da música. Duração 2:40, próxima da original."
+      }
+    }
+  ]
+}
