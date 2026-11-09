@@ -5569,6 +5569,248 @@
       "verified_at": "2026-11-08",
       "rights_reviewed": false,
       "video_origin": "busca_youtube_karaoke"
+    },
+    {
+      "id": "KAR-39Wi25tnzvE",
+      "song_id": "BYRM-l-KSfuOiuvM",
+      "youtube_video_id": "39Wi25tnzvE",
+      "kind": "karaoke",
+      "duration_seconds": 232,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "revisao_prints_player"
+    },
+    {
+      "id": "KAR-QhbKV9Z1oy0",
+      "song_id": "BYRM-aZXOX7L7siQ",
+      "youtube_video_id": "QhbKV9Z1oy0",
+      "kind": "karaoke",
+      "duration_seconds": 209,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "revisao_prints_player"
+    },
+    {
+      "id": "KAR-yfnOqv8O97U",
+      "song_id": "BYRM-8bOMhVi9ggM",
+      "youtube_video_id": "yfnOqv8O97U",
+      "kind": "karaoke",
+      "duration_seconds": 251,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "revisao_prints_player"
+    },
+    {
+      "id": "KAR-G9rz2tdDPwg",
+      "song_id": "UFMG-564477",
+      "youtube_video_id": "G9rz2tdDPwg",
+      "kind": "karaoke",
+      "duration_seconds": 196,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "revisao_prints_player"
+    },
+    {
+      "id": "KAR-q_ItEMbrWW0",
+      "song_id": "PESQ-elba-ramalho-banho-de-cheiro",
+      "youtube_video_id": "q_ItEMbrWW0",
+      "kind": "karaoke",
+      "duration_seconds": 196,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "revisao_prints_player"
+    },
+    {
+      "id": "KAR-oxo_BQQxcnQ",
+      "song_id": "PESQ-elba-ramalho-bate-coracao",
+      "youtube_video_id": "oxo_BQQxcnQ",
+      "kind": "karaoke",
+      "duration_seconds": 206,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "revisao_prints_player"
+    },
+    {
+      "id": "KAR-lZ8koqazW1E",
+      "song_id": "PESQ-genival-lacerda-severina-xique-xique",
+      "youtube_video_id": "lZ8koqazW1E",
+      "kind": "karaoke",
+      "duration_seconds": 208,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "revisao_prints_player"
+    },
+    {
+      "id": "KAR-VNQhHcR6NN0",
+      "song_id": "PESQ-flavio-jose-caboclo-sonhador",
+      "youtube_video_id": "VNQhHcR6NN0",
+      "kind": "karaoke",
+      "duration_seconds": 179,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "revisao_prints_player"
+    },
+    {
+      "id": "KAR-Z5ZBfqWLDZY",
+      "song_id": "PESQ-bicho-de-pe-nosso-xote",
+      "youtube_video_id": "Z5ZBfqWLDZY",
+      "kind": "karaoke",
+      "duration_seconds": 226,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "revisao_prints_player"
+    },
+    {
+      "id": "KAR-qjymVahxfbA",
+      "song_id": "PESQ-geraldo-azevedo-taxi-lunar",
+      "youtube_video_id": "qjymVahxfbA",
+      "kind": "karaoke",
+      "duration_seconds": 236,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "revisao_prints_player"
+    },
+    {
+      "id": "KAR-SrQFTFeYSVQ",
+      "song_id": "PESQ-geraldo-azevedo-chorando-e-cantando",
+      "youtube_video_id": "SrQFTFeYSVQ",
+      "kind": "karaoke",
+      "duration_seconds": 279,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "revisao_prints_player"
+    },
+    {
+      "id": "KAR-vO4F-6cnhVA",
+      "song_id": "PESQ-calcinha-preta-hoje-a-noite",
+      "youtube_video_id": "vO4F-6cnhVA",
+      "kind": "karaoke",
+      "duration_seconds": 221,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "revisao_prints_player"
+    },
+    {
+      "id": "KAR-HToPirOp7Yg",
+      "song_id": "PESQ-wesley-safadao-camarote",
+      "youtube_video_id": "HToPirOp7Yg",
+      "kind": "karaoke",
+      "duration_seconds": 180,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "revisao_prints_player"
+    },
+    {
+      "id": "KAR-ijDHjFWIAMo",
+      "song_id": "PESQ-wesley-safadao-ele-e-ele-eu-sou-eu",
+      "youtube_video_id": "ijDHjFWIAMo",
+      "kind": "karaoke",
+      "duration_seconds": 165,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "revisao_prints_player"
+    },
+    {
+      "id": "KAR-8POQA83Yl-Y",
+      "song_id": "PESQ-os-baroes-da-pisadinha-ta-rocheda",
+      "youtube_video_id": "8POQA83Yl-Y",
+      "kind": "karaoke",
+      "duration_seconds": 210,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "revisao_prints_player"
+    },
+    {
+      "id": "KAR-_SCxLu9-i58",
+      "song_id": "PESQ-joao-gomes-dengo",
+      "youtube_video_id": "_SCxLu9-i58",
+      "kind": "karaoke",
+      "duration_seconds": 165,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "revisao_prints_player"
+    },
+    {
+      "id": "KAR-pdDa6waEdVQ",
+      "song_id": "PESQ-ze-vaqueiro-eu-tenho-medo",
+      "youtube_video_id": "pdDa6waEdVQ",
+      "kind": "karaoke",
+      "duration_seconds": 219,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "revisao_prints_player"
+    },
+    {
+      "id": "KAR-XniI5wBZkEQ",
+      "song_id": "PESQ-tarcisio-do-acordeon-protecao-de-tela",
+      "youtube_video_id": "XniI5wBZkEQ",
+      "kind": "karaoke",
+      "duration_seconds": 217,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "revisao_prints_player"
+    },
+    {
+      "id": "KAR-dufhRG03hBk",
+      "song_id": "PESQ-tarcisio-do-acordeon-nega",
+      "youtube_video_id": "dufhRG03hBk",
+      "kind": "karaoke",
+      "duration_seconds": 233,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "revisao_prints_player"
+    },
+    {
+      "id": "KAR-lOHkMOcGSvM",
+      "song_id": "PESQ-vitor-fernandes-acaso",
+      "youtube_video_id": "lOHkMOcGSvM",
+      "kind": "karaoke",
+      "duration_seconds": 261,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "revisao_prints_player"
+    },
+    {
+      "id": "KAR-LQGiRgxAQbM",
+      "song_id": "PESQ-nattan-morena",
+      "youtube_video_id": "LQGiRgxAQbM",
+      "kind": "karaoke",
+      "duration_seconds": 181,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "revisao_prints_player"
+    },
+    {
+      "id": "KAR-Iu3jJzUA6eU",
+      "song_id": "PESQ-eric-land-chorei-na-vaquejada",
+      "youtube_video_id": "Iu3jJzUA6eU",
+      "kind": "karaoke",
+      "duration_seconds": 160,
+      "approved": true,
+      "verified_at": "2026-11-08",
+      "rights_reviewed": false,
+      "video_origin": "revisao_prints_player"
     }
   ]
 }
