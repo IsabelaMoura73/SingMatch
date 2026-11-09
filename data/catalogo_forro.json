@@ -3567,6 +3567,777 @@
       "duration_ms": 160000,
       "source": "pesquisa_lrclib_2026-11",
       "source_id": "mari-fernandez-agonia"
+    },
+    {
+      "id": "BYRM-BpckPkFf1MQ",
+      "title": "Ataiô",
+      "artists": [
+        "Rastapé"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "saudosa",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "saudosa",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        }
+      ],
+      "duration_ms": 178000,
+      "source": "byrm_zenodo_16617888",
+      "source_id": "BpckPkFf1MQ"
+    },
+    {
+      "id": "UFMG-564479",
+      "title": "Chupa Que é de Uva",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 5,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "5",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "raiva",
+          "source": "ufmg_zenodo_12733931#linha=564479"
+        }
+      ],
+      "duration_ms": 180000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564479"
+    },
+    {
+      "id": "UFMG-564489",
+      "title": "A Diferença Está No Ar",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 5,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "5",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "alegria",
+          "source": "ufmg_zenodo_12733931#linha=564489"
+        }
+      ],
+      "duration_ms": 155000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564489"
+    },
+    {
+      "id": "UFMG-564500",
+      "title": "Adeus Até Nunca Mais",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "sofrida",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "sofrida",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "alegria",
+          "source": "ufmg_zenodo_12733931#linha=564500"
+        }
+      ],
+      "duration_ms": 207000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564500"
+    },
+    {
+      "id": "UFMG-564530",
+      "title": "Balançando O Esqueleto",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 5,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "5",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "alegria",
+          "source": "ufmg_zenodo_12733931#linha=564530"
+        }
+      ],
+      "duration_ms": 181000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564530"
+    },
+    {
+      "id": "UFMG-564531",
+      "title": "Banca de Flores",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "sofrida",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "sofrida",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "raiva",
+          "source": "ufmg_zenodo_12733931#linha=564531"
+        }
+      ],
+      "duration_ms": 200000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564531"
+    },
+    {
+      "id": "UFMG-564533",
+      "title": "Barba, Cabelo e Bigode",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 5,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "5",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "alegria",
+          "source": "ufmg_zenodo_12733931#linha=564533"
+        }
+      ],
+      "duration_ms": 192000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564533"
+    },
+    {
+      "id": "UFMG-564543",
+      "title": "Brinquedo Em Suas Mãos",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "sofrida",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "sofrida",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "alegria",
+          "source": "ufmg_zenodo_12733931#linha=564543"
+        }
+      ],
+      "duration_ms": 166052,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564543"
+    },
+    {
+      "id": "UFMG-564593",
+      "title": "Desse Modelo",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "raiva",
+          "source": "ufmg_zenodo_12733931#linha=564593"
+        }
+      ],
+      "duration_ms": 133564,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564593"
+    },
+    {
+      "id": "UFMG-564613",
+      "title": "Ele Bebe, Ele Fuma, Ele Foge",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 5,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "5",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "raiva",
+          "source": "ufmg_zenodo_12733931#linha=564613"
+        }
+      ],
+      "duration_ms": 211000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564613"
+    },
+    {
+      "id": "UFMG-564632",
+      "title": "Eu Não Vou Mais Chorar",
+      "artists": [
+        "Aviões do Forró",
+        "Dorgival Dantas"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "sofrida",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "sofrida",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "tristeza",
+          "source": "ufmg_zenodo_12733931#linha=564632"
+        }
+      ],
+      "duration_ms": 190000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564632"
+    },
+    {
+      "id": "UFMG-564636",
+      "title": "Eu Quero Ser Feliz",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "alegria",
+          "source": "ufmg_zenodo_12733931#linha=564636"
+        }
+      ],
+      "duration_ms": 217000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564636"
+    },
+    {
+      "id": "UFMG-564645",
+      "title": "Eu Tô Te Querendo",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "raiva",
+          "source": "ufmg_zenodo_12733931#linha=564645"
+        }
+      ],
+      "duration_ms": 170000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564645"
+    },
+    {
+      "id": "UFMG-564728",
+      "title": "Meu Bebê",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "alegria",
+          "source": "ufmg_zenodo_12733931#linha=564728"
+        }
+      ],
+      "duration_ms": 158989,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564728"
+    },
+    {
+      "id": "UFMG-564729",
+      "title": "Meu Carro Virou Hotel",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 5,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "5",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "raiva",
+          "source": "ufmg_zenodo_12733931#linha=564729"
+        }
+      ],
+      "duration_ms": 155000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564729"
+    },
+    {
+      "id": "UFMG-564744",
+      "title": "Namoro Sério é Prejuízo",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 5,
+      "mood": "festiva",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "festiva",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "5",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "raiva",
+          "source": "ufmg_zenodo_12733931#linha=564744"
+        }
+      ],
+      "duration_ms": 197000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564744"
+    },
+    {
+      "id": "UFMG-564754",
+      "title": "Não Quero Me Amarrar",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "raiva",
+          "source": "ufmg_zenodo_12733931#linha=564754"
+        }
+      ],
+      "duration_ms": 195000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564754"
+    },
+    {
+      "id": "UFMG-564766",
+      "title": "No Toque do Celular",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 5,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "5",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "raiva",
+          "source": "ufmg_zenodo_12733931#linha=564766"
+        }
+      ],
+      "duration_ms": 202000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564766"
+    },
+    {
+      "id": "UFMG-564779",
+      "title": "O Saco E O Lixo",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "sofrida",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "sofrida",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "raiva",
+          "source": "ufmg_zenodo_12733931#linha=564779"
+        }
+      ],
+      "duration_ms": 194000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564779"
+    },
+    {
+      "id": "UFMG-564800",
+      "title": "Pense Aí",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "sofrida",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "sofrida",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "alegria",
+          "source": "ufmg_zenodo_12733931#linha=564800"
+        }
+      ],
+      "duration_ms": 168000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564800"
+    },
+    {
+      "id": "UFMG-564823",
+      "title": "Preciso de Carinho",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "alegria",
+          "source": "ufmg_zenodo_12733931#linha=564823"
+        }
+      ],
+      "duration_ms": 235000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564823"
+    },
+    {
+      "id": "UFMG-564850",
+      "title": "Reza Aí",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 3,
+      "mood": "sofrida",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "sofrida",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "3",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "tristeza",
+          "source": "ufmg_zenodo_12733931#linha=564850"
+        }
+      ],
+      "duration_ms": 154000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564850"
+    },
+    {
+      "id": "UFMG-564885",
+      "title": "Solteiro Não Leva Chifre",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "raiva",
+          "source": "ufmg_zenodo_12733931#linha=564885"
+        }
+      ],
+      "duration_ms": 160000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564885"
+    },
+    {
+      "id": "UFMG-564927",
+      "title": "Toma Sua Gostosa",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 5,
+      "mood": "animada",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "animada",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "5",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "raiva",
+          "source": "ufmg_zenodo_12733931#linha=564927"
+        }
+      ],
+      "duration_ms": 163000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564927"
+    },
+    {
+      "id": "UFMG-564966",
+      "title": "Vogais da Paixão",
+      "artists": [
+        "Aviões do Forró"
+      ],
+      "genre": "forro",
+      "energy": 4,
+      "mood": "romantica",
+      "duet_possible": false,
+      "tags": [
+        {
+          "attribute": "clima",
+          "value": "romantica",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "energia",
+          "value": "4",
+          "source": "curadoria_ia_2026-11-08_revisar"
+        },
+        {
+          "attribute": "emocao_letra",
+          "value": "alegria",
+          "source": "ufmg_zenodo_12733931#linha=564966"
+        }
+      ],
+      "duration_ms": 200000,
+      "source": "ufmg_zenodo_12733931",
+      "source_id": "564966"
     }
   ],
   "karaoke_versions": [
@@ -5811,6 +6582,331 @@
       "verified_at": "2026-11-08",
       "rights_reviewed": false,
       "video_origin": "revisao_prints_player"
+    },
+    {
+      "id": "LET-BpckPkFf1MQ",
+      "song_id": "BYRM-BpckPkFf1MQ",
+      "youtube_video_id": "BpckPkFf1MQ",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 177,
+      "approved": true,
+      "verified_at": "2026-11-09",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-BpckPkFf1MQ.lrc",
+      "lyrics_source": "lrclib.net#id=5110070",
+      "video_origin": "dataset"
+    },
+    {
+      "id": "LET-uODEG2vq5vg",
+      "song_id": "UFMG-564479",
+      "youtube_video_id": "uODEG2vq5vg",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 180,
+      "approved": true,
+      "verified_at": "2026-11-09",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-uODEG2vq5vg.lrc",
+      "lyrics_source": "lrclib.net#id=10879066",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-Z_AjoOAXPaQ",
+      "song_id": "UFMG-564489",
+      "youtube_video_id": "Z_AjoOAXPaQ",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 155,
+      "approved": true,
+      "verified_at": "2026-11-09",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-Z_AjoOAXPaQ.lrc",
+      "lyrics_source": "lrclib.net#id=13914584",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET--XeyAjGIY64",
+      "song_id": "UFMG-564500",
+      "youtube_video_id": "-XeyAjGIY64",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 207,
+      "approved": true,
+      "verified_at": "2026-11-09",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET--XeyAjGIY64.lrc",
+      "lyrics_source": "lrclib.net#id=13093847",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-jlwgIRVp8GE",
+      "song_id": "UFMG-564530",
+      "youtube_video_id": "jlwgIRVp8GE",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 181,
+      "approved": true,
+      "verified_at": "2026-11-09",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-jlwgIRVp8GE.lrc",
+      "lyrics_source": "lrclib.net#id=34964689",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-UZJM3jSZUjQ",
+      "song_id": "UFMG-564531",
+      "youtube_video_id": "UZJM3jSZUjQ",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 199,
+      "approved": true,
+      "verified_at": "2026-11-09",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-UZJM3jSZUjQ.lrc",
+      "lyrics_source": "lrclib.net#id=29633849",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-kvrkW3-UtLs",
+      "song_id": "UFMG-564533",
+      "youtube_video_id": "kvrkW3-UtLs",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 192,
+      "approved": true,
+      "verified_at": "2026-11-09",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-kvrkW3-UtLs.lrc",
+      "lyrics_source": "lrclib.net#id=14138353",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-uGf6XF83kf8",
+      "song_id": "UFMG-564543",
+      "youtube_video_id": "uGf6XF83kf8",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 166,
+      "approved": true,
+      "verified_at": "2026-11-09",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-uGf6XF83kf8.lrc",
+      "lyrics_source": "lrclib.net#id=24906895",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-DxrAAQDdGA4",
+      "song_id": "UFMG-564593",
+      "youtube_video_id": "DxrAAQDdGA4",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 134,
+      "approved": true,
+      "verified_at": "2026-11-09",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-DxrAAQDdGA4.lrc",
+      "lyrics_source": "lrclib.net#id=24326269",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-8mbe3IIlv9Q",
+      "song_id": "UFMG-564613",
+      "youtube_video_id": "8mbe3IIlv9Q",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 211,
+      "approved": true,
+      "verified_at": "2026-11-09",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-8mbe3IIlv9Q.lrc",
+      "lyrics_source": "lrclib.net#id=26303459",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-p8jV56WwycM",
+      "song_id": "UFMG-564632",
+      "youtube_video_id": "p8jV56WwycM",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 190,
+      "approved": true,
+      "verified_at": "2026-11-09",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-p8jV56WwycM.lrc",
+      "lyrics_source": "lrclib.net#id=18362947",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-O_AcYdgThEc",
+      "song_id": "UFMG-564636",
+      "youtube_video_id": "O_AcYdgThEc",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 217,
+      "approved": true,
+      "verified_at": "2026-11-09",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-O_AcYdgThEc.lrc",
+      "lyrics_source": "lrclib.net#id=34964738",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-kulA8ewb0Wo",
+      "song_id": "UFMG-564645",
+      "youtube_video_id": "kulA8ewb0Wo",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 170,
+      "approved": true,
+      "verified_at": "2026-11-09",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-kulA8ewb0Wo.lrc",
+      "lyrics_source": "lrclib.net#id=34964744",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-kgmlunKLl7Q",
+      "song_id": "UFMG-564728",
+      "youtube_video_id": "kgmlunKLl7Q",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 158,
+      "approved": true,
+      "verified_at": "2026-11-09",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-kgmlunKLl7Q.lrc",
+      "lyrics_source": "lrclib.net#id=25426574",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-kVBP82unEF8",
+      "song_id": "UFMG-564729",
+      "youtube_video_id": "kVBP82unEF8",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 155,
+      "approved": true,
+      "verified_at": "2026-11-09",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-kVBP82unEF8.lrc",
+      "lyrics_source": "lrclib.net#id=12076670",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-5atB6ZbvNPg",
+      "song_id": "UFMG-564744",
+      "youtube_video_id": "5atB6ZbvNPg",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 198,
+      "approved": true,
+      "verified_at": "2026-11-09",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-5atB6ZbvNPg.lrc",
+      "lyrics_source": "lrclib.net#id=12948200",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-oDewRinnPFM",
+      "song_id": "UFMG-564754",
+      "youtube_video_id": "oDewRinnPFM",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 195,
+      "approved": true,
+      "verified_at": "2026-11-09",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-oDewRinnPFM.lrc",
+      "lyrics_source": "lrclib.net#id=12882017",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-FYATdS44uZA",
+      "song_id": "UFMG-564766",
+      "youtube_video_id": "FYATdS44uZA",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 202,
+      "approved": true,
+      "verified_at": "2026-11-09",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-FYATdS44uZA.lrc",
+      "lyrics_source": "lrclib.net#id=11832682",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-pXTN-ZRGuPw",
+      "song_id": "UFMG-564779",
+      "youtube_video_id": "pXTN-ZRGuPw",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 194,
+      "approved": true,
+      "verified_at": "2026-11-09",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-pXTN-ZRGuPw.lrc",
+      "lyrics_source": "lrclib.net#id=6241674",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-ydpcwMwq4vw",
+      "song_id": "UFMG-564800",
+      "youtube_video_id": "ydpcwMwq4vw",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 167,
+      "approved": true,
+      "verified_at": "2026-11-09",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-ydpcwMwq4vw.lrc",
+      "lyrics_source": "lrclib.net#id=35497462",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-bBFDMOpIz_g",
+      "song_id": "UFMG-564823",
+      "youtube_video_id": "bBFDMOpIz_g",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 235,
+      "approved": true,
+      "verified_at": "2026-11-09",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-bBFDMOpIz_g.lrc",
+      "lyrics_source": "lrclib.net#id=29540013",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-OIuIO__AwMA",
+      "song_id": "UFMG-564850",
+      "youtube_video_id": "OIuIO__AwMA",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 153,
+      "approved": true,
+      "verified_at": "2026-11-09",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-OIuIO__AwMA.lrc",
+      "lyrics_source": "lrclib.net#id=11741504",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-q12tKThxDIg",
+      "song_id": "UFMG-564885",
+      "youtube_video_id": "q12tKThxDIg",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 160,
+      "approved": true,
+      "verified_at": "2026-11-09",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-q12tKThxDIg.lrc",
+      "lyrics_source": "lrclib.net#id=12200797",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-J8REGKQH-ZY",
+      "song_id": "UFMG-564927",
+      "youtube_video_id": "J8REGKQH-ZY",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 162,
+      "approved": true,
+      "verified_at": "2026-11-09",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-J8REGKQH-ZY.lrc",
+      "lyrics_source": "lrclib.net#id=13102139",
+      "video_origin": "busca_youtube"
+    },
+    {
+      "id": "LET-TmG_jI9Mhz0",
+      "song_id": "UFMG-564966",
+      "youtube_video_id": "TmG_jI9Mhz0",
+      "kind": "letra_sincronizada",
+      "duration_seconds": 200,
+      "approved": true,
+      "verified_at": "2026-11-09",
+      "rights_reviewed": false,
+      "lyrics_file": "letras/LET-TmG_jI9Mhz0.lrc",
+      "lyrics_source": "lrclib.net#id=12948194",
+      "video_origin": "busca_youtube"
     }
   ]
 }
