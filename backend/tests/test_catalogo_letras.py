@@ -13,9 +13,19 @@ from sqlalchemy.pool import StaticPool
 
 from app.database import get_db
 from app.main import app
-from app.matching import eligible_candidates
+from app.matching import (
+    MatchingError,
+    eligible_candidates,
+    validate_solo_script,
+)
 from app.models import Base
-from app.schemas import KaraokeVersion, PreferenceLabel, ProfileConfirmed, Song
+from app.schemas import (
+    KaraokeVersion,
+    PreferenceLabel,
+    ProfileConfirmed,
+    ScriptProposal,
+    Song,
+)
 from app.models import KaraokeVersionRow
 from scripts.import_catalog import FILE_ONLY_FIELDS, PILOT as PILOT_PATH, revoke_blocked, seed_all, seed_catalog
 
@@ -138,12 +148,91 @@ def test_blocked_video_is_replaced_on_old_db_or_approval_revoked():
     engine.dispose()
 
 
-def test_real_karaoke_is_preferred_over_sing_along():
+def test_matching_aceita_somente_karaokes():
     songs, versions = _all_contracts()
-    with_karaoke = {v.song_id for v in versions if v.kind == "karaoke" and v.id.startswith("KAR-") and v.song_id.startswith(("BYRM", "UFMG", "PESQ"))}
-    assert with_karaoke, "nenhuma música nova com karaokê"
-    allowed = eligible_candidates("forro", {"p1": ProfileConfirmed()}, songs, versions)["p1"]
-    kind = {v.id: v.kind for v in versions}
-    song_of = {v.id: v.song_id for v in versions}
-    chosen = {song_of[v]: kind[v] for v in allowed}
-    assert all(chosen[s] == "karaoke" for s in with_karaoke)
+
+    allowed = eligible_candidates(
+        "forro",
+        {"p1": ProfileConfirmed()},
+        songs,
+        versions,
+    )["p1"]
+
+    versions_by_id = {v.id: v for v in versions}
+
+    # Deve existir pelo menos uma música disponível.
+    assert allowed
+
+    # Todas precisam ser karaokês.
+    assert all(
+        versions_by_id[video_id].kind == "karaoke"
+        for video_id in allowed
+    )
+
+    # Todas precisam estar aprovadas.
+    assert all(
+        versions_by_id[video_id].approved
+        for video_id in allowed
+    )
+
+def test_sem_karaoke_nao_existe_fallback():
+    songs, versions = _all_contracts()
+
+    # Simula um catálogo contendo somente
+    # vídeos com a voz original do cantor.
+    only_originals = [
+        v for v in versions
+        if v.kind == "letra_sincronizada"
+    ]
+
+    with pytest.raises(
+        MatchingError,
+        match="Não há vídeos de karaokê"
+    ):
+        eligible_candidates(
+            "forro",
+            {"p1": ProfileConfirmed()},
+            songs,
+            only_originals,
+        )
+
+def test_edicao_manual_rejeita_voz_original():
+    songs, versions = _all_contracts()
+
+    profiles = {"p1": ProfileConfirmed()}
+
+    allowed = eligible_candidates(
+        "forro",
+        profiles,
+        songs,
+        versions,
+    )
+
+    # Seleciona uma versão com voz original.
+    original = next(
+        v for v in versions
+        if v.kind == "letra_sincronizada"
+    )
+
+    # Simula um roteiro que tenta utilizá-la.
+    proposal = ScriptProposal(
+        title="Roteiro inválido",
+        items=[
+            {
+                "position": 1,
+                "karaoke_version_id": original.id,
+                "participant_ids": ["p1"],
+            }
+        ],
+    )
+
+    # O backend deve rejeitar a tentativa.
+    with pytest.raises(
+        MatchingError,
+        match="não permitido"
+    ):
+        validate_solo_script(
+            proposal,
+            profiles,
+            allowed,
+        )

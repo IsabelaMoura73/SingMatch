@@ -100,7 +100,7 @@ def test_script_rejects_duet(catalog):
 
 def test_no_candidates_or_not_enough_distinct_videos(catalog):
     songs, versions = catalog
-    with pytest.raises(MatchingError, match="Não há vídeos aprovados"):
+    with pytest.raises(MatchingError, match="Não há vídeos de karaokê aprovados"):
         eligible_candidates("rock", profiles(), songs, versions)
     with pytest.raises(MatchingError, match="Sem solução"):
         eligible_candidates("forro", profiles(), songs, versions[:2])
