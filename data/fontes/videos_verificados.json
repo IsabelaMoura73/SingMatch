@@ -70,6 +70,13 @@
       "ok": 25,
       "bloqueados": 0,
       "sem_resposta": 0
+    },
+    {
+      "origem": "https://singmatch.onrender.com",
+      "verificado_em": "2026-11-10T12:23:39.026Z",
+      "ok": 54,
+      "bloqueados": 0,
+      "sem_resposta": 0
     }
   ],
   "ok": [

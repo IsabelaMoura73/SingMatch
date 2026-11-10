@@ -27,7 +27,15 @@ from app.schemas import (
     Song,
 )
 from app.models import KaraokeVersionRow
-from scripts.import_catalog import FILE_ONLY_FIELDS, PILOT as PILOT_PATH, revoke_blocked, seed_all, seed_catalog
+from scripts.import_catalog import (
+    FILE_ONLY_FIELDS,
+    PILOT as PILOT_PATH,
+    load_audit,
+    revoke_blocked,
+    revoke_unreviewed,
+    seed_all,
+    seed_catalog,
+)
 
 ROOT = Path(__file__).resolve().parents[2]
 PILOT = json.loads((ROOT / "data" / "catalogo_piloto.json").read_text(encoding="utf-8"))
@@ -236,3 +244,57 @@ def test_edicao_manual_rejeita_voz_original():
             profiles,
             allowed,
         )
+
+def test_load_audit_aceita_somente_aprovados(tmp_path):
+    path = tmp_path / "auditoria.csv"
+
+    path.write_text(
+        "version_id,youtube_url,instrumental,letra_correta,"
+        "reproducao,status\n"
+        "KAR-FOR-001,https://www.youtube.com/watch?v=abc123,"
+        "sim,sim,sim,aprovado\n"
+        "KAR-FOR-002,https://www.youtube.com/watch?v=xyz123,"
+        "pendente,pendente,sim,pendente\n",
+        encoding="utf-8",
+    )
+
+    result = load_audit(path)
+
+    assert result == {
+        "KAR-FOR-001": "abc123"
+    }
+
+
+def test_audit_revoga_nao_revisados_sem_reativar():
+    engine = create_engine(
+        "sqlite+pysqlite://",
+        connect_args={"check_same_thread": False},
+        poolclass=StaticPool,
+    )
+
+    Base.metadata.create_all(engine)
+
+    with Session(engine) as db:
+        seed_catalog(db, PILOT_PATH)
+
+        first = db.get(KaraokeVersionRow, "KAR-FOR-001")
+        second = db.get(KaraokeVersionRow, "KAR-FOR-002")
+
+        audited = {
+            first.id: first.youtube_video_id
+        }
+
+        revoked = revoke_unreviewed(db, audited, set())
+
+        assert first.approved is True
+        assert second.approved is False
+        assert second.id in revoked
+
+        # Uma reprovação manual posterior não pode ser desfeita.
+        first.approved = False
+
+        revoke_unreviewed(db, audited, set())
+
+        assert first.approved is False
+
+    engine.dispose()
