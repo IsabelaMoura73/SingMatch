@@ -271,6 +271,18 @@ def generate_script(session_id: str, db: Session = DB, token: str = BEARER):
     row = _session(db, session_id)
     _require_host(row, token)
     initial_revision = row.revision
+    previous_script = _current_script(db, row.id)
+
+    previous_video_ids = []
+
+    if (
+        previous_script is not None
+        and previous_script.input_revision == row.revision
+    ):
+        previous_video_ids = [
+            item["karaoke_version_id"]
+            for item in previous_script.items
+        ]
     profiles = _all_profiles(db, row.id)
     songs, videos = get_catalog(db, row.genre)
     try:
@@ -279,7 +291,7 @@ def generate_script(session_id: str, db: Session = DB, token: str = BEARER):
     except MatchingError as exc:
         raise conflict(str(exc)) from exc
     try:
-        proposal = compor_roteiro_solo(row.genre, row.intention, profiles, songs, videos)
+        proposal = compor_roteiro_solo(row.genre, row.intention, profiles, songs, videos, previous_video_ids=previous_video_ids,)
     except LLMServiceError as exc:
         raise HTTPException(status_code=502, detail=str(exc)) from exc
     db.expire_all()

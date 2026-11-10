@@ -111,3 +111,68 @@ def test_unknown_tag_veto_blocks_when_no_evidence(catalog):
     ps = {"P1": ProfileConfirmed(vetoes=[{"category": "tag", "value": "muito triste", "evidence": "não gosto de triste"}])}
     with pytest.raises(MatchingError, match="nenhuma música elegível"):
         eligible_candidates("forro", ps, songs, versions)
+
+def test_matching_prioriza_novidade_em_caso_de_empate(catalog):
+    songs, versions = catalog
+
+    profiles = {
+        "P1": ProfileConfirmed()
+    }
+
+    original = eligible_candidates(
+        "forro",
+        profiles,
+        songs,
+        versions,
+    )["P1"]
+
+    primeiro_video = original[0]
+
+    novo = eligible_candidates(
+        "forro",
+        profiles,
+        songs,
+        versions,
+        previous_video_ids=[primeiro_video],
+    )["P1"]
+
+    # Um vídeo diferente passa a ser prioridade.
+    assert novo[0] != primeiro_video
+
+    # O vídeo antigo continua permitido.
+    assert primeiro_video in novo
+
+def test_llm_recebe_historico_do_roteiro(catalog):
+    songs, versions = catalog
+
+    fake = FakeClient({
+        "title": "Forró renovado",
+        "items": [
+            {
+                "position": 1,
+                "karaoke_version_id": "KAR-FOR-002",
+                "participant_ids": ["P1"],
+                "justification": "Nova escolha para a rodada.",
+            }
+        ],
+    })
+
+    compor_roteiro_solo(
+        "forro",
+        "",
+        {"P1": ProfileConfirmed()},
+        songs,
+        versions,
+        previous_video_ids=["KAR-FOR-001"],
+        client=fake,
+    )
+
+    enviado = json.loads(fake.requests[0]["input"])
+
+    assert enviado["previous_script_karaoke_version_ids"] == [
+        "KAR-FOR-001"
+    ]
+
+    assert enviado["participants"]["P1"][
+        "allowed_karaoke_version_ids"
+    ][0] != "KAR-FOR-001"

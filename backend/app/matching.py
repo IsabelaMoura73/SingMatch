@@ -80,9 +80,12 @@ def eligible_candidates(
     profiles: dict[str, ProfileConfirmed],
     songs: Sequence[Song],
     karaoke_versions: Sequence[KaraokeVersion],
+    *,
+    previous_video_ids: Sequence[str] = (),
 ) -> dict[str, list[str]]:
     if not profiles:
         raise MatchingError("É necessário ter pelo menos um participante.")
+    previous = set(previous_video_ids)
     songs_by_id = {song.id: song for song in songs}
     known_moods = {s.mood for s in songs if s.mood}
     approved_all = [
@@ -124,7 +127,13 @@ def eligible_candidates(
             for veto in musical_vetoes
         )]
         eligible.sort(
-            key=lambda v: -sum(matches_like(songs_by_id[v.song_id], like) for like in profile.likes)
+            key=lambda v: (
+                -sum(
+                    matches_like(songs_by_id[v.song_id], like)
+                    for like in profile.likes
+                ),
+                v.id in previous,
+            )
         )
         result[participant_id] = [v.id for v in eligible]
         if not result[participant_id]:

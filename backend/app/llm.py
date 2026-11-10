@@ -161,6 +161,7 @@ def compor_roteiro_solo(
     songs: Sequence[Song],
     versions: Sequence[KaraokeVersion],
     *,
+    previous_video_ids: Sequence[str] = (),
     client: Any | None = None,
     model: str | None = None,
 ) -> ScriptProposal:
@@ -168,7 +169,13 @@ def compor_roteiro_solo(
 
     A proposta NÃO é aprovada automaticamente. O organizador revisará depois.
     """
-    allowed = eligible_candidates(genre, profiles, songs, versions)
+    allowed = eligible_candidates(
+        genre,
+        profiles,
+        songs,
+        versions,
+        previous_video_ids=previous_video_ids,
+    )
     songs_by_id = {s.id: s for s in songs}
     versions_by_id = {v.id: v for v in versions}
     relevant_ids = {video for values in allowed.values() for video in values}
@@ -194,10 +201,20 @@ Responda SOMENTE os campos do esquema estruturado.
 - Crie um título curto e justificativas em português; evite afirmar gostos que não estejam nos perfis.
 - Siga a intenção de clima/progressão na medida do possível, sem violar vetos.
 - Não sugira música fora dos candidatos permitidos, mesmo se o pedido parecer interessante.
+- As listas de vídeos permitidos estão ordenadas por compatibilidade
+  com as preferências e, em caso de empate, por diversidade.
+- Prefira músicas que não apareceram no roteiro anterior quando
+  houver alternativas com compatibilidade equivalente.
+- Não repita músicas apenas por serem populares ou familiares.
+- A diversidade é uma preferência, nunca uma restrição absoluta.
+- Nunca viole vetos para aumentar a diversidade.
 """
     data = {
         "genre": genre,
         "intention": intention,
+        "previous_script_karaoke_version_ids": sorted(
+            set(previous_video_ids)
+        ),
         "participants": {pid: {
             "likes": [label.model_dump() for label in p.likes],
             "vetoes": [label.model_dump() for label in p.vetoes],
