@@ -408,6 +408,246 @@ def resolve(http: Http, title: str, artists: list[str], dataset_video: str | Non
     durations = sorted({round(float(c["duration"])) for c in lyrics})[:6]
     return None, [], f"letra existe (durações {durations}s) mas nenhum vídeo liberado com a mesma duração"
 
+def descobrir_karaokes(
+    http: Http,
+    catalog_path: Path,
+    verified_path: Path,
+    output_path: Path,
+    limit: int = 10,
+    inicio: int = 0,
+) -> None:
+    """Procura karaokês sem consultar o LRCLIB."""
+
+    catalog = json.loads(
+        catalog_path.read_text(encoding="utf-8")
+    )
+
+    checked = (
+        json.loads(verified_path.read_text(encoding="utf-8"))
+        if verified_path.is_file()
+        else {}
+    )
+
+    ok = set(checked.get("ok", []))
+    blocked = set(checked.get("bloqueados", []))
+
+    versions = catalog["karaoke_versions"]
+
+    songs_with_karaoke = {
+        v["song_id"]
+        for v in versions
+        if v.get("kind", "karaoke") == "karaoke"
+    }
+
+    used_videos = {
+        v["youtube_video_id"]
+        for v in versions
+    }
+
+    targets = [
+        s for s in catalog["songs"]
+        if s["id"] not in songs_with_karaoke
+    ]
+
+    print(f"Músicas sem karaokê: {len(targets)}")
+
+    if inicio < 0 or limit < 0:
+        raise ValueError("Início e limite não podem ser negativos.")
+
+    if limit > 0:
+        targets = targets[inicio:inicio + limit]
+    else:
+        targets = targets[inicio:]
+
+    rows = []
+
+    for song in targets:
+        options = karaoke_options(
+            http,
+            song["title"],
+            song["artists"],
+            None,  # Não exige duração obtida no LRCLIB
+            blocked,
+        )
+
+        # Descartar vídeos já utilizados no catálogo.
+        options = [
+            video for video in options
+            if video["video_id"] not in used_videos
+        ]
+
+        if not options:
+            continue
+
+        # Priorizar um vídeo com reprodução já verificada.
+        # Se nenhum foi verificado, usar o primeiro resultado da busca.
+        video = next(
+            (v for v in options if v["video_id"] in ok),
+            options[0],
+        )
+
+        video_id = video["video_id"]
+
+        rows.append({
+            "song_id": song["id"],
+            "musica": song["title"],
+            "artista": ", ".join(song["artists"]),
+            "video_id": video_id,
+            "youtube_url": (
+                f"https://www.youtube.com/watch?v={video_id}"
+            ),
+            "reproducao_verificada": (
+                "sim" if video_id in ok else "nao"
+            ),
+            "status": "pendente",
+            "observacoes": "",
+        })
+
+        # Evitar selecionar o mesmo vídeo para outra música.
+        used_videos.add(video_id)
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    fields = [
+        "song_id",
+        "musica",
+        "artista",
+        "video_id",
+        "youtube_url",
+        "reproducao_verificada",
+        "status",
+        "observacoes",
+    ]
+
+    with output_path.open(
+        "w",
+        encoding="utf-8",
+        newline="",
+    ) as f:
+        writer = csv.DictWriter(
+            f,
+            fieldnames=fields,
+            lineterminator="\n",
+        )
+        writer.writeheader()
+        writer.writerows(rows)
+
+    print(f"Músicas pesquisadas: {len(targets)}")
+    print(f"Candidatos encontrados: {len(rows)}")
+    print(f"Resultado: {output_path}")
+
+def manter_karaokes_auditados(
+    versions: list[dict],
+    songs: list[dict],
+    catalogo_base: Path,
+    auditoria: Path,
+) -> list[dict]:
+    """Preserva os karaokês já aprovados na auditoria humana.
+
+    Não aceita novos vídeos apenas porque passaram no teste
+    automático de reprodução.
+    """
+
+    if not catalogo_base.is_file():
+        raise FileNotFoundError(
+            f"Catálogo anterior não encontrado: {catalogo_base}"
+        )
+
+    if not auditoria.is_file():
+        raise FileNotFoundError(
+            f"Auditoria não encontrada: {auditoria}"
+        )
+
+    anterior = json.loads(
+        catalogo_base.read_text(encoding="utf-8")
+    )
+
+    # Versões aprovadas pela auditoria humana.
+    auditados = {}
+
+    with auditoria.open(encoding="utf-8", newline="") as f:
+        reader = csv.DictReader(f)
+
+        for row in reader:
+            if row["status"].strip().lower() != "aprovado":
+                continue
+
+            if any(
+                row[campo].strip().lower() != "sim"
+                for campo in (
+                    "instrumental",
+                    "letra_correta",
+                    "reproducao",
+                )
+            ):
+                raise ValueError(
+                    f"Auditoria inconsistente: {row['version_id']}"
+                )
+
+            parsed = urllib.parse.urlparse(row["youtube_url"])
+            video_id = urllib.parse.parse_qs(
+                parsed.query
+            ).get("v", [""])[0]
+
+            if not re.fullmatch(r"[A-Za-z0-9_-]{11}", video_id):
+                raise ValueError(
+                    f"Vídeo inválido na auditoria: {row['version_id']}"
+                )
+
+            version_id = row["version_id"]
+
+            if version_id in auditados:
+                raise ValueError(
+                    f"Auditoria duplicada: {version_id}"
+                )
+
+            auditados[version_id] = video_id
+
+    # Manter as versões de letra sincronizada.
+    resultado = [
+        v for v in versions
+        if v.get("kind") == "letra_sincronizada"
+    ]
+
+    song_ids = {s["id"] for s in songs}
+    seen_songs = set()
+    preservados = 0
+
+    for version in anterior["karaoke_versions"]:
+        if version.get("kind", "karaoke") != "karaoke":
+            continue
+
+        if not version.get("approved"):
+            continue
+
+        # Exigir aprovação do mesmo ID de vídeo.
+        if (
+            auditados.get(version["id"])
+            != version["youtube_video_id"]
+        ):
+            continue
+
+        if version["song_id"] not in song_ids:
+            raise ValueError(
+                f"Música auditada desapareceu da geração: "
+                f"{version['song_id']}"
+            )
+
+        if version["song_id"] in seen_songs:
+            raise ValueError(
+                f"Mais de um karaokê por música: "
+                f"{version['song_id']}"
+            )
+
+        seen_songs.add(version["song_id"])
+        resultado.append(version.copy())
+        preservados += 1
+
+    print(
+        f"Karaokês preservados da auditoria: {preservados}"
+    )
+
+    return resultado
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -423,6 +663,31 @@ def main() -> None:
     parser.add_argument("--saida", type=Path, default=DATA / "catalogo_forro.json")
     parser.add_argument("--cache", type=Path, default=DATA / ".cache")
     parser.add_argument("--offline", action="store_true")
+    parser.add_argument(
+    "--descobrir-karaokes",
+        action="store_true",
+        help="Busca candidatos sem LRCLIB, sem alterar o catálogo",
+    )
+
+    parser.add_argument(
+        "--limite",
+        type=int,
+        default=10,
+        help="Quantidade de músicas para investigar; 0 = todas",
+    )
+    parser.add_argument(
+        "--inicio",
+        type=int,
+        default=0,
+        help="Índice inicial do lote de músicas sem karaokê",
+    )
+
+    parser.add_argument(
+        "--saida-candidatos",
+        type=Path,
+        default=DATA / "fontes" / "candidatos_karaoke.csv",
+        help="CSV onde serão salvos os candidatos encontrados",
+    )
     parser.add_argument("--workers", type=int, default=6, help="requisições em paralelo na pré-busca")
     parser.add_argument("--sem-karaoke", action="store_true", help="não procurar vídeos de karaokê")
     parser.add_argument("--karaoke-revisado", type=Path, default=DATA / "fontes" / "karaoke_revisado.json",
@@ -433,6 +698,16 @@ def main() -> None:
     letras_dir = args.saida.parent / "letras"
 
     http = Http(args.cache, args.offline)
+    if args.descobrir_karaokes:
+        descobrir_karaokes(
+            http=http,
+            catalog_path=args.saida,
+            verified_path=args.verificados,
+            output_path=args.saida_candidatos,
+            limit=args.limite,
+            inicio=args.inicio,
+        )
+        return
     with args.byrm.open(encoding="utf-8", newline="") as fh:
         reader = csv.reader(fh)
         next(reader)
@@ -602,6 +877,13 @@ def main() -> None:
         "songs": songs,
         "karaoke_versions": versions,
     }
+    if not args.sem_karaoke:
+        catalog["karaoke_versions"] = manter_karaokes_auditados(
+            versions=catalog["karaoke_versions"],
+            songs=catalog["songs"],
+            catalogo_base=DATA / "catalogo_forro.json",
+            auditoria=DATA / "fontes" / "auditoria_karaoke.csv",
+        )
     args.saida.write_text(json.dumps(catalog, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (DATA / "relatorio_catalogo.md").write_text(render_report(report, songs), encoding="utf-8")
     by_source = {s: sum(1 for x in songs if x["source"] == s) for s in (BYRM_SOURCE, UFMG_SOURCE, PESQUISA_SOURCE)}
