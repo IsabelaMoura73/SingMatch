@@ -176,3 +176,85 @@ def test_llm_recebe_historico_do_roteiro(catalog):
     assert enviado["participants"]["P1"][
         "allowed_karaoke_version_ids"
     ][0] != "KAR-FOR-001"
+
+def test_llm_envia_pontuacoes_de_afinidade(catalog):
+    songs, versions = catalog
+
+    ps = profiles()
+
+    ps["P1"] = ProfileConfirmed(
+        likes=[
+            {
+                "category": "genre",
+                "value": "forro",
+                "evidence": "gosto de forró",
+            },
+            {
+                "category": "tag",
+                "value": "animada",
+                "evidence": "músicas animadas",
+            },
+        ],
+        vetoes=[
+            {
+                "category": "tag",
+                "value": "romantica",
+                "evidence": "não gosto de românticas",
+            },
+        ],
+    )
+
+    fake = FakeClient({
+        "title": "Forró personalizado",
+        "items": [
+            {
+                "position": 1,
+                "karaoke_version_id": "KAR-FOR-001",
+                "participant_ids": ["P3"],
+                "justification": "Preferência por Asa Branca.",
+            },
+            {
+                "position": 2,
+                "karaoke_version_id": "KAR-FOR-002",
+                "participant_ids": ["P1"],
+                "justification": "Música de forró.",
+            },
+            {
+                "position": 3,
+                "karaoke_version_id": "KAR-FOR-004",
+                "participant_ids": ["P2"],
+                "justification": "Música animada.",
+            },
+        ],
+    })
+
+    compor_roteiro_solo(
+        "forro",
+        "Começar tranquilo e terminar animado",
+        ps,
+        songs,
+        versions,
+        client=fake,
+    )
+
+    enviado = json.loads(fake.requests[0]["input"])
+
+    p1 = enviado["participants"]["P1"]
+
+    # Música de forró animada atende duas preferências.
+    assert p1["affinity_scores"]["KAR-FOR-004"] == 2
+
+    # Asa Branca atende à preferência pelo gênero.
+    assert p1["affinity_scores"]["KAR-FOR-001"] == 1
+
+    # O veto a músicas românticas permanece obrigatório.
+    assert "KAR-FOR-003" not in p1["allowed_karaoke_version_ids"]
+
+    # Pontuações individuais dos demais participantes.
+    assert enviado["participants"]["P2"][
+        "affinity_scores"
+    ]["KAR-FOR-004"] == 1
+
+    assert enviado["participants"]["P3"][
+        "affinity_scores"
+    ]["KAR-FOR-001"] == 1
