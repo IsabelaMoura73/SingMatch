@@ -80,24 +80,34 @@ def eligible_candidates(
     profiles: dict[str, ProfileConfirmed],
     songs: Sequence[Song],
     karaoke_versions: Sequence[KaraokeVersion],
+    *,
+    previous_video_ids: Sequence[str] = (),
 ) -> dict[str, list[str]]:
     if not profiles:
         raise MatchingError("É necessário ter pelo menos um participante.")
+    previous = set(previous_video_ids)
     songs_by_id = {song.id: song for song in songs}
     known_moods = {s.mood for s in songs if s.mood}
-    approved_all = [v for v in karaoke_versions if v.approved and v.song_id in songs_by_id
-                    and norm(songs_by_id[v.song_id].genre) == norm(genre)]
+    approved_all = [
+        v for v in karaoke_versions
+        if v.approved
+        and v.kind == "karaoke"
+        and v.song_id in songs_by_id
+        and norm(songs_by_id[v.song_id].genre) == norm(genre)
+    ]
     # Uma versão por obra no MVP. Uma segunda versão da MESMA música pode ser
     # fallback técnico, mas não deve contar como escolha distinta do roteiro.
     # Karaokê de verdade (instrumental) vem antes da versão "cante junto" da mesma música.
-    approved_all.sort(key=lambda v: (v.kind != "karaoke", v.id))
+    approved_all.sort(key=lambda v: v.id)
     approved, seen_songs = [], set()
     for v in approved_all:
         if v.song_id not in seen_songs:
             approved.append(v)
             seen_songs.add(v.song_id)
     if not approved:
-        raise MatchingError(f"Não há vídeos aprovados para o gênero {genre!r}.")
+        raise MatchingError(
+            f"Não há vídeos de karaokê aprovados para o gênero {genre!r}."
+        )
     # Restrições sobre o FORMATO de apresentação não são restrições
     # sobre as músicas. Neste MVP, TODAS as apresentações são solo.
     # Assim, "não quero dueto" nunca deve zerar os candidatos musicais.
@@ -117,7 +127,13 @@ def eligible_candidates(
             for veto in musical_vetoes
         )]
         eligible.sort(
-            key=lambda v: -sum(matches_like(songs_by_id[v.song_id], like) for like in profile.likes)
+            key=lambda v: (
+                -sum(
+                    matches_like(songs_by_id[v.song_id], like)
+                    for like in profile.likes
+                ),
+                v.id in previous,
+            )
         )
         result[participant_id] = [v.id for v in eligible]
         if not result[participant_id]:
