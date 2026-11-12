@@ -142,6 +142,36 @@ def _assignment_possible(candidates: dict[str, list[str]]) -> bool:
     return all(assign(person_id, set()) for person_id in candidates)
 
 
+def duet_eligible_pairs(
+    profiles: dict[str, ProfileConfirmed],
+    songs: Sequence[Song],
+    karaoke_versions: Sequence[KaraokeVersion],
+) -> dict[str, set[str]]:
+    """Mapeia parceiros possíveis; consentimento explícito bilateral é obrigatório."""
+    known_moods = {s.mood for s in songs if s.mood}
+    approved_song_ids = {v.song_id for v in karaoke_versions if v.approved}
+    eligible_songs = [s for s in songs if s.duet_possible and s.id in approved_song_ids]
+    format_vetoes = {"dueto", "duetos", "em dueto", "cantar em dueto", "cantar duetos",
+                     "apresentacao em dueto", "dupla", "duplas", "em dupla", "cantar em dupla"}
+    eligible_by_person = {
+        pid: {s.id for s in eligible_songs if all(
+            respects_veto(s, veto, known_moods) for veto in profile.vetoes
+            if not (veto.category == "tag" and norm(veto.value) in format_vetoes)
+        )}
+        for pid, profile in profiles.items()
+    }
+    result = {pid: set() for pid in profiles}
+    members = list(profiles)
+    for index, first in enumerate(members):
+        if profiles[first].duet_allowed is not True:
+            continue
+        for second in members[index + 1:]:
+            if profiles[second].duet_allowed is True and eligible_by_person[first] & eligible_by_person[second]:
+                result[first].add(second)
+                result[second].add(first)
+    return result
+
+
 def validate_solo_script(
     proposal: ScriptProposal,
     profiles: dict[str, ProfileConfirmed],
@@ -164,3 +194,54 @@ def validate_solo_script(
         actual_participants.add(person)
     if actual_participants != set(profiles):
         raise MatchingError("O roteiro omitiu algum participante da rodada.")
+
+
+def duet_affinity(first: ProfileConfirmed, second: ProfileConfirmed,
+                  songs: Sequence[Song]) -> float:
+    """Score 0..1 from shared stated likes over duet-capable works."""
+    common = [song for song in songs if song.duet_possible]
+    if not common:
+        return 0.0
+    if not first.likes or not second.likes:
+        return 0.0
+    matched = sum(
+        any(matches_like(song, label) for label in first.likes)
+        and any(matches_like(song, label) for label in second.likes)
+        for song in common
+    )
+    return round(matched / len(common), 3)
+
+
+def validate_mixed_script(
+    proposal: ScriptProposal,
+    profiles: dict[str, ProfileConfirmed],
+    allowed_candidates: dict[str, list[str]],
+    songs: Sequence[Song],
+    karaoke_versions: Sequence[KaraokeVersion],
+) -> None:
+    """Valida solos e duetos; cada pessoa aparece uma vez e duetos exigem permissão."""
+    if len(proposal.items) > len(profiles):
+        raise MatchingError("Roteiro excede o número de participantes.")
+    partners = duet_eligible_pairs(profiles, songs, karaoke_versions)
+    seen: set[str] = set()
+    versions = {v.id: v for v in karaoke_versions}
+    songs_by_id = {s.id: s for s in songs}
+    for item in proposal.items:
+        ids = item.participant_ids
+        if len(ids) not in (1, 2) or len(set(ids)) != len(ids):
+            raise MatchingError("Cada apresentação deve ser solo ou dueto com duas pessoas distintas.")
+        if any(pid not in profiles or pid in seen for pid in ids):
+            raise MatchingError("Participante desconhecido ou repetido na rodada.")
+        version = versions.get(item.karaoke_version_id)
+        if version is None or not version.approved:
+            raise MatchingError("Versão de karaokê inexistente ou não aprovada.")
+        song = songs_by_id.get(version.song_id)
+        if song is None or not song.duet_possible and len(ids) == 2:
+            raise MatchingError("Esta música não está habilitada para dueto.")
+        if len(ids) == 2 and (ids[1] not in partners.get(ids[0], set())):
+            raise MatchingError("Dueto exige consentimento explícito e compatibilidade dos dois participantes.")
+        if any(item.karaoke_version_id not in allowed_candidates.get(pid, []) for pid in ids):
+            raise MatchingError("Música não permitida para um dos participantes do item.")
+        seen.update(ids)
+    if seen != set(profiles):
+        raise MatchingError("Roteiro deve incluir cada participante exatamente uma vez.")

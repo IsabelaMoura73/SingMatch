@@ -13,7 +13,8 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict
 
-from app.matching import MatchingError, eligible_candidates, validate_solo_script
+from app.matching import (MatchingError, duet_affinity, duet_eligible_pairs, eligible_candidates,
+                          norm, validate_mixed_script, validate_solo_script)
 from app.schemas import (
     InterpretRequest, KaraokeVersion, PreferenceLabel, ProfileConfirmed,
     ProfileDraft, ScriptItem, ScriptProposal, Song,
@@ -21,6 +22,7 @@ from app.schemas import (
 
 PROFILE_PROMPT_VERSION = "perfil-v1-2026-11-03"
 SCRIPT_PROMPT_VERSION = "roteiro-solo-v1-2026-11-03"
+MIXED_SCRIPT_PROMPT_VERSION = "roteiro-misto-v1-2026-11-12"
 DEFAULT_MODEL = "gpt-4o-mini"
 
 
@@ -219,6 +221,64 @@ Responda SOMENTE os campos do esquema estruturado.
             ) for item in parsed.items],
         )
         validate_solo_script(proposal, profiles, allowed)
+        return proposal
+    except (ValueError, MatchingError) as exc:
+        raise LLMServiceError(f"Roteiro gerado não atende às regras do SingMatch: {exc}") from exc
+
+
+def compor_roteiro_misto(
+    genre: str,
+    intention: str,
+    profiles: dict[str, ProfileConfirmed],
+    songs: Sequence[Song],
+    versions: Sequence[KaraokeVersion],
+    *,
+    client: Any | None = None,
+    model: str | None = None,
+) -> ScriptProposal:
+    """Gera uma rodada solo/mista; duetos apenas por consentimento bilateral validado."""
+    allowed = eligible_candidates(genre, profiles, songs, versions)
+    duet_pairs = duet_eligible_pairs(profiles, songs, versions)
+    songs_by_id = {song.id: song for song in songs}
+    candidates = []
+    for version in versions:
+        song = songs_by_id.get(version.song_id)
+        if not version.approved or song is None or norm(song.genre) != norm(genre):
+            continue
+        people = [pid for pid in profiles if version.id in allowed[pid]]
+        if people:
+            candidates.append({"karaoke_version_id": version.id, "title": song.title,
+                               "artists": song.artists, "mood": song.mood,
+                               "energy": song.energy, "eligible_solo_participants": people,
+                               "duet_possible": song.duet_possible})
+        for i, first in enumerate(people):
+            for second in people[i + 1:]:
+                if second in duet_pairs.get(first, []) and song.duet_possible:
+                    candidates[-1]["eligible_duet_pairs"] = candidates[-1].get("eligible_duet_pairs", []) + [[first, second]]
+    prompt = f"""Você cria um roteiro de karaokê misto. Versão {MIXED_SCRIPT_PROMPT_VERSION}.
+Retorne os campos do esquema estruturado. Faça exatamente uma participação por pessoa:
+cada pessoa aparece uma única vez, em um solo ou em um dueto permitido. Dueto só pode
+usar um par listado em eligible_duet_pairs e uma música duet_possible=true. Priorize
+afinidade explícita com likes, varie clima/energia quando houver dados e distribua
+participações igualmente (uma por pessoa). Se dueto não melhorar o roteiro, use solos.
+Não repita músicas/vídeos nem invente IDs. As validações do servidor prevalecem.
+"""
+    data = {"genre": genre, "intention": intention, "participants": {
+        pid: {"likes": [x.model_dump() for x in profile.likes],
+              "vetoes": [x.model_dump() for x in profile.vetoes],
+              "preferred_format": profile.preferred_format,
+              "duet_allowed": profile.duet_allowed,
+              "allowed_solo_ids": allowed[pid], "eligible_duet_partners": sorted(duet_pairs[pid]),
+              "duet_affinity": {partner: duet_affinity(profile, profiles[partner], songs)
+                                for partner in duet_pairs[pid]}}
+        for pid, profile in profiles.items()}, "catalog_candidates": candidates}
+    parsed: _ScriptOut = _parse(_client_or_default(client), prompt, data, _ScriptOut, model)
+    try:
+        proposal = ScriptProposal(title=parsed.title, items=[ScriptItem(
+            position=item.position, karaoke_version_id=item.karaoke_version_id,
+            participant_ids=item.participant_ids, justification=item.justification, origin="ia")
+            for item in parsed.items])
+        validate_mixed_script(proposal, profiles, allowed, songs, versions)
         return proposal
     except (ValueError, MatchingError) as exc:
         raise LLMServiceError(f"Roteiro gerado não atende às regras do SingMatch: {exc}") from exc
