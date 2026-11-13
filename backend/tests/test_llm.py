@@ -5,7 +5,8 @@ from types import SimpleNamespace
 
 import pytest
 
-from app.llm import LLMServiceError, compor_roteiro_solo, interpretar_perfil, _ProfileOut, _ScriptOut
+from app.llm import (LLMServiceError, compor_roteiro_misto, compor_roteiro_solo,
+                     interpretar_perfil, _ProfileOut, _ScriptOut)
 from app.matching import MatchingError, eligible_candidates
 from app.schemas import KaraokeVersion, ProfileConfirmed, Song
 
@@ -111,3 +112,32 @@ def test_unknown_tag_veto_blocks_when_no_evidence(catalog):
     ps = {"P1": ProfileConfirmed(vetoes=[{"category": "tag", "value": "muito triste", "evidence": "não gosto de triste"}])}
     with pytest.raises(MatchingError, match="nenhuma música elegível"):
         eligible_candidates("forro", ps, songs, versions)
+
+
+def test_mixed_script_composes_one_duet_and_fallback_solo(catalog):
+    songs, versions = catalog
+    songs = [song.model_copy(update={"duet_possible": True}) for song in songs]
+    ps = {
+        "A": ProfileConfirmed(duet_allowed=True),
+        "B": ProfileConfirmed(duet_allowed=True),
+        "C": ProfileConfirmed(duet_allowed=None),
+    }
+    fake = FakeClient({"title": "Roteiro misto", "items": [
+        {"position": 1, "karaoke_version_id": "KAR-FOR-001", "participant_ids": ["A", "B"], "justification": "Afinidade."},
+        {"position": 2, "karaoke_version_id": "KAR-FOR-002", "participant_ids": ["C"], "justification": "Solo."},
+    ]})
+    proposal = compor_roteiro_misto("forro", "", ps, songs, versions, client=fake)
+    assert [item.participant_ids for item in proposal.items] == [["A", "B"], ["C"]]
+    data = json.loads(fake.requests[0]["input"])
+    assert "B" in data["participants"]["A"]["eligible_duet_partners"]
+
+
+def test_mixed_script_rejects_duet_without_bilateral_consent(catalog):
+    songs, versions = catalog
+    songs = [song.model_copy(update={"duet_possible": True}) for song in songs]
+    ps = {"A": ProfileConfirmed(duet_allowed=True), "B": ProfileConfirmed(duet_allowed=None)}
+    fake = FakeClient({"title": "Roteiro inválido", "items": [
+        {"position": 1, "karaoke_version_id": "KAR-FOR-001", "participant_ids": ["A", "B"], "justification": "X."},
+    ]})
+    with pytest.raises(LLMServiceError, match="consentimento explícito"):
+        compor_roteiro_misto("forro", "", ps, songs, versions, client=fake)
