@@ -1,16 +1,9 @@
 /*
- * Identidade visual nova do SingMatch (baseada no protótipo do Lovable).
- *
- * Tailwind v4 sem o "preflight" (reset global): as telas antigas em style.css
- * continuam funcionando enquanto a migração é feita em partes. Quando todas as
- * telas usarem Tailwind, troque os imports abaixo por `@import "tailwindcss";`
- * e apague style.css.
+ * Identidade visual do SingMatch (baseada no protótipo do Lovable).
+ * Tailwind v4 completo: cores e fontes em @theme, base em @layer base e
+ * componentes reutilizáveis (sm-card, sm-btn-*, sm-input...) como @utility.
  */
-@layer theme, legacy, utilities;
-@import "tailwindcss/theme.css" layer(theme);
-/* CSS antigo numa camada abaixo dos utilitários: classes Tailwind sempre ganham. */
-@import "./style.css" layer(legacy);
-@import "tailwindcss/utilities.css" layer(utilities) source("../src");
+@import "tailwindcss" source("../src");
 
 @theme inline {
   --font-display: "Bricolage Grotesque", sans-serif;
@@ -72,13 +65,26 @@
   --shadow-glow: 0 0 40px -8px color-mix(in oklab, var(--primary) 70%, transparent);
 }
 
-/* Base fora de camadas para valer sobre o tema antigo de style.css. */
-html { background: var(--background); }
-body {
-  background: var(--gradient-stage), var(--background);
-  background-attachment: fixed;
-  color: var(--foreground);
-  font-family: var(--font-sans);
+@layer base {
+  html {
+    /* 15px mantém a escala usada desde o início da migração. */
+    font-size: 15px;
+    background: var(--background);
+    color-scheme: dark;
+    scroll-behavior: smooth;
+  }
+  body {
+    min-height: 100vh;
+    background: var(--gradient-stage), var(--background);
+    background-attachment: fixed;
+    color: var(--foreground);
+    font-family: var(--font-sans);
+  }
+  h1, h2, h3 { font-family: var(--font-display); letter-spacing: -0.035em; }
+  button:not(:disabled), [role="button"]:not(:disabled) { cursor: pointer; }
+  :focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+  textarea { resize: vertical; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 }
 
 @utility sm-card { @apply rounded-2xl border border-border bg-card/80 p-6 backdrop-blur; }

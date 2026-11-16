@@ -8,6 +8,7 @@ import { Shell } from './components/Shell'
 import { Home } from './components/Home'
 import { ProfileCard } from './components/Profile'
 import { PlayerCard } from './components/Player'
+import { Toast } from './components/Toast'
 import { HostScriptCard, ParticipantScriptCard, ParticipantsCard, RoomHeader, type SongLookup } from './components/Room'
 
 const STORAGE_KEY = 'singmatch:mvp:identity'
@@ -288,7 +289,7 @@ function App() {
   return (
     <Shell code={identity ? room?.session.code : undefined} onExit={identity ? exitRoom : undefined}>
 
-      <main className="main-container">
+      <main className="mx-auto w-full max-w-[1210px] px-4 pt-2 pb-16 sm:px-7">
         {!identity ? (
           <Home
             busy={pending !== null}
@@ -360,8 +361,8 @@ function App() {
             </>}
           </div>
         )}
-        {error && <div className="feedback error" role="alert"><strong>Não foi possível concluir</strong><span>{error}</span><button type="button" onClick={() => setError('')} aria-label="Fechar erro">×</button></div>}
-        {message && <div className="feedback success" role="status"><span>{message}</span><button type="button" onClick={() => setMessage('')} aria-label="Fechar aviso">×</button></div>}
+        {error && <Toast tone="error" title="Não foi possível concluir" message={error} onClose={() => setError('')} />}
+        {message && !error && <Toast tone="success" message={message} onClose={() => setMessage('')} />}
       </main>
     </Shell>
   )
