@@ -8,7 +8,7 @@ from __future__ import annotations
 import json
 import os
 import unicodedata
-from collections.abc import Sequence
+from collections.abc import Callable, Sequence
 from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, ValidationError
@@ -32,7 +32,7 @@ PROFILE_PROMPT_VERSION = "perfil-v1-2026-11-03"
 SCRIPT_PROMPT_VERSION = "roteiro-solo-v3-reparo-2026-11-16"
 # Novas tentativas quando o roteiro gerado quebra uma regra (não vale para erro de API).
 SCRIPT_REPAIR_ATTEMPTS = 1
-MIXED_SCRIPT_PROMPT_VERSION = "roteiro-misto-v1-2026-11-12"
+MIXED_SCRIPT_PROMPT_VERSION = "roteiro-misto-v2-reparo-2026-11-16"
 DEFAULT_MODEL = "gpt-4o-mini"
 
 
@@ -122,6 +122,36 @@ def _rule_violation(exc: Exception) -> str:
         messages = [str(error.get("msg", "")).removeprefix("Value error, ") for error in exc.errors()]
         return "; ".join(m for m in messages if m) or "resposta fora do esquema"
     return str(exc)
+
+
+def _compose_with_repair(llm: Any, prompt: str, data: dict, model: str | None,
+                         validate: Callable[[ScriptProposal], None]) -> ScriptProposal:
+    """Pede o roteiro ao modelo e valida; se quebrar uma regra, faz UMA tentativa de reparo.
+
+    Erro de API (_parse) não gera nova tentativa: evita gastar créditos à toa.
+    """
+    for attempt in range(SCRIPT_REPAIR_ATTEMPTS + 1):
+        parsed: _ScriptOut = _parse(llm, prompt, data, _ScriptOut, model)
+        try:
+            proposal = ScriptProposal(
+                title=parsed.title,
+                items=[ScriptItem(
+                    position=item.position,
+                    karaoke_version_id=item.karaoke_version_id,
+                    participant_ids=item.participant_ids,
+                    justification=item.justification,
+                    origin="ia",
+                ) for item in parsed.items],
+            )
+            validate(proposal)
+            return proposal
+        except (ValueError, MatchingError) as exc:
+            reason = _rule_violation(exc)
+            if attempt == SCRIPT_REPAIR_ATTEMPTS:
+                raise LLMServiceError(f"Roteiro gerado não atende às regras do SingMatch: {reason}") from exc
+            # O modelo recebe só o motivo da recusa (sem a resposta anterior inteira).
+            data = {**data, "previous_attempt_rejected_because": reason}
+    raise AssertionError("inalcançável")
 
 
 def _normalize_text(value: str) -> str:
@@ -301,30 +331,10 @@ Responda SOMENTE os campos do esquema estruturado.
         } for pid, p in profiles.items()},
         "catalog_candidates": candidate_data,
     }
-    llm = _client_or_default(client)
-    for attempt in range(SCRIPT_REPAIR_ATTEMPTS + 1):
-        # Erro de API (_parse) não gera nova tentativa: evita gastar créditos à toa.
-        parsed: _ScriptOut = _parse(llm, prompt, data, _ScriptOut, model)
-        try:
-            proposal = ScriptProposal(
-                title=parsed.title,
-                items=[ScriptItem(
-                    position=item.position,
-                    karaoke_version_id=item.karaoke_version_id,
-                    participant_ids=item.participant_ids,
-                    justification=item.justification,
-                    origin="ia",
-                ) for item in parsed.items],
-            )
-            validate_solo_script(proposal, profiles, allowed)
-            return proposal
-        except (ValueError, MatchingError) as exc:
-            reason = _rule_violation(exc)
-            if attempt == SCRIPT_REPAIR_ATTEMPTS:
-                raise LLMServiceError(f"Roteiro gerado não atende às regras do SingMatch: {reason}") from exc
-            # Uma tentativa de reparo: o modelo recebe o motivo da recusa (sem dados novos).
-            data = {**data, "previous_attempt_rejected_because": reason}
-    raise AssertionError("inalcançável")
+    return _compose_with_repair(
+        _client_or_default(client), prompt, data, model,
+        lambda proposal: validate_solo_script(proposal, profiles, allowed),
+    )
 
 
 def compor_roteiro_misto(
@@ -334,11 +344,12 @@ def compor_roteiro_misto(
     songs: Sequence[Song],
     versions: Sequence[KaraokeVersion],
     *,
+    previous_video_ids: Sequence[str] = (),
     client: Any | None = None,
     model: str | None = None,
 ) -> ScriptProposal:
     """Gera uma rodada solo/mista; duetos apenas por consentimento bilateral validado."""
-    allowed = eligible_candidates(genre, profiles, songs, versions)
+    allowed = eligible_candidates(genre, profiles, songs, versions, previous_video_ids=previous_video_ids)
     duet_pairs = duet_eligible_pairs(profiles, songs, versions)
     songs_by_id = {song.id: song for song in songs}
     candidates = []
@@ -363,8 +374,17 @@ usar um par listado em eligible_duet_pairs e uma música duet_possible=true. Pri
 afinidade explícita com likes, varie clima/energia quando houver dados e distribua
 participações igualmente (uma por pessoa). Se dueto não melhorar o roteiro, use solos.
 Não repita músicas/vídeos nem invente IDs. As validações do servidor prevalecem.
+Cada ID de required_participant_ids aparece EXATAMENTE uma vez no roteiro inteiro
+(num solo ou num dueto); nunca dê duas apresentações para a mesma pessoa.
+Prefira músicas fora de previous_script_karaoke_version_ids quando houver alternativa
+equivalente; a diversidade nunca justifica violar vetos.
+Se houver previous_attempt_rejected_because, sua resposta anterior foi recusada por
+esse motivo: corrija o problema e responda de novo.
 """
-    data = {"genre": genre, "intention": intention, "participants": {
+    data = {"genre": genre, "intention": intention,
+            "required_participant_ids": list(profiles),
+            "previous_script_karaoke_version_ids": sorted(set(previous_video_ids)),
+            "participants": {
         pid: {"likes": [x.model_dump() for x in profile.likes],
               "vetoes": [x.model_dump() for x in profile.vetoes],
               "preferred_format": profile.preferred_format,
@@ -373,13 +393,7 @@ Não repita músicas/vídeos nem invente IDs. As validações do servidor preval
               "duet_affinity": {partner: duet_affinity(profile, profiles[partner], songs)
                                 for partner in duet_pairs[pid]}}
         for pid, profile in profiles.items()}, "catalog_candidates": candidates}
-    parsed: _ScriptOut = _parse(_client_or_default(client), prompt, data, _ScriptOut, model)
-    try:
-        proposal = ScriptProposal(title=parsed.title, items=[ScriptItem(
-            position=item.position, karaoke_version_id=item.karaoke_version_id,
-            participant_ids=item.participant_ids, justification=item.justification, origin="ia")
-            for item in parsed.items])
-        validate_mixed_script(proposal, profiles, allowed, songs, versions)
-        return proposal
-    except (ValueError, MatchingError) as exc:
-        raise LLMServiceError(f"Roteiro gerado não atende às regras do SingMatch: {exc}") from exc
+    return _compose_with_repair(
+        _client_or_default(client), prompt, data, model,
+        lambda proposal: validate_mixed_script(proposal, profiles, allowed, songs, versions),
+    )

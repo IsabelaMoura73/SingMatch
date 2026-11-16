@@ -359,3 +359,25 @@ def test_roteiro_nao_repete_chamada_em_erro_de_api(catalog, status, trecho):
     with pytest.raises(LLMServiceError, match=trecho):
         compor_roteiro_solo("forro", "", {"P1": ProfileConfirmed()}, songs, versions, client=fake)
     assert fake.calls == 1
+
+
+
+def test_roteiro_misto_tambem_tem_tentativa_de_reparo(catalog):
+    songs, versions = catalog
+    ps = {"A": ProfileConfirmed(duet_allowed=True), "B": ProfileConfirmed(duet_allowed=True)}
+    repeated = {"title": "Dupla", "items": [
+        {"position": 1, "karaoke_version_id": "KAR-FOR-002", "participant_ids": ["A", "B"], "justification": "Dueto."},
+        {"position": 2, "karaoke_version_id": "KAR-FOR-001", "participant_ids": ["A"], "justification": "De novo."},
+    ]}
+    fixed = {"title": "Dupla", "items": [
+        {"position": 1, "karaoke_version_id": "KAR-FOR-002", "participant_ids": ["A", "B"], "justification": "Dueto."},
+    ]}
+    fake = SequenceClient(repeated, fixed)
+    proposal = compor_roteiro_misto("forro", "", ps, songs, versions,
+                                    previous_video_ids=["KAR-FOR-005"], client=fake)
+    assert [item.participant_ids for item in proposal.items] == [["A", "B"]]
+    assert len(fake.requests) == 2
+    first = json.loads(fake.requests[0]["input"])
+    assert first["required_participant_ids"] == ["A", "B"]
+    assert first["previous_script_karaoke_version_ids"] == ["KAR-FOR-005"]
+    assert "previous_attempt_rejected_because" in json.loads(fake.requests[1]["input"])

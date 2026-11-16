@@ -78,14 +78,14 @@ def join(api, code, name):
     return r.json()
 
 
-def confirm(api, participant_id, token, veto=False):
+def confirm(api, participant_id, token, veto=False, duet_allowed=False):
     response = api.post(f"/api/participants/{participant_id}/interpret",
                         json={"text": "Gosto de forró e prefiro músicas animadas"}, headers=auth(token))
     assert response.status_code == 200, response.text
     labels = [{"category": "tag", "value": "romantica", "evidence": "não gosto de românticas"}]
     response = api.put(f"/api/participants/{participant_id}/profile",
                        json={"profile": {"likes": [], "vetoes": labels if veto else [],
-                                         "preferred_format": "solo", "duet_allowed": False,
+                                         "preferred_format": "solo", "duet_allowed": duet_allowed,
                                          "questions": []}}, headers=auth(token))
     assert response.status_code == 200, response.text
 
@@ -259,3 +259,77 @@ def test_host_cannot_remove_participant_from_another_room(client):
     assert api.delete(url, headers=auth(host_a)).status_code == 404
     assert api.delete(f"/api/sessions/{room_b['id']}/participants/{other['participant_id']}",
                       headers=auth(host_a)).status_code == 403
+
+
+# ---------------------------------------------------------------- duetos
+
+def duet_room(api, consent):
+    """Sala com Ana, Beto e Cris; consent[i] é o duet_allowed de cada um."""
+    s, host = start_room(api)
+    members = [join(api, s["code"], n) for n in ("Ana", "Beto", "Cris")]
+    for member, allowed in zip(members, consent):
+        confirm(api, member["participant_id"], member["participant_token"], duet_allowed=allowed)
+    return s, host, members
+
+
+def fake_mixed_script(genre, intention, profiles, songs, versions, *, previous_video_ids=()):
+    # A API ordena os perfis pelo id; a dupla é quem consentiu, o solo é o restante.
+    a, b = [pid for pid, p in profiles.items() if p.duet_allowed is True]
+    (c,) = [pid for pid in profiles if pid not in (a, b)]
+    return ScriptProposal(title="Forró em dupla", items=[
+        ScriptItem(position=1, karaoke_version_id="KAR-FOR-002", participant_ids=[a, b],
+                   justification="Dueto de teste", origin="ia"),
+        ScriptItem(position=2, karaoke_version_id="KAR-FOR-001", participant_ids=[c],
+                   justification="Solo de teste", origin="ia"),
+    ])
+
+
+def test_gera_roteiro_misto_quando_ha_dupla_com_consentimento(client, monkeypatch):
+    api, _ = client
+    monkeypatch.setattr(routes, "compor_roteiro_misto", fake_mixed_script)
+    monkeypatch.setattr(routes, "compor_roteiro_solo",
+                        lambda *a, **k: pytest.fail("não deveria usar o roteiro só de solos"))
+    room, host, members = duet_room(api, (True, True, False))
+    path = f"/api/sessions/{room['id']}/script"
+    generated = api.post(path, headers=auth(host))
+    assert generated.status_code == 201, generated.text
+    items = generated.json()["script"]["items"]
+    assert [len(item["participant_ids"]) for item in items] == [2, 1]
+
+    # Trocar a música do dueto por outra que admite dueto: aceito.
+    edited = [dict(items[0], karaoke_version_id="KAR-FOR-005"), items[1]]
+    ok = api.put(path, json={"expected_version": 1, "proposal": {"title": "Editado", "items": edited}},
+                 headers=auth(host))
+    assert ok.status_code == 200, ok.text
+    # Música que não admite dueto: recusada pelo servidor.
+    edited = [dict(items[0], karaoke_version_id="KAR-FOR-004"), items[1]]
+    bad = api.put(path, json={"expected_version": 2, "proposal": {"title": "Editado", "items": edited}},
+                  headers=auth(host))
+    assert bad.status_code == 409
+    assert "dueto" in bad.json()["detail"]
+    assert api.post(f"{path}/approve", json={"expected_version": 2}, headers=auth(host)).status_code == 200
+
+
+def test_sem_dupla_possivel_continua_so_com_solos(client, monkeypatch):
+    api, _ = client
+    monkeypatch.setattr(routes, "compor_roteiro_misto",
+                        lambda *a, **k: pytest.fail("não deveria usar o roteiro misto"))
+    room, host, _ = duet_room(api, (True, False, None))
+    generated = api.post(f"/api/sessions/{room['id']}/script", headers=auth(host))
+    assert generated.status_code == 201, generated.text
+    assert all(len(item["participant_ids"]) == 1 for item in generated.json()["script"]["items"])
+
+
+def test_edicao_recusa_dueto_sem_consentimento_dos_dois(client):
+    api, _ = client
+    room, host, members = duet_room(api, (True, False, False))
+    path = f"/api/sessions/{room['id']}/script"
+    first = api.post(path, headers=auth(host)).json()["script"]
+    a, b = members[0]["participant_id"], members[1]["participant_id"]
+    c_item = next(i for i in first["items"] if members[2]["participant_id"] in i["participant_ids"])
+    items = [{"position": 1, "karaoke_version_id": "KAR-FOR-002", "participant_ids": [a, b],
+              "justification": None, "origin": "manual"}, dict(c_item, position=2)]
+    r = api.put(path, json={"expected_version": 1, "proposal": {"title": "Dupla", "items": items}},
+                headers=auth(host))
+    assert r.status_code == 409
+    assert "consentimento" in r.json()["detail"]

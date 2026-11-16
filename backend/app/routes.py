@@ -16,8 +16,8 @@ from sqlalchemy.orm import Session
 from app.api_schemas import CatalogResponse, ParticipantPrivate, ScriptResponse, SessionState
 from app.catalog import get_catalog, get_lyrics
 from app.database import get_db
-from app.llm import LLMServiceError, compor_roteiro_solo, interpretar_perfil
-from app.matching import MatchingError, eligible_candidates, norm, validate_solo_script
+from app.llm import LLMServiceError, compor_roteiro_misto, compor_roteiro_solo, interpretar_perfil
+from app.matching import MatchingError, duet_eligible_pairs, eligible_candidates, norm, validate_mixed_script
 from app.models import ParticipantRow, ScriptRow, SessionRow
 from app.schemas import (
     ApproveScriptRequest, ConfirmProfileRequest, CreateSessionRequest,
@@ -113,12 +113,13 @@ def _all_profiles(db: Session, session_id: str) -> dict[str, ProfileConfirmed]:
     return {p.id: ProfileConfirmed.model_validate(p.profile_confirmed) for p in members}
 
 
-def _valid_solo(proposal: ScriptProposal, profiles: dict[str, ProfileConfirmed],
-                genre: str, db: Session) -> None:
+def _valid_script(proposal: ScriptProposal, profiles: dict[str, ProfileConfirmed],
+                  genre: str, db: Session) -> None:
+    """Solos e duetos: cada pessoa uma vez; dueto só com consentimento dos dois."""
     songs, videos = get_catalog(db, genre)
     try:
         allowed = eligible_candidates(genre, profiles, songs, videos)
-        validate_solo_script(proposal, profiles, allowed)
+        validate_mixed_script(proposal, profiles, allowed, songs, videos)
     except MatchingError as exc:
         raise conflict(str(exc)) from exc
 
@@ -317,7 +318,12 @@ def generate_script(session_id: str, db: Session = DB, token: str = BEARER):
     except MatchingError as exc:
         raise conflict(str(exc)) from exc
     try:
-        proposal = compor_roteiro_solo(row.genre, row.intention, profiles, songs, videos, previous_video_ids=previous_video_ids,)
+        # Com pelo menos uma dupla possível (consentimento dos dois + música em comum),
+        # o roteiro pode ter duetos; senão segue o fluxo só de solos.
+        has_duet_pair = any(duet_eligible_pairs(profiles, songs, videos).values())
+        compose = compor_roteiro_misto if has_duet_pair else compor_roteiro_solo
+        proposal = compose(row.genre, row.intention, profiles, songs, videos,
+                           previous_video_ids=previous_video_ids)
     except LLMServiceError as exc:
         raise HTTPException(status_code=502, detail=str(exc)) from exc
     db.expire_all()
@@ -325,7 +331,7 @@ def generate_script(session_id: str, db: Session = DB, token: str = BEARER):
     if row.revision != initial_revision:
         raise conflict("A sala mudou durante a geração; resposta antiga descartada.")
     # Revalidar na persistência para não confiar no modelo.
-    _valid_solo(proposal, profiles, row.genre, db)
+    _valid_script(proposal, profiles, row.genre, db)
     current = _current_script(db, row.id)
     new_row = _add_script(db, row, proposal, 1 if current is None else current.version + 1)
     return ScriptResponse(script=_snapshot(new_row))
@@ -359,7 +365,7 @@ def edit_script(session_id: str, request: EditScriptRequest,
         raise conflict("Perfis mudaram; gere um roteiro atualizado.")
     profiles = _all_profiles(db, row.id)
     proposal = _apply_manual_changes(current, request.proposal)
-    _valid_solo(proposal, profiles, row.genre, db)
+    _valid_script(proposal, profiles, row.genre, db)
     updated = _add_script(db, row, proposal, current.version + 1)
     return ScriptResponse(script=_snapshot(updated))
 
@@ -378,7 +384,7 @@ def approve_script(session_id: str, request: ApproveScriptRequest,
         raise conflict("O perfil da sala mudou; o roteiro precisa ser atualizado.")
     profiles = _all_profiles(db, row.id)
     proposal = ScriptProposal(title=current.title, items=current.items)
-    _valid_solo(proposal, profiles, row.genre, db)
+    _valid_script(proposal, profiles, row.genre, db)
     current.approved = True
     row.status = "ready"
     db.commit()
