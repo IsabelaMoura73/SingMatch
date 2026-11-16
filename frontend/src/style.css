@@ -61,36 +61,14 @@ p{line-height:1.65}
 .notice strong{display:block;margin-bottom:6px}
 .notice ul{margin:9px 0 0;padding-left:20px}
 .alert.error{border-color:#e8bab5;background:#fff0ec;color:#923b45}
-.profile-card>h2,.script-card h2,.player-card h2{color:#68273a}
-.profile-form{margin-top:20px}
-.profile-form textarea{min-height:125px}
+.script-card h2,.player-card h2{color:#68273a}
 .inline-actions{display:flex;align-items:center;flex-wrap:wrap;gap:13px;margin-top:16px}
 .inline-actions .smaller{max-width:380px}
-.profile-revision{border-top:1px solid #ebd6cb;margin-top:29px;padding-top:26px}
-.review-panel{background:#fbf2e8;border:1px solid #edd4c2;padding:22px;border-radius:14px}
-.review-panel h3{color:#6e2638;font-family:var(--font-display);font-weight:700;font-size:1.8rem;margin-bottom:8px}
-.review-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:23px 0}
-.labels-section{background:#fffbf4;border:1px solid #ead7ca;border-radius:12px;padding:16px;min-width:0}
-.section-intro{display:flex;flex-direction:column;gap:6px;margin-bottom:13px}
-.section-intro strong{color:#6d3541}
-.section-intro span{color:#9b7a6f;font-size:.73rem}
-.label-list{display:flex;flex-direction:column;gap:8px;min-height:50px}
-.label-card{display:flex;align-items:start;gap:8px;background:#f9eadd;border-radius:9px;padding:10px;min-width:0}
-.label-content{display:flex;flex-wrap:wrap;gap:5px 8px;align-items:center;min-width:0;flex:1}
-.label-content strong{font-size:.87rem;overflow-wrap:anywhere}
-.label-content small{width:100%;font-size:.7rem;color:#8d7068;line-height:1.35;overflow-wrap:anywhere}
 .chip{border-radius:100px;padding:5px 9px;font-size:.65rem;font-weight:800;white-space:nowrap}
 .chip.light{background:#f1d1ba;color:#7f4650}
 .icon-btn{background:transparent;color:#864456;border:1px solid #dcbaa9;border-radius:7px;min-width:32px;min-height:31px;font-weight:800;font-size:1.25rem;padding:1px 6px}
 .icon-btn:hover:not(:disabled){background:#f1e1d6}
-.add-label{display:grid;grid-template-columns:115px minmax(0,1fr) auto;gap:7px;margin-top:16px}
-.add-label select,.add-label input{min-width:0;font-size:.78rem;padding:9px}
-.add-label .btn{padding:8px;min-height:36px}
-.form-grid.two{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:12px}
-.form-grid.two .field{margin-bottom:8px}
-.profile-footer{display:flex;align-items:center;flex-wrap:wrap;gap:14px;margin-top:17px}
-.confirmed-mark{font-size:.77rem;color:#41765d}
-.participant-script{border-top:1px solid #e9d6c5;padding-top:30px;margin-top:30px}
+.participant-script .eyebrow{margin-bottom:7px}
 .participant-script h3{color:#6e2c40;font-size:1.4rem}
 .participant-script ol{padding-left:30px;line-height:2.1}
 .participant-script li{padding-left:8px}
@@ -155,7 +133,7 @@ p{line-height:1.65}
 .feedback.error{background:#fff0ed;border:1px solid #daaea5;color:#8b3943}
 .feedback.success{background:#e8f4e7;border:1px solid #a6ccac;color:#2f6444}
 @media (max-width:940px){.main-container{padding-top:24px}.player-layout{grid-template-columns:1fr}}
-@media (max-width:640px){.main-container{padding:6px 14px 60px}.room-header{flex-direction:column;align-items:stretch}.room-header h1{font-size:2.8rem}.code-panel{align-self:flex-start;width:100%}.paper-card{padding:22px 17px}.review-grid,.form-grid.two{grid-template-columns:1fr}.add-label{grid-template-columns:1fr 1fr}.add-label input{grid-column:1 / -1;grid-row:2}.add-label button{grid-column:2;grid-row:1}.script-item{padding:12px;gap:10px}.script-pos{width:32px;height:32px}.player-meta{flex-direction:column;align-items:flex-start}.lyrics-panel{padding:14px 12px;min-height:120px}.stage-controls>.btn:last-child{margin-left:0}.feedback{right:16px;bottom:16px}}
+@media (max-width:640px){.main-container{padding:6px 14px 60px}.room-header{flex-direction:column;align-items:stretch}.room-header h1{font-size:2.8rem}.code-panel{align-self:flex-start;width:100%}.paper-card{padding:22px 17px}.script-item{padding:12px;gap:10px}.script-pos{width:32px;height:32px}.player-meta{flex-direction:column;align-items:flex-start}.lyrics-panel{padding:14px 12px;min-height:120px}.stage-controls>.btn:last-child{margin-left:0}.feedback{right:16px;bottom:16px}}
 
 /* ---------------------------------------------------------------------------
  * Transição para o visual novo (Parte 1). Textos que ficam direto sobre o fundo

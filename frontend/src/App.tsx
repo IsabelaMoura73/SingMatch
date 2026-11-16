@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useMemo, useState, type FormEvent } from 'react'
 import {
   api, type Catalog, type KaraokeVersion, type OwnProfile, type Participant, type Song,
-  type PreferenceCategory, type PreferenceLabel, type Profile, type Room,
+  type Profile, type Room,
   type Script, type ScriptItem, type ScriptProposal,
 } from './api'
 import { KaraokePlayer } from './KaraokePlayer'
 import { Shell } from './components/Shell'
 import { Home } from './components/Home'
+import { ProfileCard } from './components/Profile'
 
 const STORAGE_KEY = 'singmatch:mvp:identity'
 /**
@@ -22,9 +23,6 @@ type Identity = {
 const roomToken = (identity: Identity) => identity.hostToken ?? identity.participant!.token
 
 type ActiveTask = 'create' | 'join' | 'join-host' | 'interpret' | 'confirm' | 'generate' | 'save' | 'approve' | null
-const CATEGORY_NAMES: Record<PreferenceCategory, string> = {
-  genre: 'Gênero', artist: 'Artista', song: 'Música', tag: 'Característica',
-}
 
 function storedIdentity(): Identity | null {
   try {
@@ -58,76 +56,6 @@ function cloneProposal(script: Script): ScriptProposal {
 }
 function initials(name: string) {
   return name.trim().slice(0, 2).toUpperCase() || '♪'
-}
-
-function LabelCollection({ heading, description, labels, onChange }: {
-  heading: string
-  description: string
-  labels: PreferenceLabel[]
-  onChange: (labels: PreferenceLabel[]) => void
-}) {
-  const [category, setCategory] = useState<PreferenceCategory>('tag')
-  const [value, setValue] = useState('')
-  const add = () => {
-    const cleaned = value.trim()
-    if (!cleaned || cleaned.length > 150) return
-    if (labels.some(item => item.category === category && item.value.toLowerCase() === cleaned.toLowerCase())) return
-    onChange([...labels, { category, value: cleaned, evidence: 'Correção informada diretamente pelo participante.', origin: 'correcao_usuario' }])
-    setValue('')
-  }
-  return (
-    <section className="labels-section">
-      <div className="section-intro"><strong>{heading}</strong><span>{description}</span></div>
-      <div className="label-list">
-        {labels.length === 0 && <p className="muted smaller">Nenhuma informação nesta categoria.</p>}
-        {labels.map((label, index) => (
-          <div className="label-card" key={`${label.category}-${label.value}-${index}`}>
-            <div className="label-content">
-              <span className="chip light">{CATEGORY_NAMES[label.category]}</span>
-              <strong>{label.value}</strong>
-              <small>{label.origin === 'texto' ? `Evidência: “${label.evidence}”` : 'Adicionada por você'}</small>
-            </div>
-            <button type="button" className="icon-btn" onClick={() => onChange(labels.filter((_, i) => i !== index))} aria-label={`Remover ${label.value}`} title="Remover informação">×</button>
-          </div>
-        ))}
-      </div>
-      <div className="add-label">
-        <select aria-label={`Categoria para adicionar em ${heading}`} value={category} onChange={e => setCategory(e.target.value as PreferenceCategory)}>
-          {Object.entries(CATEGORY_NAMES).map(([key, name]) => <option key={key} value={key}>{name}</option>)}
-        </select>
-        <input value={value} maxLength={150} onChange={e => setValue(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); add() } }} placeholder="Adicionar correção..." aria-label={`Valor para adicionar em ${heading}`} />
-        <button type="button" className="btn subtle small" onClick={add} disabled={!value.trim()}>Adicionar</button>
-      </div>
-    </section>
-  )
-}
-
-function ProfileReview({ profile, onChange }: { profile: Profile; onChange: (profile: Profile) => void }) {
-  return (
-    <div className="review-panel">
-      <div className="eyebrow">Perfil interpretado pela IA · revisável</div>
-      <h3>Confira antes de confirmar</h3>
-      <p className="muted">As informações a seguir foram extraídas do seu texto. Remova interpretações incorretas e adicione correções.</p>
-      <div className="review-grid">
-        <LabelCollection heading="Gosto de" description="Preferências que ajudam a escolher músicas" labels={profile.likes} onChange={likes => onChange({ ...profile, likes })} />
-        <LabelCollection heading="Não quero" description="Vetos que o roteiro deve respeitar" labels={profile.vetoes} onChange={vetoes => onChange({ ...profile, vetoes })} />
-      </div>
-      <div className="form-grid two">
-        <label className="field">Formato preferido
-          <select value={profile.preferred_format} onChange={e => onChange({ ...profile, preferred_format: e.target.value as Profile['preferred_format'] })}>
-            <option value="indiferente">Indiferente</option><option value="solo">Solo</option><option value="dueto">Dueto</option>
-          </select>
-        </label>
-        <label className="field">Permite duetos?
-          <select value={profile.duet_allowed === null ? 'unknown' : String(profile.duet_allowed)} onChange={e => onChange({ ...profile, duet_allowed: e.target.value === 'unknown' ? null : e.target.value === 'true' })}>
-            <option value="unknown">Não informado</option><option value="true">Sim</option><option value="false">Não</option>
-          </select>
-        </label>
-      </div>
-      {!!profile.questions.length && <div className="notice"><strong>Questões sinalizadas pela IA</strong><ul>{profile.questions.map((q, i) => <li key={i}>{q}</li>)}</ul></div>}
-      <p className="muted smaller">Neste piloto, o roteiro é exclusivamente solo, mesmo se você permitir duetos.</p>
-    </div>
-  )
 }
 
 function SongName({versionId, catalog}: {versionId: string; catalog: Catalog | null}) {
@@ -356,6 +284,10 @@ function App() {
     ),
     [catalog, songsById]
   )
+  // Mesmos termos que backend/app/matching.py reconhece em vetos de característica.
+  const tagSuggestions = useMemo(() => [
+    ...new Set((catalog?.songs ?? []).map(song => song.mood).filter((mood): mood is string => !!mood)),
+  ].sort().concat(['energia baixa', 'energia media', 'energia alta']), [catalog])
   const isHost = !!identity?.hostToken
   const participantName = (ids: string[]) => ids.map(id => room?.participants.find(p => p.id === id)?.name || 'Participante').join(' + ')
 
@@ -400,23 +332,24 @@ function App() {
                 <div className="status-line"><span>Atualização automática a cada 7 segundos</span><span>{room.participants.filter(p => p.profile_confirmed).length}/{room.participants.length} perfis prontos</span></div>
               </section>
 
-              {me && <section className="paper-card profile-card">
-                <span className="eyebrow">01 · PREFERÊNCIAS</span>
-                <h2>O que você gosta de cantar?</h2>
-                <p className="muted">Escreva de um jeito natural. A IA transforma sua resposta em preferências e restrições, mas você decide o que confirmar.</p>
-                <form onSubmit={interpret} className="profile-form">
-                  <label className="field">Conte seus gostos musicais
-                    <textarea rows={5} minLength={3} maxLength={2000} required value={rawText} onChange={e => setRawText(e.target.value)} placeholder="Ex.: Gosto de forró animado, mas não quero músicas românticas. Prefiro cantar sozinho."/>
-                  </label>
-                  <div className="inline-actions"><button className="btn secondary" disabled={pending !== null || rawText.trim().length < 3}>{pending === 'interpret' ? 'Interpretando com IA...' : own?.draft ? 'Interpretar novamente ✧' : 'Interpretar com IA ✧'}</button><span className="muted smaller">Sua resposta pode ser processada pela API OpenAI.</span></div>
-                </form>
-                {draft && <div className="profile-revision">
-                  <ProfileReview profile={draft} onChange={setDraft} />
-                  {rawText.trim() !== interpretedText && <div className="notice warn">Você alterou o texto. Interprete novamente antes de confirmar o perfil.</div>}
-                  <div className="profile-footer"><button type="button" className="btn primary" disabled={pending !== null || rawText.trim() !== interpretedText} onClick={confirm}>{pending === 'confirm' ? 'Salvando...' : own?.confirmed ? 'Salvar correções do perfil ✓' : 'Confirmar meu perfil ✓'}</button>{own?.confirmed && <span className="confirmed-mark">✓ Seu perfil já foi confirmado. Alterações exigem nova confirmação.</span>}</div>
-                </div>}
-                {!isHost && room.script && <div className="participant-script"><span className="eyebrow">02 · ROTEIRO DA NOITE</span><h3>{room.script.title}</h3><p className="muted">{room.script.approved ? 'O organizador aprovou este roteiro.' : 'Esta ainda é uma proposta. O organizador pode editá-la.'}</p><ol>{room.script.items.map(item => <li key={item.position}><b>{participantName(item.participant_ids)}</b> — <SongName versionId={item.karaoke_version_id} catalog={catalog}/></li>)}</ol><div className="notice">O player fica disponível apenas no dispositivo do organizador.</div></div>}
-              </section>}
+              {me && <ProfileCard
+                name={room.participants.find(p => p.id === me.id)?.name || own?.name || ''}
+                intention={room.session.intention}
+                own={own}
+                rawText={rawText}
+                interpretedText={interpretedText}
+                draft={draft}
+                tagSuggestions={tagSuggestions}
+                busy={pending !== null}
+                interpreting={pending === 'interpret'}
+                confirming={pending === 'confirm'}
+                onTextChange={setRawText}
+                onDraftChange={setDraft}
+                onInterpret={interpret}
+                onConfirm={() => { void confirm() }}
+              />}
+
+              {!isHost && room.script && <section className="paper-card participant-script"><span className="eyebrow">02 · ROTEIRO DA NOITE</span><h3>{room.script.title}</h3><p className="muted">{room.script.approved ? 'O organizador aprovou este roteiro.' : 'Esta ainda é uma proposta. O organizador pode editá-la.'}</p><ol>{room.script.items.map(item => <li key={item.position}><b>{participantName(item.participant_ids)}</b> — <SongName versionId={item.karaoke_version_id} catalog={catalog}/></li>)}</ol><div className="notice">O player fica disponível apenas no dispositivo do organizador.</div></section>}
 
               {isHost && <section className="paper-card script-card">
                 <div className="card-title-row"><div><span className="eyebrow">02 · COMPOSIÇÃO COLETIVA</span><h2>Roteiro da noite</h2></div>{room.script && <span className={`state-tag ${room.script.approved ? 'done' : ''}`}>{room.script.approved ? '✓ Aprovado' : '✧ Proposta · v' + room.script.version}</span>}</div>
