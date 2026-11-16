@@ -33,7 +33,8 @@ SCRIPT_PROMPT_VERSION = "roteiro-solo-v3-reparo-2026-11-16"
 # Novas tentativas quando o roteiro gerado quebra uma regra (não vale para erro de API).
 SCRIPT_REPAIR_ATTEMPTS = 1
 MIXED_SCRIPT_PROMPT_VERSION = "roteiro-misto-v2-reparo-2026-11-16"
-DEFAULT_MODEL = "gpt-4o-mini"
+# Mesmo modelo de produção (docs/ETAPA6_PUBLICACAO.md); OPENAI_MODEL no ambiente tem prioridade.
+DEFAULT_MODEL = "gpt-5-mini"
 
 
 class LLMServiceError(RuntimeError):

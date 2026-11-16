@@ -26,7 +26,7 @@ type Identity = {
 /** Token usado para ler o estado da sala (qualquer papel serve). */
 const roomToken = (identity: Identity) => identity.hostToken ?? identity.participant!.token
 
-type ActiveTask = 'create' | 'join' | 'join-host' | 'interpret' | 'confirm' | 'generate' | 'save' | 'approve' | 'remove' | null
+type ActiveTask = 'create' | 'join' | 'join-host' | 'interpret' | 'confirm' | 'generate' | 'save' | 'approve' | 'remove' | 'start' | 'reopen' | null
 
 function storedIdentity(): Identity | null {
   try {
@@ -346,6 +346,24 @@ function App() {
     })
   }
 
+  const openPlayer = async () => {
+    if (!identity?.hostToken || !room) return
+    if (room.session.status === 'playing') { go('player'); return }
+    const host = identity, hostToken = identity.hostToken
+    await execute('start', async () => {
+      setRoom(await api.start(host.sessionId, hostToken))
+      go('player')
+    })
+  }
+  const reopenRoom = async () => {
+    if (!identity?.hostToken) return
+    const host = identity, hostToken = identity.hostToken
+    await execute('reopen', async () => {
+      setRoom(await api.reopen(host.sessionId, hostToken))
+      setMessage('Sala reaberta: quem chegar agora pode entrar (o roteiro precisará ser aprovado de novo).')
+    })
+  }
+
   const songsById = useMemo(() => new Map<string, Song>((catalog?.songs ?? []).map(song => [song.id, song] as const)), [catalog])
   const versionsById = useMemo(() => new Map<string, KaraokeVersion>((catalog?.karaoke_versions ?? []).map(video => [video.id, video] as const)), [catalog])
   const eligibleVideos = useMemo(
@@ -363,6 +381,7 @@ function App() {
   ].sort().concat(['energia baixa', 'energia media', 'energia alta']), [catalog])
   const lookup: SongLookup = useMemo(() => ({ songsById, versionsById }), [songsById, versionsById])
   const isHost = !!identity?.hostToken
+  const playing = room?.session.status === 'playing' || room?.session.status === 'finished'
   const script = room?.script ?? null
   const stale = !!script && !!room && script.input_revision !== room.session.revision
   const canPlay = isHost && !!script?.approved && !stale && !editing
@@ -415,7 +434,21 @@ function App() {
           <div className="flex flex-col gap-5">
             {!connected && <p role="alert" className="mb-0 rounded-xl border border-destructive/40 bg-destructive/10 px-4 py-3 text-sm text-destructive">Conexão com a API indisponível. Tentando reconectar...</p>}
             {!room || (me && !ownLoaded) ? <div className="sm-card text-muted-foreground">Carregando informações da sala...</div> : <>
-              <Steps screens={stepScreens} current={screen} available={available} onSelect={go} />
+              <Steps screens={stepScreens} current={screen} available={available} onSelect={s => { if (s === 'player') void openPlayer(); else go(s) }} />
+
+              {playing && (screen === 'sala' || screen === 'player') && (
+                <div className="sm-card flex flex-col gap-3 border-accent/40 sm:flex-row sm:items-center">
+                  <p className="m-0 flex-1 text-sm text-muted-foreground">
+                    <strong className="text-accent">A noite começou.</strong>{' '}
+                    {isHost ? 'A sala não aceita novas entradas nem mudanças de perfil.' : 'Os perfis estão travados até o organizador reabrir a sala.'}
+                  </p>
+                  {isHost && (
+                    <button type="button" className="sm-btn-ghost shrink-0" onClick={() => { void reopenRoom() }} disabled={pending !== null}>
+                      {pending === 'reopen' ? 'Reabrindo…' : 'Reabrir a sala'}
+                    </button>
+                  )}
+                </div>
+              )}
 
               {screen === 'preferencias' && me && (
                 <PreferencesScreen
@@ -437,7 +470,7 @@ function App() {
 
               {screen === 'sala' && <>
                 <RoomHeader isHost={isHost} intention={room.session.intention} code={room.session.code} onCopy={() => { void copyCode() }} />
-                {isHost && !me && !['playing', 'finished'].includes(room.session.status) && (
+                {isHost && !me && !playing && (
                   <form onSubmit={joinAsHost} className="sm-card flex flex-col gap-3 sm:flex-row sm:items-center">
                     <div className="flex-1">
                       <p className="mb-0 font-semibold">Vai cantar também?</p>
@@ -448,10 +481,10 @@ function App() {
                   </form>
                 )}
                 <ParticipantsCard participants={room.participants} meId={me?.id} hostParticipantId={isHost ? me?.id : undefined} onRefresh={() => { void refresh(identity).catch(err => setError(displayError(err))) }}
-                  onRemove={isHost && !['playing', 'finished'].includes(room.session.status) ? person => { void removeParticipant(person) } : undefined}
+                  onRemove={isHost && !playing ? person => { void removeParticipant(person) } : undefined}
                   removingId={removingId} busy={pending !== null} />
                 <LobbyActions
-                  isHost={isHost} singing={!!me} profileConfirmed={!!own?.confirmed} hasScript={!!script} allReady={allReady}
+                  isHost={isHost} singing={!!me && !playing} profileConfirmed={!!own?.confirmed} hasScript={!!script} allReady={allReady}
                   generating={pending === 'generate'} busy={pending !== null}
                   onProfile={() => go(own?.confirmed ? 'perfil' : draft ? 'perfil' : 'preferencias')}
                   onGenerate={() => { void generate() }}
@@ -480,8 +513,8 @@ function App() {
                   onMoveItem={moveItem}
                 />
                 {canPlay && (
-                  <button type="button" className="sm-btn-primary px-6 py-3 text-base" onClick={() => go('player')}>
-                    <Play className="h-5 w-5" aria-hidden="true" />Abrir o player
+                  <button type="button" className="sm-btn-primary px-6 py-3 text-base" onClick={() => { void openPlayer() }} disabled={pending !== null}>
+                    <Play className="h-5 w-5" aria-hidden="true" />{pending === 'start' ? 'Abrindo…' : 'Abrir o player'}
                   </button>
                 )}
               </> : <ParticipantScriptCard script={script} participantName={participantName} lookup={lookup} />)}

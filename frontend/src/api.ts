@@ -115,6 +115,10 @@ export const api = {
   }, token),
   removeParticipant: (id: string, token: string, participantId: string) => request<Room>(
     `/api/sessions/${encodeURIComponent(id)}/participants/${encodeURIComponent(participantId)}`, { method: 'DELETE' }, token),
+  /** Abre o player: a sala fecha para entradas, remoções e mudanças de perfil. */
+  start: (id: string, token: string) => request<Room>(`/api/sessions/${encodeURIComponent(id)}/start`, { method: 'POST' }, token),
+  /** Reabre a sala depois de aberto o player (ex.: chegou alguém atrasado). */
+  reopen: (id: string, token: string) => request<Room>(`/api/sessions/${encodeURIComponent(id)}/reopen`, { method: 'POST' }, token),
   approve: (id: string, token: string, expected_version: number) => request<{script: Script}>(`/api/sessions/${encodeURIComponent(id)}/script/approve`, {
     method: 'POST', body: json({expected_version}),
   }, token),

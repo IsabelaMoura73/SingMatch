@@ -118,7 +118,7 @@ DATABASE_URL=postgresql+psycopg://singmatch:dev-local-change-me@127.0.0.1:5432/s
 # Configure sua chave local; nunca a envie ao Git.
 OPENAI_API_KEY=
 # Escolha um modelo ao qual sua conta tenha acesso.
-OPENAI_MODEL=gpt-4o-2024-05-13
+OPENAI_MODEL=gpt-5-mini
 ```
 
 Os valores acima são **exemplos de desenvolvimento**. Use credenciais adequadas ao seu ambiente. Se um volume PostgreSQL já existir, alterar a senha no `.env` não atualiza automaticamente a senha gravada no banco.

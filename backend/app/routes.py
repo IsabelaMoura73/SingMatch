@@ -16,6 +16,7 @@ from sqlalchemy.orm import Session
 from app.api_schemas import CatalogResponse, ParticipantPrivate, ScriptResponse, SessionState
 from app.catalog import get_catalog, get_lyrics
 from app.database import get_db
+from app.limits import MAX_LIKES, MAX_QUESTIONS, MAX_VETOES, interpret_limit, script_limit
 from app.llm import LLMServiceError, compor_roteiro_misto, compor_roteiro_solo, interpretar_perfil
 from app.matching import MatchingError, duet_eligible_pairs, eligible_candidates, norm, validate_mixed_script
 from app.models import ParticipantRow, ScriptRow, SessionRow
@@ -74,6 +75,12 @@ def _require_room_access(db: Session, session: SessionRow, token: str) -> None:
         if check_token(token, row.token_hash):
             return
     raise HTTPException(status_code=403, detail="Token não pertence a esta sala.")
+
+
+def _require_not_playing(session: SessionRow) -> None:
+    """Durante a noite, mudar perfis derrubaria a aprovação no meio do player."""
+    if session.status in {"playing", "finished"}:
+        raise conflict("A noite já começou: peça ao organizador para reabrir a sala antes de mudar o perfil.")
 
 
 def _public(session: SessionRow) -> SessionPublic:
@@ -164,14 +171,18 @@ def join_session(request: JoinSessionRequest, db: Session = DB):
     if not row:
         raise not_found("Código de sala não encontrado.")
     if row.status in {"playing", "finished"}:
-        raise conflict("Esta sala não recebe mais participantes.")
+        raise conflict("A noite já começou e a sala não recebe mais participantes. Peça ao organizador para reabrir.")
+    # "Ana " e "Ana" são a mesma pessoa; nome só com espaços não vale.
+    name = " ".join(request.name.split())
+    if not name:
+        raise HTTPException(status_code=422, detail="Informe um nome.")
     # Comparar sem diferenciar maiúsculas e minúsculas.
     names = [p.name.casefold() for p in db.scalars(select(ParticipantRow)
                          .where(ParticipantRow.session_id == row.id))]
-    if request.name.casefold() in names:
+    if name.casefold() in names:
         raise conflict("Já existe um participante com esse nome na sala.")
     token = new_token()
-    participant = ParticipantRow(id=str(uuid4()), session_id=row.id, name=request.name,
+    participant = ParticipantRow(id=str(uuid4()), session_id=row.id, name=name,
                                  token_hash=hash_token(token))
     db.add(participant)
     _invalidate(db, row)
@@ -251,9 +262,11 @@ def interpret_preferences(participant_id: str, request: InterpretRequest,
     session_id = participant.session_id
     row = _session(db, session_id)
     original_revision = row.revision
+    _require_not_playing(row)
     songs, _ = get_catalog(db, row.genre)
     if not songs:
         raise conflict("Catálogo vazio. Execute a importação antes de interpretar perfis.")
+    interpret_limit.hit(participant.id)
     try:
         draft = interpretar_perfil(request.text, songs)
     except LLMServiceError as exc:
@@ -284,13 +297,19 @@ def confirm_profile(participant_id: str, request: ConfirmProfileRequest,
     participant = _participant(db, participant_id)
     if participant.profile_draft is None:
         raise conflict("Interprete as preferências antes de confirmar o perfil.")
-    participant.profile_confirmed = request.profile.model_dump(mode="json")
+    _require_not_playing(row)
+    profile = request.profile
+    if len(profile.likes) > MAX_LIKES or len(profile.vetoes) > MAX_VETOES:
+        raise HTTPException(status_code=422, detail=f"O perfil pode ter no máximo {MAX_LIKES} gostos e {MAX_VETOES} vetos.")
+    # Dúvidas vêm da IA e só informam; guardar no máximo MAX_QUESTIONS.
+    profile = profile.model_copy(update={"questions": profile.questions[:MAX_QUESTIONS]})
+    participant.profile_confirmed = profile.model_dump(mode="json")
     _invalidate(db, row)
     db.commit()
     return ParticipantPrivate(id=participant.id, name=participant.name,
                               text=participant.text,
                               draft=ProfileDraft.model_validate(participant.profile_draft),
-                              confirmed=request.profile)
+                              confirmed=profile)
 
 
 @router.post("/sessions/{session_id}/script", response_model=ScriptResponse, status_code=201)
@@ -317,6 +336,7 @@ def generate_script(session_id: str, db: Session = DB, token: str = BEARER):
         eligible_candidates(row.genre, profiles, songs, videos)
     except MatchingError as exc:
         raise conflict(str(exc)) from exc
+    script_limit.hit(row.id)
     try:
         # Com pelo menos uma dupla possível (consentimento dos dois + música em comum),
         # o roteiro pode ter duetos; senão segue o fluxo só de solos.
@@ -368,6 +388,32 @@ def edit_script(session_id: str, request: EditScriptRequest,
     _valid_script(proposal, profiles, row.genre, db)
     updated = _add_script(db, row, proposal, current.version + 1)
     return ScriptResponse(script=_snapshot(updated))
+
+
+@router.post("/sessions/{session_id}/start", response_model=SessionState)
+def start_night(session_id: str, db: Session = DB, token: str = BEARER):
+    """Organizador abre o player: a sala fecha para entradas, remoções e mudanças de perfil."""
+    row = _session(db, session_id, lock=True)
+    _require_host(row, token)
+    current = _current_script(db, row.id)
+    if current is None or not current.approved or current.input_revision != row.revision:
+        raise conflict("Aprove o roteiro atual antes de abrir o player.")
+    row.status = "playing"
+    db.commit()
+    return _state(db, row)
+
+
+@router.post("/sessions/{session_id}/reopen", response_model=SessionState)
+def reopen_room(session_id: str, db: Session = DB, token: str = BEARER):
+    """Organizador reabre a sala (ex.: chegou alguém atrasado). O roteiro aprovado continua aprovado."""
+    row = _session(db, session_id, lock=True)
+    _require_host(row, token)
+    if row.status in {"playing", "finished"}:
+        current = _current_script(db, row.id)
+        approved = current is not None and current.approved and current.input_revision == row.revision
+        row.status = "ready" if approved else "lobby"
+        db.commit()
+    return _state(db, row)
 
 
 @router.post("/sessions/{session_id}/script/approve", response_model=ScriptResponse)

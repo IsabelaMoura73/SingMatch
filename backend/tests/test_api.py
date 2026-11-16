@@ -327,9 +327,112 @@ def test_edicao_recusa_dueto_sem_consentimento_dos_dois(client):
     first = api.post(path, headers=auth(host)).json()["script"]
     a, b = members[0]["participant_id"], members[1]["participant_id"]
     c_item = next(i for i in first["items"] if members[2]["participant_id"] in i["participant_ids"])
-    items = [{"position": 1, "karaoke_version_id": "KAR-FOR-002", "participant_ids": [a, b],
+    # Música de dueto diferente da do solo da Cris (o fake distribui as músicas pela
+    # ordem aleatória dos ids); senão o servidor recusaria por vídeo repetido, não por consentimento.
+    duet_video = next(v for v in ("KAR-FOR-002", "KAR-FOR-005") if v != c_item["karaoke_version_id"])
+    items = [{"position": 1, "karaoke_version_id": duet_video, "participant_ids": [a, b],
               "justification": None, "origin": "manual"}, dict(c_item, position=2)]
     r = api.put(path, json={"expected_version": 1, "proposal": {"title": "Dupla", "items": items}},
                 headers=auth(host))
     assert r.status_code == 409
     assert "consentimento" in r.json()["detail"]
+
+
+def test_nome_ignora_espacos_extras_e_recusa_nome_vazio(client):
+    api, _ = client
+    room, host = start_room(api)
+    join(api, room["code"], "  Ana   Maria ")
+    state = api.get(f"/api/sessions/{room['id']}", headers=auth(host)).json()
+    assert [p["name"] for p in state["participants"]] == ["Ana Maria"]
+    assert api.post("/api/join", json={"code": room["code"], "name": "ana maria"}).status_code == 409
+    assert api.post("/api/join", json={"code": room["code"], "name": "   "}).status_code == 422
+
+
+# ------------------------------------------------- noite em andamento e limites
+
+@pytest.fixture
+def limites_zerados():
+    from app.limits import interpret_limit, script_limit
+    interpret_limit.reset(); script_limit.reset()
+    yield
+    interpret_limit.reset(); script_limit.reset()
+
+
+def test_abrir_player_fecha_a_sala_e_reabrir_aceita_entradas(client):
+    api, _ = client
+    room, host, members = ready_room(api)
+    base = f"/api/sessions/{room['id']}"
+    assert api.post(f"{base}/start", headers=auth(host)).status_code == 409  # sem roteiro aprovado
+    api.post(f"{base}/script", headers=auth(host))
+    assert api.post(f"{base}/start", headers=auth(members[0]["participant_token"])).status_code == 403
+    assert api.post(f"{base}/script/approve", json={"expected_version": 1}, headers=auth(host)).status_code == 200
+
+    started = api.post(f"{base}/start", headers=auth(host))
+    assert started.status_code == 200 and started.json()["session"]["status"] == "playing"
+    late = api.post("/api/join", json={"code": room["code"], "name": "Duda"})
+    assert late.status_code == 409 and "reabrir" in late.json()["detail"]
+    me = members[1]
+    assert api.post(f"/api/participants/{me['participant_id']}/interpret", json={"text": "Mudei de ideia"},
+                    headers=auth(me["participant_token"])).status_code == 409
+    assert api.put(f"/api/participants/{me['participant_id']}/profile",
+                   json={"profile": {"likes": [], "vetoes": [], "preferred_format": "solo",
+                                     "duet_allowed": False, "questions": []}},
+                   headers=auth(me["participant_token"])).status_code == 409
+    assert api.delete(f"{base}/participants/{me['participant_id']}", headers=auth(host)).status_code == 409
+    state = api.get(base, headers=auth(host)).json()
+    assert state["script"]["approved"] is True  # a noite seguiu intacta
+
+    reopened = api.post(f"{base}/reopen", headers=auth(host))
+    assert reopened.status_code == 200 and reopened.json()["session"]["status"] == "ready"
+    assert api.post("/api/join", json={"code": room["code"], "name": "Duda"}).status_code == 201
+
+
+def test_limite_de_interpretacoes_por_hora(client, monkeypatch, limites_zerados):
+    api, _ = client
+    monkeypatch.setenv("SINGMATCH_MAX_INTERPRETACOES_HORA", "2")
+    room, _ = start_room(api)
+    me = join(api, room["code"], "Ana")
+    url = f"/api/participants/{me['participant_id']}/interpret"
+    for _ in range(2):
+        assert api.post(url, json={"text": "Gosto de forró"}, headers=auth(me["participant_token"])).status_code == 200
+    blocked = api.post(url, json={"text": "Gosto de forró"}, headers=auth(me["participant_token"]))
+    assert blocked.status_code == 429 and "Tente de novo em" in blocked.json()["detail"]
+    other = join(api, room["code"], "Beto")  # o limite é por participante
+    assert api.post(f"/api/participants/{other['participant_id']}/interpret", json={"text": "Gosto de forró"},
+                    headers=auth(other["participant_token"])).status_code == 200
+
+
+def test_limite_de_roteiros_por_hora(client, monkeypatch, limites_zerados):
+    api, _ = client
+    monkeypatch.setenv("SINGMATCH_MAX_ROTEIROS_HORA", "2")
+    room, host, _ = ready_room(api)
+    path = f"/api/sessions/{room['id']}/script"
+    assert [api.post(path, headers=auth(host)).status_code for _ in range(3)] == [201, 201, 429]
+
+
+def test_perfil_tem_tamanho_maximo(client):
+    api, _ = client
+    room, _ = start_room(api)
+    me = join(api, room["code"], "Ana")
+    headers = auth(me["participant_token"])
+    url = f"/api/participants/{me['participant_id']}"
+    assert api.post(f"{url}/interpret", json={"text": "Gosto de forró"}, headers=headers).status_code == 200
+    label = lambda i: {"category": "artist", "value": f"Artista {i}", "evidence": "teste"}
+    too_many = {"likes": [label(i) for i in range(21)], "vetoes": [], "preferred_format": "solo",
+                "duet_allowed": None, "questions": []}
+    assert api.put(f"{url}/profile", json={"profile": too_many}, headers=headers).status_code == 422
+    ok = dict(too_many, likes=[label(i) for i in range(20)], questions=[f"Dúvida {i}" for i in range(15)])
+    saved = api.put(f"{url}/profile", json={"profile": ok}, headers=headers)
+    assert saved.status_code == 200
+    assert len(saved.json()["confirmed"]["questions"]) == 10
+
+
+def test_janela_do_limite_libera_depois_de_uma_hora():
+    from fastapi import HTTPException
+    from app.limits import HourlyLimit
+    limit = HourlyLimit("SINGMATCH_TESTE_INEXISTENTE", 2, "Limite.")
+    limit.hit("x", now=0); limit.hit("x", now=10)
+    with pytest.raises(HTTPException) as error:
+        limit.hit("x", now=20)
+    assert error.value.status_code == 429
+    limit.hit("x", now=3600)  # o primeiro uso saiu da janela

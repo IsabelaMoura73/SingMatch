@@ -21,7 +21,7 @@ PYTHONPATH=backend python3 -m pytest -q backend/tests
 PYTHONPATH=backend python3 scripts/demo_llm.py --modo contrato
 ```
 
-Para as chamadas reais, exporte `OPENAI_API_KEY` localmente. Opcionalmente defina `OPENAI_MODEL` (o padrão do script é `gpt-4o-mini`). **Não comite `.env` nem o resultado contendo textos pessoais.**
+Para as chamadas reais, exporte `OPENAI_API_KEY` localmente. Opcionalmente defina `OPENAI_MODEL` (o padrão é `gpt-5-mini`, o mesmo usado em produção). **Não comite `.env` nem o resultado contendo textos pessoais.**
 
 ```bash
 read -srp 'Chave OpenAI: ' OPENAI_API_KEY; echo; export OPENAI_API_KEY
