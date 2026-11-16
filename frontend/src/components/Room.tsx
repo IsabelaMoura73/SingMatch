@@ -2,6 +2,7 @@ import { useState, type ReactNode } from 'react'
 import {
   ArrowDown, ArrowUp, Check, CheckCircle2, Clock, Copy, Crown, Pencil, RefreshCw, Sparkles, Trash2, TriangleAlert, Users, X,
 } from 'lucide-react'
+import { characteristicLabel } from '../labels'
 import type { KaraokeVersion, Participant, Room, Script, ScriptItem, ScriptProposal, Song } from '../api'
 
 export type SongLookup = {
@@ -128,8 +129,8 @@ export function ParticipantsCard({ participants, meId, hostParticipantId, onRefr
               ) : (
                 <span className="flex shrink-0 items-center gap-2">
                   {person.profile_confirmed
-                    ? <span className="sm-chip bg-neon/15 text-neon"><Check className="h-3 w-3" aria-hidden="true" />confirmado</span>
-                    : <span className="sm-chip bg-muted text-muted-foreground"><Clock className="h-3 w-3" aria-hidden="true" />escrevendo…</span>}
+                    ? <span className="sm-chip bg-neon/15 text-neon"><Check className="h-3 w-3" aria-hidden="true" />CONFIRMADO</span>
+                    : <span className="sm-chip bg-muted text-muted-foreground"><Clock className="h-3 w-3" aria-hidden="true" />EDITANDO...</span>}
                   {onRemove && (
                     <button type="button" disabled={busy} onClick={() => setConfirmingId(person.id)}
                       aria-label={`Remover ${person.name} da sala`} title="Remover da sala"
@@ -176,7 +177,7 @@ function ScriptRow({ item, index, personName, lookup }: {
         </div>
         <p className="mb-0 text-sm">
           <span className="text-primary">{personName}</span>
-          {song?.mood && <span className="text-muted-foreground"> · {song.mood}</span>}
+          {song?.mood && <span className="text-muted-foreground"> · {characteristicLabel(song.mood)}</span>}
         </p>
         <p className="mt-1 mb-0 text-xs text-muted-foreground">
           {item.justification || (item.origin === 'manual' ? 'Escolha editada pelo organizador.' : 'Apresentação sugerida.')}
