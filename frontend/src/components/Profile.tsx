@@ -9,20 +9,6 @@ export const CATEGORY_NAMES: Record<PreferenceCategory, string> = {
 /** Sugestões que o participante pode juntar ao texto com um clique. */
 const EXAMPLES = ['Amo Luiz Gonzaga', 'Forró pé de serra', 'Nada de música romântica', 'Prefiro cantar solo']
 
-function Steps({ step }: { step: number }) {
-  const labels = ['Contar gostos', 'Revisar', 'Confirmado']
-  return (
-    <ol className="mb-6 flex gap-1.5 p-0" aria-label="Etapas do seu perfil">
-      {labels.map((label, i) => (
-        <li key={label} className="flex-1 list-none" aria-current={i === step ? 'step' : undefined}>
-          <div className={`h-1.5 rounded-full ${i <= step ? 'bg-hot' : 'bg-muted'}`} />
-          <span className={`mt-1 block text-[11px] ${i === step ? 'text-foreground' : 'text-muted-foreground'}`}>{label}</span>
-        </li>
-      ))}
-    </ol>
-  )
-}
-
 /** Mesma normalização de backend/app/matching.py (norm): sem acentos, minúsculas. */
 function norm(value: string) {
   return value.toLowerCase().trim().normalize('NFKD').replace(/\p{M}/gu, '')
@@ -160,38 +146,31 @@ function SectionTitle({ icon, children }: { icon: ReactNode; children: ReactNode
   return <h3 className="m-0 flex items-center gap-2 text-base font-bold">{icon}{children}</h3>
 }
 
-/** Card do participante: escrever preferências, revisar a interpretação da IA e confirmar. */
-export function ProfileCard({
-  name, intention, own, rawText, interpretedText, draft, tagSuggestions, busy, interpreting, confirming,
-  onTextChange, onDraftChange, onInterpret, onConfirm,
-}: {
+type ProfileScreenProps = {
   name: string
   intention: string
   own: OwnProfile | null
   rawText: string
   interpretedText: string
   draft: Profile | null
-  tagSuggestions: string[]
   busy: boolean
+}
+
+/** Tela "Preferências": o participante escreve do que gosta e a IA interpreta. */
+export function PreferencesScreen({ name, intention, rawText, interpretedText, draft, busy, interpreting, onTextChange, onInterpret, onReview }: ProfileScreenProps & {
   interpreting: boolean
-  confirming: boolean
   onTextChange: (text: string) => void
-  onDraftChange: (profile: Profile) => void
   onInterpret: (event: FormEvent<HTMLFormElement>) => void
-  onConfirm: () => void
+  /** Vai para a revisão sem reinterpretar (quando o texto não mudou). */
+  onReview: () => void
 }) {
   const textChanged = rawText.trim() !== interpretedText
-  const step = !draft ? 0 : own?.confirmed && !textChanged ? 2 : 1
-  const duetValue = draft?.duet_allowed === null ? 'unknown' : String(draft?.duet_allowed)
-
   return (
     <section className="sm-card sm:p-8" aria-labelledby="perfil-titulo">
-      <Steps step={step} />
-
       <p className="mb-0 text-sm text-muted-foreground">
         Oi, {name}! {intention ? <>A noite é: <span className="text-foreground">“{intention}”</span></> : 'Conte o que você curte.'}
       </p>
-      <h2 id="perfil-titulo" className="mt-3 mb-1 text-3xl font-bold">O que você curte cantar?</h2>
+      <h1 id="perfil-titulo" className="mt-3 mb-1 text-3xl font-bold">O que você curte cantar?</h1>
       <p className="mb-0 text-muted-foreground">
         Escreva do seu jeito: artistas, músicas, estilos — e o que você <strong className="text-primary">não</strong> quer cantar.
         A IA interpreta, mas quem confirma é você.
@@ -199,9 +178,9 @@ export function ProfileCard({
 
       <form onSubmit={onInterpret}>
         <textarea
-          className="sm-input mt-5 min-h-36 text-base"
+          className="sm-input mt-5 min-h-44 text-base"
           aria-label="Conte seus gostos musicais"
-          rows={5}
+          rows={6}
           minLength={3}
           maxLength={2000}
           required
@@ -221,75 +200,97 @@ export function ProfileCard({
             </button>
           ))}
         </div>
-        <button className="sm-btn-primary mt-6 w-full" disabled={busy || rawText.trim().length < 3}>
-          <Wand2 className={`h-4 w-4 ${interpreting ? 'animate-spin' : ''}`} aria-hidden="true" />
-          {interpreting ? 'A IA está lendo seu gosto…' : draft ? 'Interpretar novamente' : 'Interpretar com IA'}
-        </button>
+        <div className="mt-6 flex flex-wrap gap-3">
+          {draft && !textChanged && (
+            <button type="button" className="sm-btn-ghost" onClick={onReview} disabled={busy}>Ver o que a IA entendeu</button>
+          )}
+          <button className="sm-btn-primary flex-1" disabled={busy || rawText.trim().length < 3}>
+            <Wand2 className={`h-4 w-4 ${interpreting ? 'animate-spin' : ''}`} aria-hidden="true" />
+            {interpreting ? 'A IA está lendo seu gosto…' : draft ? 'Interpretar novamente' : 'Interpretar com IA'}
+          </button>
+        </div>
         <p className="mt-2 mb-0 text-center text-xs text-muted-foreground">Seu texto é enviado a um serviço de IA (OpenAI). Os outros participantes não veem o que você escreveu.</p>
       </form>
+    </section>
+  )
+}
 
-      {draft && (
-        <div className="mt-8 border-t border-border pt-8">
-          <h2 className="mb-1 text-2xl font-bold">Entendi assim, {name} 🎤</h2>
-          <p className="mb-0 text-muted-foreground">Remova o que a IA entendeu errado, acrescente o que faltou e confirme.</p>
-          {interpretedText && (
-            <blockquote className="mx-0 mt-4 mb-0 border-l-2 border-primary pl-4 text-sm text-muted-foreground italic">“{interpretedText}”</blockquote>
-          )}
+/** Tela "Perfil": revisar o que a IA entendeu, corrigir e confirmar. */
+export function ReviewScreen({ name, own, rawText, interpretedText, draft, busy, tagSuggestions, confirming, onDraftChange, onConfirm, onRewrite }: ProfileScreenProps & {
+  draft: Profile
+  tagSuggestions: string[]
+  confirming: boolean
+  onDraftChange: (profile: Profile) => void
+  onConfirm: () => void
+  onRewrite: () => void
+}) {
+  const textChanged = rawText.trim() !== interpretedText
+  const duetValue = draft.duet_allowed === null ? 'unknown' : String(draft.duet_allowed)
+  return (
+    <section className="flex flex-col gap-4" aria-labelledby="revisao-titulo">
+      <div>
+        <h1 id="revisao-titulo" className="mb-1 text-3xl font-bold">Entendi assim, {name} 🎤</h1>
+        <p className="mb-0 text-muted-foreground">Remova o que a IA entendeu errado, acrescente o que faltou e confirme.</p>
+        {interpretedText && (
+          <blockquote className="mx-0 mt-4 mb-0 border-l-2 border-primary pl-4 text-sm text-muted-foreground italic">“{interpretedText}”</blockquote>
+        )}
+      </div>
 
-          <div className="mt-6 grid gap-4 md:grid-cols-2">
-            <div className="flex flex-col gap-3 rounded-2xl border border-border bg-background/40 p-5">
-              <SectionTitle icon={<Heart className="h-4 w-4 text-primary" aria-hidden="true" />}>Gostos</SectionTitle>
-              <LabelList labels={draft.likes} tone="like" addLabel="adicionar gosto" tagSuggestions={tagSuggestions} onChange={likes => onDraftChange({ ...draft, likes })} />
-            </div>
-            <div className="flex flex-col gap-3 rounded-2xl border border-border bg-background/40 p-5">
-              <SectionTitle icon={<Ban className="h-4 w-4 text-destructive" aria-hidden="true" />}>Vetos</SectionTitle>
-              <p className="mb-0 text-xs text-muted-foreground">O roteiro nunca vai te dar uma música vetada.</p>
-              <LabelList labels={draft.vetoes} tone="veto" addLabel="adicionar veto" tagSuggestions={tagSuggestions} onChange={vetoes => onDraftChange({ ...draft, vetoes })} />
-            </div>
-            <div className="flex flex-col gap-3 rounded-2xl border border-border bg-background/40 p-5">
-              <SectionTitle icon={<Mic className="h-4 w-4 text-neon" aria-hidden="true" />}>Formato preferido</SectionTitle>
-              <Choice
-                label="Formato preferido"
-                value={draft.preferred_format}
-                options={[{ value: 'solo', label: 'Solo' }, { value: 'dueto', label: 'Dueto' }, { value: 'indiferente', label: 'Tanto faz' }]}
-                onChange={preferred_format => onDraftChange({ ...draft, preferred_format })}
-              />
-            </div>
-            <div className="flex flex-col gap-3 rounded-2xl border border-border bg-background/40 p-5">
-              <SectionTitle icon={<Users className="h-4 w-4 text-neon" aria-hidden="true" />}>Topa dueto?</SectionTitle>
-              <Choice
-                label="Permite duetos"
-                value={duetValue as 'true' | 'false' | 'unknown'}
-                options={[{ value: 'true', label: 'Sim' }, { value: 'false', label: 'Não' }, { value: 'unknown', label: 'Não informei' }]}
-                onChange={v => onDraftChange({ ...draft, duet_allowed: v === 'unknown' ? null : v === 'true' })}
-              />
-              <p className="mb-0 text-xs text-muted-foreground">Neste piloto o roteiro é só solo, mesmo se você topar dueto.</p>
-            </div>
-          </div>
-
-          {draft.questions.length > 0 && (
-            <div className="mt-4 flex flex-col gap-2 rounded-2xl border border-accent/40 bg-accent/5 p-5">
-              <SectionTitle icon={<HelpCircle className="h-4 w-4 text-accent" aria-hidden="true" />}>Dúvidas da IA</SectionTitle>
-              <ul className="m-0 space-y-1 pl-5 text-sm text-muted-foreground">
-                {draft.questions.map((question, i) => <li key={i}>{question}</li>)}
-              </ul>
-              <p className="mb-0 text-xs text-muted-foreground">Se algo estiver ambíguo, ajuste o texto e interprete novamente, ou corrija os itens acima.</p>
-            </div>
-          )}
-
-          {textChanged && (
-            <p className="mt-4 mb-0 rounded-xl border border-accent/40 bg-accent/10 px-4 py-3 text-sm text-accent" role="status">
-              Você alterou o texto. Interprete novamente antes de confirmar.
-            </p>
-          )}
-          <button type="button" className="sm-btn-primary mt-6 w-full" disabled={busy || textChanged} onClick={onConfirm}>
-            <Check className="h-4 w-4" aria-hidden="true" />
-            {confirming ? 'Salvando...' : own?.confirmed ? 'Salvar correções do perfil' : 'Confirmar meu perfil'}
-          </button>
-          {own?.confirmed && !textChanged && (
-            <p className="mt-2 mb-0 text-center text-xs text-neon" role="status">✓ Perfil confirmado. Se mudar algo, confirme de novo.</p>
-          )}
+      <div className="grid gap-4 md:grid-cols-2">
+        <div className="sm-card flex flex-col gap-3">
+          <SectionTitle icon={<Heart className="h-4 w-4 text-primary" aria-hidden="true" />}>Gostos</SectionTitle>
+          <LabelList labels={draft.likes} tone="like" addLabel="adicionar gosto" tagSuggestions={tagSuggestions} onChange={likes => onDraftChange({ ...draft, likes })} />
         </div>
+        <div className="sm-card flex flex-col gap-3">
+          <SectionTitle icon={<Ban className="h-4 w-4 text-destructive" aria-hidden="true" />}>Vetos</SectionTitle>
+          <p className="mb-0 text-xs text-muted-foreground">O roteiro nunca vai te dar uma música vetada.</p>
+          <LabelList labels={draft.vetoes} tone="veto" addLabel="adicionar veto" tagSuggestions={tagSuggestions} onChange={vetoes => onDraftChange({ ...draft, vetoes })} />
+        </div>
+        <div className="sm-card flex flex-col gap-3">
+          <SectionTitle icon={<Mic className="h-4 w-4 text-neon" aria-hidden="true" />}>Formato preferido</SectionTitle>
+          <Choice
+            label="Formato preferido"
+            value={draft.preferred_format}
+            options={[{ value: 'solo', label: 'Solo' }, { value: 'dueto', label: 'Dueto' }, { value: 'indiferente', label: 'Tanto faz' }]}
+            onChange={preferred_format => onDraftChange({ ...draft, preferred_format })}
+          />
+        </div>
+        <div className="sm-card flex flex-col gap-3">
+          <SectionTitle icon={<Users className="h-4 w-4 text-neon" aria-hidden="true" />}>Topa dueto?</SectionTitle>
+          <Choice
+            label="Permite duetos"
+            value={duetValue as 'true' | 'false' | 'unknown'}
+            options={[{ value: 'true', label: 'Sim' }, { value: 'false', label: 'Não' }, { value: 'unknown', label: 'Não informei' }]}
+            onChange={v => onDraftChange({ ...draft, duet_allowed: v === 'unknown' ? null : v === 'true' })}
+          />
+          <p className="mb-0 text-xs text-muted-foreground">Neste piloto o roteiro é só solo, mesmo se você topar dueto.</p>
+        </div>
+      </div>
+
+      {draft.questions.length > 0 && (
+        <div className="sm-card flex flex-col gap-2 border-accent/40">
+          <SectionTitle icon={<HelpCircle className="h-4 w-4 text-accent" aria-hidden="true" />}>Dúvidas da IA</SectionTitle>
+          <ul className="m-0 space-y-1 pl-5 text-sm text-muted-foreground">
+            {draft.questions.map((question, i) => <li key={i}>{question}</li>)}
+          </ul>
+          <p className="mb-0 text-xs text-muted-foreground">Se algo estiver ambíguo, reescreva e interprete de novo, ou corrija os itens acima.</p>
+        </div>
+      )}
+
+      {textChanged && (
+        <p className="m-0 rounded-xl border border-accent/40 bg-accent/10 px-4 py-3 text-sm text-accent" role="status">
+          Você alterou o texto. Volte em “Reescrever” e interprete de novo antes de confirmar.
+        </p>
+      )}
+      <div className="flex flex-wrap gap-3">
+        <button type="button" className="sm-btn-ghost" onClick={onRewrite} disabled={busy}>Reescrever</button>
+        <button type="button" className="sm-btn-primary flex-1" disabled={busy || textChanged} onClick={onConfirm}>
+          <Check className="h-4 w-4" aria-hidden="true" />
+          {confirming ? 'Salvando...' : own?.confirmed ? 'Salvar correções do perfil' : 'Confirmar perfil'}
+        </button>
+      </div>
+      {own?.confirmed && !textChanged && (
+        <p className="m-0 text-center text-xs text-neon" role="status">✓ Perfil confirmado. Se mudar algo, confirme de novo.</p>
       )}
     </section>
   )

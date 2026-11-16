@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState, type FormEvent } from 'react'
+import { ArrowLeft, Play } from 'lucide-react'
 import {
   api, type Catalog, type KaraokeVersion, type OwnProfile, type Song,
   type Profile, type Room,
@@ -6,10 +7,11 @@ import {
 } from './api'
 import { Shell } from './components/Shell'
 import { Home } from './components/Home'
-import { ProfileCard } from './components/Profile'
+import { PreferencesScreen, ReviewScreen } from './components/Profile'
+import { Steps, type Screen } from './components/Steps'
 import { PlayerCard } from './components/Player'
 import { Toast } from './components/Toast'
-import { HostScriptCard, ParticipantScriptCard, ParticipantsCard, RoomHeader, type SongLookup } from './components/Room'
+import { HostScriptCard, LobbyActions, ParticipantScriptCard, ParticipantsCard, RoomHeader, type SongLookup } from './components/Room'
 
 const STORAGE_KEY = 'singmatch:mvp:identity'
 /**
@@ -50,6 +52,13 @@ function storedIdentity(): Identity | null {
   return null
 }
 
+const SCREENS: Screen[] = ['preferencias', 'perfil', 'sala', 'roteiro', 'player']
+/** Tela pedida no endereço (#sala, #roteiro...), para o "voltar" do navegador e o F5 funcionarem. */
+function screenFromHash(): Screen | null {
+  const hash = window.location.hash.slice(1)
+  return (SCREENS as string[]).includes(hash) ? hash as Screen : null
+}
+
 function displayError(err: unknown): string {
   return err instanceof Error ? err.message : 'Ocorreu um erro inesperado. Tente novamente.'
 }
@@ -69,6 +78,21 @@ function App() {
   const [draft, setDraft] = useState<Profile | null>(null)
   const [initialCode] = useState(() => new URLSearchParams(window.location.search).get('code') || '')
   const [hostJoinName, setHostJoinName] = useState('')
+  /** Tela inicial aberta pelo logo enquanto a aba ainda tem acesso a uma sala. */
+  const [atHome, setAtHome] = useState(false)
+  const [requestedScreen, setRequestedScreen] = useState<Screen | null>(screenFromHash)
+  const [ownLoaded, setOwnLoaded] = useState(false)
+
+  useEffect(() => {
+    const onHashChange = () => setRequestedScreen(screenFromHash())
+    window.addEventListener('hashchange', onHashChange)
+    return () => window.removeEventListener('hashchange', onHashChange)
+  }, [])
+  const go = (screen: Screen) => {
+    setRequestedScreen(screen)
+    if (window.location.hash !== `#${screen}`) window.location.hash = screen
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
   const [pending, setPending] = useState<ActiveTask>(null)
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
@@ -84,6 +108,8 @@ function App() {
     setOwn(null)
     setDraft(null)
     setIdentity(newIdentity)
+    setAtHome(false)
+    setRequestedScreen(null)
     window.history.replaceState(null, '', window.location.pathname)
     setError('')
     setMessage('')
@@ -119,13 +145,15 @@ function App() {
   useEffect(() => {
     if (!me) return
     let alive = true
+    setOwnLoaded(false)
     api.ownProfile(me.id, me.token).then(profile => {
       if (!alive) return
+      setOwnLoaded(true)
       setOwn(profile)
       setRawText(profile.text || '')
       setInterpretedText(profile.text || '')
       setDraft(profile.confirmed || profile.draft)
-    }).catch(err => { if (alive) setError(displayError(err)) })
+    }).catch(err => { if (alive) { setOwnLoaded(true); setError(displayError(err)) } })
     return () => { alive = false }
   }, [me?.id, me?.token])
 
@@ -173,14 +201,20 @@ function App() {
       sessionStorage.setItem(STORAGE_KEY, JSON.stringify(updated))
       setIdentity(updated)
       await refresh(updated)
-      setMessage('Pronto! Agora conte o que você gosta de cantar.')
+      go('preferencias')
     })
+  }
+  const goHome = () => {
+    setAtHome(!!identity)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
   const exitRoom = () => {
     if (!window.confirm('Sair apaga deste navegador o acesso à sala. Sem o token, não será possível recuperar o papel de organizador ou este participante. Deseja sair?')) return
     sessionStorage.removeItem(STORAGE_KEY)
     setIdentity(null); setRoom(null); setOwn(null); setDraft(null)
-    setPlayingIndex(null); setEditing(false); setError(''); setMessage('')
+    setPlayingIndex(null); setEditing(false); setError(''); setMessage(''); setAtHome(false)
+    setRequestedScreen(null)
+    window.history.replaceState(null, '', window.location.pathname)
   }
   const copyCode = async () => {
     if (!room) return
@@ -197,7 +231,7 @@ function App() {
       setInterpretedText(rawText.trim())
       setOwn(old => old ? { ...old, text: rawText.trim(), draft: result.draft, confirmed: null } : null)
       await refresh(current)
-      setMessage('Perfil interpretado. Revise e confirme abaixo.')
+      go('perfil')
     })
   }
   const confirm = async () => {
@@ -209,7 +243,8 @@ function App() {
       setOwn(result)
       setDraft(result.confirmed)
       await refresh(current)
-      setMessage('Preferências confirmadas! Você já pode aguardar o roteiro.')
+      go('sala')
+      setMessage('Perfil confirmado! Agora é esperar o roteiro.')
     })
   }
   const generate = async () => {
@@ -220,6 +255,7 @@ function App() {
       await api.generate(host.sessionId, hostToken)
       await refresh(host)
       setEditing(false); setPlayingIndex(null)
+      go('roteiro')
       setMessage('Roteiro gerado! Confira antes de aprovar.')
     })
   }
@@ -264,6 +300,7 @@ function App() {
       await api.approve(host.sessionId, hostToken, room.script!.version)
       await refresh(host)
       setMessage('Roteiro aprovado! O player está liberado neste dispositivo.')
+      setPlayingIndex(null)
     })
   }
 
@@ -284,13 +321,39 @@ function App() {
   ].sort().concat(['energia baixa', 'energia media', 'energia alta']), [catalog])
   const lookup: SongLookup = useMemo(() => ({ songsById, versionsById }), [songsById, versionsById])
   const isHost = !!identity?.hostToken
+  const script = room?.script ?? null
+  const stale = !!script && !!room && script.input_revision !== room.session.revision
+  const canPlay = isHost && !!script?.approved && !stale && !editing
+  const available = (screen: Screen) =>
+    screen === 'preferencias' ? !!me
+      : screen === 'perfil' ? !!me && !!draft
+        : screen === 'sala' ? true
+          : screen === 'roteiro' ? !!script
+            : canPlay
+  const defaultScreen: Screen = me && !own?.confirmed ? (draft ? 'perfil' : 'preferencias') : script ? 'roteiro' : 'sala'
+  const screen = requestedScreen && available(requestedScreen) ? requestedScreen : defaultScreen
+  const stepScreens = SCREENS.filter(s => (s === 'preferencias' || s === 'perfil') ? !!me : s === 'player' ? isHost : true)
+  const myName = room?.participants.find(p => p.id === me?.id)?.name || own?.name || ''
+  const allReady = !!room && room.participants.length > 0 && room.participants.every(p => p.profile_confirmed)
   const participantName = (ids: string[]) => ids.map(id => room?.participants.find(p => p.id === id)?.name || 'Participante').join(' + ')
 
   return (
-    <Shell code={identity ? room?.session.code : undefined} onExit={identity ? exitRoom : undefined}>
+    <Shell code={identity && !atHome ? room?.session.code : undefined} onExit={identity ? exitRoom : undefined} onHome={goHome}>
 
       <main className="mx-auto w-full max-w-[1210px] px-4 pt-2 pb-16 sm:px-7">
-        {!identity ? (
+        {!identity || atHome ? (
+          <>
+          {identity && (
+            <div className="mx-auto mt-2 max-w-3xl px-1">
+              <div className="sm-card flex flex-col gap-3 border-primary/40 sm:flex-row sm:items-center">
+                <div className="flex-1">
+                  <p className="m-0 font-semibold">Você tem uma sala aberta{room ? <> · <span className="font-mono tracking-widest text-accent">{room.session.code}</span></> : null}</p>
+                  <p className="m-0 text-sm text-muted-foreground">Criar ou entrar em outra sala substitui o acesso a esta neste dispositivo.</p>
+                </div>
+                <button type="button" className="sm-btn-primary shrink-0" onClick={() => setAtHome(false)}>Voltar para a sala</button>
+              </div>
+            </div>
+          )}
           <Home
             busy={pending !== null}
             creating={pending === 'create'}
@@ -299,65 +362,86 @@ function App() {
             onCreate={(intention, hostName) => { void createRoom(intention, hostName) }}
             onJoin={(code, name) => { void joinRoom(code, name) }}
           />
+          </>
         ) : (
           <div className="flex flex-col gap-5">
-            <RoomHeader isHost={isHost} intention={room?.session.intention} code={room?.session.code} onCopy={() => { void copyCode() }} />
             {!connected && <p role="alert" className="mb-0 rounded-xl border border-destructive/40 bg-destructive/10 px-4 py-3 text-sm text-destructive">Conexão com a API indisponível. Tentando reconectar...</p>}
-            {isHost && !me && room && !['playing', 'finished'].includes(room.session.status) && (
-              <form onSubmit={joinAsHost} className="sm-card flex flex-col gap-3 sm:flex-row sm:items-center">
-                <div className="flex-1">
-                  <p className="mb-0 font-semibold">Vai cantar também?</p>
-                  <p className="mb-0 text-sm text-muted-foreground">Entre na roda com seu nome. Você ganha uma música no roteiro, como os amigos.</p>
-                </div>
-                <input className="sm-input sm:max-w-56" aria-label="Seu nome" placeholder="Seu nome" maxLength={80} required value={hostJoinName} onChange={e => setHostJoinName(e.target.value)} />
-                <button className="sm-btn-primary shrink-0" disabled={pending !== null || !hostJoinName.trim()}>{pending === 'join-host' ? 'Entrando...' : 'Entrar também como participante'}</button>
-              </form>
-            )}
-            {!room ? <div className="sm-card text-muted-foreground">Carregando informações da sala...</div> : <>
-              <ParticipantsCard participants={room.participants} meId={me?.id} onRefresh={() => { void refresh(identity).catch(err => setError(displayError(err))) }} />
+            {!room || (me && !ownLoaded) ? <div className="sm-card text-muted-foreground">Carregando informações da sala...</div> : <>
+              <Steps screens={stepScreens} current={screen} available={available} onSelect={go} />
 
-              {me && <ProfileCard
-                name={room.participants.find(p => p.id === me.id)?.name || own?.name || ''}
-                intention={room.session.intention}
-                own={own}
-                rawText={rawText}
-                interpretedText={interpretedText}
-                draft={draft}
-                tagSuggestions={tagSuggestions}
-                busy={pending !== null}
-                interpreting={pending === 'interpret'}
-                confirming={pending === 'confirm'}
-                onTextChange={setRawText}
-                onDraftChange={setDraft}
-                onInterpret={interpret}
-                onConfirm={() => { void confirm() }}
-              />}
-
-              {!isHost && room.script && <ParticipantScriptCard script={room.script} participantName={participantName} lookup={lookup} />}
-
-              {isHost && <HostScriptCard
-                room={room}
-                participantName={participantName}
-                lookup={lookup}
-                eligibleVideos={eligibleVideos}
-                busy={pending !== null}
-                pending={pending === 'generate' || pending === 'save' || pending === 'approve' ? pending : null}
-                editing={editing}
-                proposal={proposal}
-                editVersion={editVersion}
-                onGenerate={() => { void generate() }}
-                onStartEdit={() => startEdit(room.script!)}
-                onCancelEdit={() => { setEditing(false); setProposal(null) }}
-                onSaveEdit={() => { void saveEdit() }}
-                onApprove={() => { void approve() }}
-                onTitleChange={title => setProposal(old => old ? { ...old, title } : old)}
-                onChangeItem={changeItem}
-                onMoveItem={moveItem}
-              />}
-
-              {isHost && room.script?.approved && room.script.input_revision === room.session.revision && !editing && (
-                <PlayerCard script={room.script} index={playingIndex} lookup={lookup} participantName={participantName} onSelect={setPlayingIndex} />
+              {screen === 'preferencias' && me && (
+                <PreferencesScreen
+                  name={myName} intention={room.session.intention} own={own}
+                  rawText={rawText} interpretedText={interpretedText} draft={draft}
+                  busy={pending !== null} interpreting={pending === 'interpret'}
+                  onTextChange={setRawText} onInterpret={interpret} onReview={() => go('perfil')}
+                />
               )}
+
+              {screen === 'perfil' && me && draft && (
+                <ReviewScreen
+                  name={myName} intention={room.session.intention} own={own}
+                  rawText={rawText} interpretedText={interpretedText} draft={draft}
+                  busy={pending !== null} tagSuggestions={tagSuggestions} confirming={pending === 'confirm'}
+                  onDraftChange={setDraft} onConfirm={() => { void confirm() }} onRewrite={() => go('preferencias')}
+                />
+              )}
+
+              {screen === 'sala' && <>
+                <RoomHeader isHost={isHost} intention={room.session.intention} code={room.session.code} onCopy={() => { void copyCode() }} />
+                {isHost && !me && !['playing', 'finished'].includes(room.session.status) && (
+                  <form onSubmit={joinAsHost} className="sm-card flex flex-col gap-3 sm:flex-row sm:items-center">
+                    <div className="flex-1">
+                      <p className="mb-0 font-semibold">Vai cantar também?</p>
+                      <p className="mb-0 text-sm text-muted-foreground">Entre na roda com seu nome. Você ganha uma música no roteiro, como os amigos.</p>
+                    </div>
+                    <input className="sm-input sm:max-w-56" aria-label="Seu nome" placeholder="Seu nome" maxLength={80} required value={hostJoinName} onChange={e => setHostJoinName(e.target.value)} />
+                    <button className="sm-btn-primary shrink-0" disabled={pending !== null || !hostJoinName.trim()}>{pending === 'join-host' ? 'Entrando...' : 'Entrar também como participante'}</button>
+                  </form>
+                )}
+                <ParticipantsCard participants={room.participants} meId={me?.id} hostParticipantId={isHost ? me?.id : undefined} onRefresh={() => { void refresh(identity).catch(err => setError(displayError(err))) }} />
+                <LobbyActions
+                  isHost={isHost} singing={!!me} profileConfirmed={!!own?.confirmed} hasScript={!!script} allReady={allReady}
+                  generating={pending === 'generate'} busy={pending !== null}
+                  onProfile={() => go(own?.confirmed ? 'perfil' : draft ? 'perfil' : 'preferencias')}
+                  onGenerate={() => { void generate() }}
+                  onScript={() => go('roteiro')}
+                />
+              </>}
+
+              {screen === 'roteiro' && script && (isHost ? <>
+                <HostScriptCard
+                  room={room}
+                  participantName={participantName}
+                  lookup={lookup}
+                  eligibleVideos={eligibleVideos}
+                  busy={pending !== null}
+                  pending={pending === 'generate' || pending === 'save' || pending === 'approve' ? pending : null}
+                  editing={editing}
+                  proposal={proposal}
+                  editVersion={editVersion}
+                  onGenerate={() => { void generate() }}
+                  onStartEdit={() => startEdit(script)}
+                  onCancelEdit={() => { setEditing(false); setProposal(null) }}
+                  onSaveEdit={() => { void saveEdit() }}
+                  onApprove={() => { void approve() }}
+                  onTitleChange={title => setProposal(old => old ? { ...old, title } : old)}
+                  onChangeItem={changeItem}
+                  onMoveItem={moveItem}
+                />
+                {canPlay && (
+                  <button type="button" className="sm-btn-primary px-6 py-3 text-base" onClick={() => go('player')}>
+                    <Play className="h-5 w-5" aria-hidden="true" />Abrir o player
+                  </button>
+                )}
+              </> : <ParticipantScriptCard script={script} participantName={participantName} lookup={lookup} />)}
+
+              {screen === 'player' && script && <>
+                <button type="button" className="sm-btn-ghost self-start" onClick={() => go('roteiro')}>
+                  <ArrowLeft className="h-4 w-4" aria-hidden="true" />Voltar ao roteiro
+                </button>
+                <PlayerCard script={script} index={playingIndex ?? 0} lookup={lookup} participantName={participantName} onSelect={setPlayingIndex} />
+              </>}
             </>}
           </div>
         )}

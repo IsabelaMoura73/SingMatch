@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from 'react'
 import {
-  ArrowDown, ArrowUp, Check, CheckCircle2, Clock, Copy, Pencil, RefreshCw, Sparkles, TriangleAlert, X,
+  ArrowDown, ArrowUp, Check, CheckCircle2, Clock, Copy, Crown, Pencil, RefreshCw, Sparkles, TriangleAlert, X,
 } from 'lucide-react'
 import type { KaraokeVersion, Participant, Room, Script, ScriptItem, ScriptProposal, Song } from '../api'
 
@@ -70,9 +70,14 @@ export function RoomHeader({ isHost, intention, code, onCopy }: {
 }
 
 /** Lista de quem está na sala e quem já confirmou o perfil. */
-export function ParticipantsCard({ participants, meId, onRefresh }: {
+export function ParticipantsCard({ participants, meId, hostParticipantId, onRefresh }: {
   participants: Participant[]
   meId: string | undefined
+  /**
+   * Participante que é o organizador. A API não informa isso; só é conhecido no
+   * dispositivo do próprio organizador (quando ele também canta).
+   */
+  hostParticipantId?: string
   onRefresh: () => void
 }) {
   const ready = participants.filter(p => p.profile_confirmed).length
@@ -96,6 +101,9 @@ export function ParticipantsCard({ participants, meId, onRefresh }: {
               <span className="flex min-w-0 items-center gap-3">
                 <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-secondary text-xs font-bold">{initials(person.name)}</span>
                 <span className="truncate">{person.name}{person.id === meId && <span className="text-muted-foreground"> (você)</span>}</span>
+                {person.id === hostParticipantId && (
+                  <Crown className="h-4 w-4 shrink-0 text-accent" role="img" aria-label="Organizador" />
+                )}
               </span>
               {person.profile_confirmed
                 ? <span className="sm-chip shrink-0 bg-neon/15 text-neon"><Check className="h-3 w-3" aria-hidden="true" />confirmado</span>
@@ -231,16 +239,6 @@ export function HostScriptCard({
         {script && <StatusChip script={script} />}
       </div>
 
-      {!script && (
-        room.participants.length === 0 ? <Note>Compartilhe o código e aguarde seus amigos entrarem.</Note>
-          : !allReady ? <Note>Aguardando todos confirmarem as preferências para gerar o roteiro.</Note>
-            : (
-              <button type="button" className="sm-btn-primary w-full" onClick={onGenerate} disabled={busy}>
-                <Sparkles className={`h-4 w-4 ${pending === 'generate' ? 'animate-spin' : ''}`} aria-hidden="true" />
-                {pending === 'generate' ? 'Montando o roteiro…' : 'Gerar roteiro com IA'}
-              </button>
-            )
-      )}
 
       {script && editing && proposal && (
         <div className="flex flex-col gap-3">
@@ -321,5 +319,44 @@ export function HostScriptCard({
         </>
       )}
     </section>
+  )
+}
+
+/** Próximo passo na tela "Sala": completar o perfil, gerar o roteiro ou ir até ele. */
+export function LobbyActions({
+  isHost, singing, profileConfirmed, hasScript, allReady, generating, busy, onProfile, onGenerate, onScript,
+}: {
+  isHost: boolean
+  /** Esta aba também é participante (canta). */
+  singing: boolean
+  profileConfirmed: boolean
+  hasScript: boolean
+  allReady: boolean
+  generating: boolean
+  busy: boolean
+  onProfile: () => void
+  onGenerate: () => void
+  onScript: () => void
+}) {
+  return (
+    <div className="flex flex-wrap items-center gap-3">
+      {singing && (
+        <button type="button" className={profileConfirmed ? 'sm-btn-ghost' : 'sm-btn-primary'} onClick={onProfile} disabled={busy}>
+          {profileConfirmed ? 'Editar meu perfil' : 'Preencher meu perfil'}
+        </button>
+      )}
+      {hasScript ? (
+        <button type="button" className="sm-btn-primary flex-1" onClick={onScript}>Ver roteiro</button>
+      ) : isHost ? (
+        <button type="button" className="sm-btn-primary flex-1" onClick={onGenerate} disabled={busy || !allReady}>
+          <Sparkles className={`h-4 w-4 ${generating ? 'animate-spin' : ''}`} aria-hidden="true" />
+          {generating ? 'Montando o roteiro…' : allReady ? 'Gerar roteiro com IA' : 'Aguardando todos confirmarem'}
+        </button>
+      ) : (
+        <p className="m-0 flex-1 text-sm text-muted-foreground">
+          {profileConfirmed ? 'Pronto! O organizador vai gerar o roteiro quando todos confirmarem.' : 'Confirme seu perfil para entrar no roteiro.'}
+        </p>
+      )}
+    </div>
   )
 }
