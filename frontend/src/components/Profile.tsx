@@ -43,7 +43,7 @@ function LabelList({ labels, tone, addLabel, tagSuggestions, onChange }: {
     setValue('')
   }
   return (
-    <div className="space-y-3">
+    <div className="flex flex-col gap-3">
       {labels.length === 0
         ? <p className="mb-0 text-sm text-muted-foreground">Nada por aqui.</p>
         : <ul className="m-0 flex flex-wrap gap-2 p-0">
@@ -128,7 +128,7 @@ function Choice<T extends string>({ label, value, options, onChange }: {
 }
 
 function SectionTitle({ icon, children }: { icon: ReactNode; children: ReactNode }) {
-  return <h3 className="flex items-center gap-2 text-base font-bold">{icon}{children}</h3>
+  return <h3 className="m-0 flex items-center gap-2 text-base font-bold">{icon}{children}</h3>
 }
 
 /** Card do participante: escrever preferências, revisar a interpretação da IA e confirmar. */
@@ -208,16 +208,16 @@ export function ProfileCard({
           )}
 
           <div className="mt-6 grid gap-4 md:grid-cols-2">
-            <div className="space-y-3 rounded-2xl border border-border bg-background/40 p-5">
+            <div className="flex flex-col gap-3 rounded-2xl border border-border bg-background/40 p-5">
               <SectionTitle icon={<Heart className="h-4 w-4 text-primary" aria-hidden="true" />}>Gostos</SectionTitle>
               <LabelList labels={draft.likes} tone="like" addLabel="adicionar gosto" tagSuggestions={tagSuggestions} onChange={likes => onDraftChange({ ...draft, likes })} />
             </div>
-            <div className="space-y-3 rounded-2xl border border-border bg-background/40 p-5">
+            <div className="flex flex-col gap-3 rounded-2xl border border-border bg-background/40 p-5">
               <SectionTitle icon={<Ban className="h-4 w-4 text-destructive" aria-hidden="true" />}>Vetos</SectionTitle>
               <p className="mb-0 text-xs text-muted-foreground">O roteiro nunca vai te dar uma música vetada.</p>
               <LabelList labels={draft.vetoes} tone="veto" addLabel="adicionar veto" tagSuggestions={tagSuggestions} onChange={vetoes => onDraftChange({ ...draft, vetoes })} />
             </div>
-            <div className="space-y-3 rounded-2xl border border-border bg-background/40 p-5">
+            <div className="flex flex-col gap-3 rounded-2xl border border-border bg-background/40 p-5">
               <SectionTitle icon={<Mic className="h-4 w-4 text-neon" aria-hidden="true" />}>Formato preferido</SectionTitle>
               <Choice
                 label="Formato preferido"
@@ -226,7 +226,7 @@ export function ProfileCard({
                 onChange={preferred_format => onDraftChange({ ...draft, preferred_format })}
               />
             </div>
-            <div className="space-y-3 rounded-2xl border border-border bg-background/40 p-5">
+            <div className="flex flex-col gap-3 rounded-2xl border border-border bg-background/40 p-5">
               <SectionTitle icon={<Users className="h-4 w-4 text-neon" aria-hidden="true" />}>Topa dueto?</SectionTitle>
               <Choice
                 label="Permite duetos"
@@ -239,7 +239,7 @@ export function ProfileCard({
           </div>
 
           {draft.questions.length > 0 && (
-            <div className="mt-4 space-y-2 rounded-2xl border border-accent/40 bg-accent/5 p-5">
+            <div className="mt-4 flex flex-col gap-2 rounded-2xl border border-accent/40 bg-accent/5 p-5">
               <SectionTitle icon={<HelpCircle className="h-4 w-4 text-accent" aria-hidden="true" />}>Dúvidas da IA</SectionTitle>
               <ul className="m-0 space-y-1 pl-5 text-sm text-muted-foreground">
                 {draft.questions.map((question, i) => <li key={i}>{question}</li>)}

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState, type FormEvent } from 'react'
 import {
-  api, type Catalog, type KaraokeVersion, type OwnProfile, type Participant, type Song,
+  api, type Catalog, type KaraokeVersion, type OwnProfile, type Song,
   type Profile, type Room,
   type Script, type ScriptItem, type ScriptProposal,
 } from './api'
@@ -8,6 +8,7 @@ import { KaraokePlayer } from './KaraokePlayer'
 import { Shell } from './components/Shell'
 import { Home } from './components/Home'
 import { ProfileCard } from './components/Profile'
+import { HostScriptCard, ParticipantScriptCard, ParticipantsCard, RoomHeader, type SongLookup } from './components/Room'
 
 const STORAGE_KEY = 'singmatch:mvp:identity'
 /**
@@ -54,9 +55,7 @@ function displayError(err: unknown): string {
 function cloneProposal(script: Script): ScriptProposal {
   return { title: script.title, items: script.items.map(item => ({ ...item, participant_ids: [...item.participant_ids] })) }
 }
-function initials(name: string) {
-  return name.trim().slice(0, 2).toUpperCase() || '♪'
-}
+
 
 function SongName({versionId, catalog}: {versionId: string; catalog: Catalog | null}) {
   const video = catalog?.karaoke_versions.find(v => v.id === versionId)
@@ -288,6 +287,7 @@ function App() {
   const tagSuggestions = useMemo(() => [
     ...new Set((catalog?.songs ?? []).map(song => song.mood).filter((mood): mood is string => !!mood)),
   ].sort().concat(['energia baixa', 'energia media', 'energia alta']), [catalog])
+  const lookup: SongLookup = useMemo(() => ({ songsById, versionsById }), [songsById, versionsById])
   const isHost = !!identity?.hostToken
   const participantName = (ids: string[]) => ids.map(id => room?.participants.find(p => p.id === id)?.name || 'Participante').join(' + ')
 
@@ -305,16 +305,9 @@ function App() {
             onJoin={(code, name) => { void joinRoom(code, name) }}
           />
         ) : (
-          <div className="room-layout">
-            <div className="room-header">
-              <div>
-                <span className="eyebrow">{isHost ? 'PAINEL DO ORGANIZADOR' : 'MEU ESPAÇO NO KARAOKÊ'}</span>
-                <h1>{isHost ? 'A noite é nossa.' : 'Sua voz faz parte.'}</h1>
-                <p className="muted">Forró · {room?.session.intention || 'Uma noite de música criada em grupo'}</p>
-              </div>
-              <div className="code-panel"><span>CÓDIGO DA SALA</span><strong>{room?.session.code || '········'}</strong>{isHost && <button type="button" onClick={copyCode} className="text-button">Copiar código ↗</button>}</div>
-            </div>
-            {!connected && <div className="alert error" role="alert">Conexão com a API indisponível. Tentando reconectar...</div>}
+          <div className="flex flex-col gap-5">
+            <RoomHeader isHost={isHost} intention={room?.session.intention} code={room?.session.code} onCopy={() => { void copyCode() }} />
+            {!connected && <p role="alert" className="mb-0 rounded-xl border border-destructive/40 bg-destructive/10 px-4 py-3 text-sm text-destructive">Conexão com a API indisponível. Tentando reconectar...</p>}
             {isHost && !me && room && !['playing', 'finished'].includes(room.session.status) && (
               <form onSubmit={joinAsHost} className="sm-card flex flex-col gap-3 sm:flex-row sm:items-center">
                 <div className="flex-1">
@@ -325,12 +318,8 @@ function App() {
                 <button className="sm-btn-primary shrink-0" disabled={pending !== null || !hostJoinName.trim()}>{pending === 'join-host' ? 'Entrando...' : 'Entrar também como participante'}</button>
               </form>
             )}
-            {!room ? <div className="paper-card">Carregando informações da sala...</div> : <>
-              <section className="paper-card participants-card">
-                <div className="card-title-row"><div><span className="eyebrow">QUEM ESTÁ NA RODA</span><h2>Participantes <span className="title-count">({room.participants.length})</span></h2></div><button className="btn outline small" type="button" onClick={() => { void refresh(identity).catch(err => setError(displayError(err))) }}>↻ Atualizar</button></div>
-                {room.participants.length ? <div className="people-grid">{room.participants.map((person: Participant) => <div className="person-card" key={person.id}><div className="avatar">{initials(person.name)}</div><div className="person-info"><strong>{person.name}</strong><span className={person.profile_confirmed ? 'ready' : 'waiting'}>{person.profile_confirmed ? '✓ Perfil confirmado' : 'Aguardando perfil'}</span></div></div>)}</div> : <div className="empty-state">Ninguém entrou ainda. Compartilhe o código da sala.</div>}
-                <div className="status-line"><span>Atualização automática a cada 7 segundos</span><span>{room.participants.filter(p => p.profile_confirmed).length}/{room.participants.length} perfis prontos</span></div>
-              </section>
+            {!room ? <div className="sm-card text-muted-foreground">Carregando informações da sala...</div> : <>
+              <ParticipantsCard participants={room.participants} meId={me?.id} onRefresh={() => { void refresh(identity).catch(err => setError(displayError(err))) }} />
 
               {me && <ProfileCard
                 name={room.participants.find(p => p.id === me.id)?.name || own?.name || ''}
@@ -349,31 +338,27 @@ function App() {
                 onConfirm={() => { void confirm() }}
               />}
 
-              {!isHost && room.script && <section className="paper-card participant-script"><span className="eyebrow">02 · ROTEIRO DA NOITE</span><h3>{room.script.title}</h3><p className="muted">{room.script.approved ? 'O organizador aprovou este roteiro.' : 'Esta ainda é uma proposta. O organizador pode editá-la.'}</p><ol>{room.script.items.map(item => <li key={item.position}><b>{participantName(item.participant_ids)}</b> — <SongName versionId={item.karaoke_version_id} catalog={catalog}/></li>)}</ol><div className="notice">O player fica disponível apenas no dispositivo do organizador.</div></section>}
+              {!isHost && room.script && <ParticipantScriptCard script={room.script} participantName={participantName} lookup={lookup} />}
 
-              {isHost && <section className="paper-card script-card">
-                <div className="card-title-row"><div><span className="eyebrow">02 · COMPOSIÇÃO COLETIVA</span><h2>Roteiro da noite</h2></div>{room.script && <span className={`state-tag ${room.script.approved ? 'done' : ''}`}>{room.script.approved ? '✓ Aprovado' : '✧ Proposta · v' + room.script.version}</span>}</div>
-                {!room.participants.length ? <div className="notice">Compartilhe o código e aguarde seus amigos entrarem.</div> : !room.participants.every(p => p.profile_confirmed) ? <div className="notice">Aguardando a confirmação das preferências de todos os participantes antes de gerar o roteiro.</div> : <div className="inline-actions"><button type="button" className="btn secondary" onClick={generate} disabled={pending !== null || editing}>{pending === 'generate' ? 'Criando roteiro...' : room.script ? '✧ Gerar outro roteiro' : '✧ Gerar roteiro com IA'}</button><span className="muted smaller">Gera uma apresentação solo por pessoa usando músicas aprovadas do catálogo.</span></div>}
-                {room.script && <div className="script-area">
-                  {editing && proposal ? <>
-                    <div className="edit-banner"><strong>Modo de edição</strong><span>Troque músicas ou altere a ordem. Nenhuma pessoa pode ser removida da rodada.</span></div>
-                    {editVersion !== room.script.version && <div className="alert error">Outra versão foi salva. Cancele a edição e atualize a sala antes de continuar.</div>}
-                    <label className="field">Título do roteiro<input maxLength={160} required value={proposal.title} onChange={e => setProposal(old => old ? {...old, title: e.target.value } : old)}/></label>
-                    <div className="script-list">{proposal.items.map((item, i) => <div className="script-item" key={item.participant_ids.join('-')}>
-                      <div className="script-pos">{i+1}</div><div className="script-details"><span className="item-person">{participantName(item.participant_ids)}</span><label className="field"><span>Música para esta apresentação</span><select value={item.karaoke_version_id} onChange={e => changeItem(i, {karaoke_version_id: e.target.value})}>{eligibleVideos.map(video => <option key={video.id} value={video.id}>{songsById.get(video.song_id)?.title || video.id} — {songsById.get(video.song_id)?.artists.join(', ')}{video.kind === 'letra_sincronizada' ? ' (letra na tela)' : ' (karaokê)'}</option>)}</select></label></div>
-                      <div className="order-actions"><button className="icon-btn" type="button" aria-label={`Subir apresentação de ${participantName(item.participant_ids)}`} onClick={() => moveItem(i, -1)} disabled={i === 0}>↑</button><button className="icon-btn" type="button" aria-label={`Descer apresentação de ${participantName(item.participant_ids)}`} onClick={() => moveItem(i, 1)} disabled={i === proposal.items.length-1}>↓</button></div>
-                    </div>)}</div>
-                    <div className="inline-actions"><button type="button" className="btn primary" disabled={pending !== null || editVersion !== room.script.version || !proposal.title.trim()} onClick={saveEdit}>{pending === 'save' ? 'Salvando...' : 'Salvar alterações ✓'}</button><button type="button" className="btn outline" onClick={() => { setEditing(false); setProposal(null) }}>Cancelar</button></div>
-                    <p className="muted smaller">O backend valida vetos e impedirá vídeos repetidos ou incompatíveis antes de salvar.</p>
-                  </> : <>
-                    <h3 className="script-title">{room.script.title}</h3><div className="script-list">{room.script.items.map(item => <div className="script-item" key={item.position}>
-                      <div className="script-pos">{item.position}</div><div className="script-details"><span className="item-person">{participantName(item.participant_ids)}</span><SongName versionId={item.karaoke_version_id} catalog={catalog}/><p className="reason">{item.justification || (item.origin === 'manual' ? 'Escolha editada pelo organizador.' : 'Apresentação sugerida.')}</p></div><span className="chip light">{item.origin === 'ia' ? '✧ IA' : 'Manual'}</span>
-                    </div>)}</div>
-                    <div className="inline-actions"><button type="button" className="btn outline" disabled={pending !== null} onClick={() => startEdit(room.script!)}>Editar roteiro</button>{!room.script.approved && <button type="button" className="btn primary" disabled={pending !== null || room.script.input_revision !== room.session.revision} onClick={approve}>{pending === 'approve' ? 'Aprovando...' : 'Aprovar roteiro ✓'}</button>}</div>
-                    {room.script.input_revision !== room.session.revision && <div className="notice warn">Os perfis mudaram desde esta proposta. Gere um novo roteiro antes de aprovar.</div>}
-                  </>}
-                </div>}
-              </section>}
+              {isHost && <HostScriptCard
+                room={room}
+                participantName={participantName}
+                lookup={lookup}
+                eligibleVideos={eligibleVideos}
+                busy={pending !== null}
+                pending={pending === 'generate' || pending === 'save' || pending === 'approve' ? pending : null}
+                editing={editing}
+                proposal={proposal}
+                editVersion={editVersion}
+                onGenerate={() => { void generate() }}
+                onStartEdit={() => startEdit(room.script!)}
+                onCancelEdit={() => { setEditing(false); setProposal(null) }}
+                onSaveEdit={() => { void saveEdit() }}
+                onApprove={() => { void approve() }}
+                onTitleChange={title => setProposal(old => old ? { ...old, title } : old)}
+                onChangeItem={changeItem}
+                onMoveItem={moveItem}
+              />}
 
               {isHost && room.script?.approved && room.script.input_revision === room.session.revision && !editing && <section className="paper-card player-card"><div className="card-title-row"><div><span className="eyebrow">03 · HORA DE CANTAR</span><h2>Player do organizador</h2></div><span className="state-tag done">Repertório aprovado</span></div><p className="muted">Reproduza na ordem do roteiro. Músicas com letra sincronizada mostram a letra abaixo do vídeo; use “Tela cheia” na TV ou projetor. O player aparece apenas aqui, no dispositivo do organizador.</p>
                 {playingIndex === null ? <button className="btn primary" type="button" onClick={() => setPlayingIndex(0)}>▶ Abrir o player</button> : <Player script={room.script} index={playingIndex} versions={versionsById} catalog={catalog} participantName={participantName} onSelect={setPlayingIndex}/>}
