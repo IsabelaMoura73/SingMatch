@@ -5,6 +5,7 @@ import {
   type Script, type ScriptItem, type ScriptProposal,
 } from './api'
 import { KaraokePlayer } from './KaraokePlayer'
+import { Shell } from './components/Shell'
 
 const STORAGE_KEY = 'singmatch:mvp:identity'
 type Identity =
@@ -318,14 +319,7 @@ function App() {
   const participantName = (ids: string[]) => ids.map(id => room?.participants.find(p => p.id === id)?.name || 'Participante').join(' + ')
 
   return (
-    <div className="app-shell">
-      <header className="topbar">
-        <div className="topbar-inner">
-          <div className="brand"><span className="brand-disc">♪</span><span>Sing<span className="brand-accent">Match</span></span></div>
-          <span className="topbar-note">KARAOKÊ CRIADO EM CONJUNTO</span>
-          {identity && <button type="button" className="nav-exit" onClick={exitRoom}>Sair deste dispositivo ↗</button>}
-        </div>
-      </header>
+    <Shell code={identity ? room?.session.code : undefined} onExit={identity ? exitRoom : undefined}>
 
       <main className="main-container">
         {!identity ? (
@@ -435,8 +429,7 @@ function App() {
         {error && <div className="feedback error" role="alert"><strong>Não foi possível concluir</strong><span>{error}</span><button type="button" onClick={() => setError('')} aria-label="Fechar erro">×</button></div>}
         {message && <div className="feedback success" role="status"><span>{message}</span><button type="button" onClick={() => setMessage('')} aria-label="Fechar aviso">×</button></div>}
       </main>
-      <footer className="footer"><span>SINGMATCH · PROJETO FERRAMENTA</span><span>Forró · Piloto colaborativo · 2026</span></footer>
-    </div>
+    </Shell>
   )
 }
 
