@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useMemo, useState, type FormEvent } from 'react'
 import { ArrowLeft, Play } from 'lucide-react'
 import {
-  api, type Catalog, type KaraokeVersion, type OwnProfile, type Song,
+  api, ApiError, type Catalog, type KaraokeVersion, type OwnProfile, type Song,
   type Profile, type Room,
-  type Script, type ScriptItem, type ScriptProposal,
+  type Participant, type Script, type ScriptItem, type ScriptProposal,
 } from './api'
 import { Shell } from './components/Shell'
 import { Home } from './components/Home'
@@ -26,7 +26,7 @@ type Identity = {
 /** Token usado para ler o estado da sala (qualquer papel serve). */
 const roomToken = (identity: Identity) => identity.hostToken ?? identity.participant!.token
 
-type ActiveTask = 'create' | 'join' | 'join-host' | 'interpret' | 'confirm' | 'generate' | 'save' | 'approve' | null
+type ActiveTask = 'create' | 'join' | 'join-host' | 'interpret' | 'confirm' | 'generate' | 'save' | 'approve' | 'remove' | null
 
 function storedIdentity(): Identity | null {
   try {
@@ -102,6 +102,7 @@ function App() {
   const [editVersion, setEditVersion] = useState<number | null>(null)
   const [proposal, setProposal] = useState<ScriptProposal | null>(null)
   const [playingIndex, setPlayingIndex] = useState<number | null>(null)
+  const [removingId, setRemovingId] = useState<string | null>(null)
 
   const saveIdentity = (newIdentity: Identity) => {
     sessionStorage.setItem(STORAGE_KEY, JSON.stringify(newIdentity))
@@ -115,6 +116,25 @@ function App() {
     setMessage('')
   }
 
+  const leaveRoom = useCallback(() => {
+    sessionStorage.removeItem(STORAGE_KEY)
+    setIdentity(null); setRoom(null); setOwn(null); setDraft(null)
+    setPlayingIndex(null); setEditing(false); setError(''); setMessage('')
+    setRequestedScreen(null)
+    window.history.replaceState(null, '', window.location.pathname)
+  }, [])
+  /** O organizador removeu este participante: some o acesso de participante desta aba. */
+  const removedFromRoom = useCallback((target: Identity) => {
+    if (target.hostToken) {
+      // Organizador que também cantava: continua organizando a sala.
+      const hostOnly: Identity = { sessionId: target.sessionId, hostToken: target.hostToken }
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(hostOnly))
+      setIdentity(hostOnly); setOwn(null); setDraft(null); setRawText(''); setInterpretedText('')
+      return
+    }
+    leaveRoom()
+    setError('Você foi removido desta sala pelo organizador.')
+  }, [leaveRoom])
   const refresh = useCallback(async (target: Identity) => {
     const data = await api.room(target.sessionId, roomToken(target))
     setRoom(data)
@@ -134,12 +154,16 @@ function App() {
     const poll = () => {
       api.room(identity.sessionId, roomToken(identity))
         .then(data => { if (alive) { setRoom(data); setConnected(true) } })
-        .catch(() => { if (alive) setConnected(false) })
+        .catch(err => {
+          if (!alive) return
+          if (err instanceof ApiError && err.status === 403 && !identity.hostToken) removedFromRoom(identity)
+          else setConnected(false)
+        })
     }
     poll()
     const timer = window.setInterval(poll, 7000)
     return () => { alive = false; window.clearInterval(timer) }
-  }, [identity])
+  }, [identity, removedFromRoom])
 
   const me = identity?.participant
   useEffect(() => {
@@ -153,7 +177,12 @@ function App() {
       setRawText(profile.text || '')
       setInterpretedText(profile.text || '')
       setDraft(profile.confirmed || profile.draft)
-    }).catch(err => { if (alive) { setOwnLoaded(true); setError(displayError(err)) } })
+    }).catch(err => {
+      if (!alive) return
+      setOwnLoaded(true)
+      if (err instanceof ApiError && err.status === 404 && identity) removedFromRoom(identity)
+      else setError(displayError(err))
+    })
     return () => { alive = false }
   }, [me?.id, me?.token])
 
@@ -211,11 +240,7 @@ function App() {
   }
   const exitRoom = () => {
     if (!window.confirm('Sair apaga deste navegador o acesso à sala. Sem o token, não será possível recuperar o papel de organizador ou este participante. Deseja sair?')) return
-    sessionStorage.removeItem(STORAGE_KEY)
-    setIdentity(null); setRoom(null); setOwn(null); setDraft(null)
-    setPlayingIndex(null); setEditing(false); setError(''); setMessage('')
-    setRequestedScreen(null)
-    window.history.replaceState(null, '', window.location.pathname)
+    leaveRoom()
   }
   const copyCode = async () => {
     if (!room) return
@@ -293,6 +318,22 @@ function App() {
       setEditing(false); setPlayingIndex(null)
       setMessage('Nova versão do roteiro salva. Aprove-a para reproduzir.')
     })
+  }
+  const removeParticipant = async (person: Participant) => {
+    if (!identity?.hostToken) return
+    const host = identity, hostToken = identity.hostToken
+    setRemovingId(person.id)
+    await execute('remove', async () => {
+      const data = await api.removeParticipant(host.sessionId, hostToken, person.id)
+      setRoom(data)
+      // O roteiro citava essa pessoa: a edição em andamento ficou obsoleta.
+      setEditing(false); setProposal(null); setPlayingIndex(null)
+      if (host.participant?.id === person.id) removedFromRoom(host)
+      setMessage(data.script
+        ? `Removemos ${person.name} da sala. Gere um novo roteiro para a rodada atual.`
+        : `Removemos ${person.name} da sala.`)
+    })
+    setRemovingId(null)
   }
   const approve = async () => {
     if (!identity?.hostToken || !room?.script) return
@@ -406,7 +447,9 @@ function App() {
                     <button className="sm-btn-primary shrink-0" disabled={pending !== null || !hostJoinName.trim()}>{pending === 'join-host' ? 'Entrando...' : 'Entrar também como participante'}</button>
                   </form>
                 )}
-                <ParticipantsCard participants={room.participants} meId={me?.id} hostParticipantId={isHost ? me?.id : undefined} onRefresh={() => { void refresh(identity).catch(err => setError(displayError(err))) }} />
+                <ParticipantsCard participants={room.participants} meId={me?.id} hostParticipantId={isHost ? me?.id : undefined} onRefresh={() => { void refresh(identity).catch(err => setError(displayError(err))) }}
+                  onRemove={isHost && !['playing', 'finished'].includes(room.session.status) ? person => { void removeParticipant(person) } : undefined}
+                  removingId={removingId} busy={pending !== null} />
                 <LobbyActions
                   isHost={isHost} singing={!!me} profileConfirmed={!!own?.confirmed} hasScript={!!script} allReady={allReady}
                   generating={pending === 'generate'} busy={pending !== null}

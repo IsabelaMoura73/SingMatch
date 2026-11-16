@@ -216,6 +216,7 @@ Para simular participantes no mesmo computador, use sessões independentes do na
 | `POST` | `/api/sessions` | Criar sala |
 | `POST` | `/api/join` | Entrar com código |
 | `GET` | `/api/sessions/{session_id}` | Consultar sala e roteiro |
+| `DELETE` | `/api/sessions/{session_id}/participants/{participant_id}` | Organizador remove participante |
 | `POST` | `/api/participants/{participant_id}/interpret` | Interpretar preferências com IA |
 | `PUT` | `/api/participants/{participant_id}/profile` | Confirmar/corrigir perfil |
 | `POST` | `/api/sessions/{session_id}/script` | Gerar proposta com IA |

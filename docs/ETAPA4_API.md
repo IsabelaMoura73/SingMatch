@@ -90,6 +90,7 @@ Abrir `http://127.0.0.1:8000/docs` para visualizar a documentação interativa, 
 | POST | `/api/sessions` | Não | `session`, `host_token` |
 | POST | `/api/join` | Não (código de sala) | `participant_id`, `participant_token` |
 | GET | `/api/sessions/{id}` | Host ou membro da sala | dados públicos e último roteiro |
+| DELETE | `/api/sessions/{id}/participants/{participant_id}` | Host | sala atualizada (roteiro perde a aprovação) |
 | POST | `/api/participants/{id}/interpret` | Do próprio participante | `draft` da IA |
 | GET | `/api/participants/{id}/profile` | Do próprio participante | texto + draft + confirmado |
 | PUT | `/api/participants/{id}/profile` | Do próprio participante | perfil confirmado |

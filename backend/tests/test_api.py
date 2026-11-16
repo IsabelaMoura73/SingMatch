@@ -212,3 +212,50 @@ def test_manual_edit_rejects_nonexistent_video_and_duet(client):
     r = api.put(path, json={"expected_version": 1,
                             "proposal": {"title": first["title"], "items": items}}, headers=auth(host))
     assert r.status_code in {409, 422}
+
+
+def test_host_removes_participant_and_invalidates_script(client):
+    api, _ = client
+    s, host, (ana, beto, cris) = ready_room(api)
+    script = api.post(f"/api/sessions/{s['id']}/script", headers=auth(host)).json()["script"]
+    assert api.post(f"/api/sessions/{s['id']}/script/approve", json={"expected_version": script["version"]},
+                    headers=auth(host)).status_code == 200
+    url = f"/api/sessions/{s['id']}/participants/{beto['participant_id']}"
+
+    # Somente o organizador remove; participante (nem o próprio) não consegue.
+    assert api.delete(url).status_code == 401
+    assert api.delete(url, headers=auth(ana["participant_token"])).status_code == 403
+    assert api.delete(url, headers=auth(beto["participant_token"])).status_code == 403
+
+    removed = api.delete(url, headers=auth(host))
+    assert removed.status_code == 200, removed.text
+    state = removed.json()
+    assert [p["name"] for p in state["participants"]] == ["Ana", "Cris"]
+    assert state["script"]["approved"] is False
+    assert state["script"]["input_revision"] != state["session"]["revision"]
+    assert state["session"]["status"] == "lobby"
+
+    # O token removido perde acesso à sala e ao próprio perfil.
+    assert api.get(f"/api/sessions/{s['id']}", headers=auth(beto["participant_token"])).status_code == 403
+    assert api.get(f"/api/participants/{beto['participant_id']}/profile",
+                   headers=auth(beto["participant_token"])).status_code == 404
+    assert api.delete(url, headers=auth(host)).status_code == 404
+
+    # Com quem sobrou, o organizador gera e aprova um novo roteiro.
+    new = api.post(f"/api/sessions/{s['id']}/script", headers=auth(host))
+    assert new.status_code == 201, new.text
+    assert {pid for item in new.json()["script"]["items"] for pid in item["participant_ids"]} == {
+        ana["participant_id"], cris["participant_id"]}
+    # O nome volta a ficar livre.
+    join(api, s["code"], "Beto")
+
+
+def test_host_cannot_remove_participant_from_another_room(client):
+    api, _ = client
+    room_a, host_a = start_room(api)
+    room_b, _ = start_room(api)
+    other = join(api, room_b["code"], "Dani")
+    url = f"/api/sessions/{room_a['id']}/participants/{other['participant_id']}"
+    assert api.delete(url, headers=auth(host_a)).status_code == 404
+    assert api.delete(f"/api/sessions/{room_b['id']}/participants/{other['participant_id']}",
+                      headers=auth(host_a)).status_code == 403

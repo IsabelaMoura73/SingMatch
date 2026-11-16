@@ -56,6 +56,11 @@ export type OwnProfile = {
   draft: Profile | null; confirmed: Profile | null
 }
 
+/** Erro HTTP da API, com o status para a tela reagir (ex.: 403 = removido da sala). */
+export class ApiError extends Error {
+  constructor(message: string, readonly status: number) { super(message) }
+}
+
 async function request<T>(url: string, options: RequestInit = {}, token?: string): Promise<T> {
   let response: Response
   try {
@@ -78,7 +83,7 @@ async function request<T>(url: string, options: RequestInit = {}, token?: string
       else if (Array.isArray(body.detail)) message = body.detail.map(x => x.msg || 'Campo inválido').join('; ')
     } catch { /* Resposta sem JSON */ }
     if (response.status === 409) message += ' Atualize a sala ou revise sua escolha.'
-    throw new Error(message)
+    throw new ApiError(message, response.status)
   }
   return await response.json() as T
 }
@@ -108,6 +113,8 @@ export const api = {
   edit: (id: string, token: string, expected_version: number, proposal: ScriptProposal) => request<{script: Script}>(`/api/sessions/${encodeURIComponent(id)}/script`, {
     method: 'PUT', body: json({expected_version, proposal}),
   }, token),
+  removeParticipant: (id: string, token: string, participantId: string) => request<Room>(
+    `/api/sessions/${encodeURIComponent(id)}/participants/${encodeURIComponent(participantId)}`, { method: 'DELETE' }, token),
   approve: (id: string, token: string, expected_version: number) => request<{script: Script}>(`/api/sessions/${encodeURIComponent(id)}/script/approve`, {
     method: 'POST', body: json({expected_version}),
   }, token),

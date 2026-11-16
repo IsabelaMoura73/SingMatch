@@ -179,10 +179,7 @@ def join_session(request: JoinSessionRequest, db: Session = DB):
                                participant_token=token)
 
 
-@router.get("/sessions/{session_id}", response_model=SessionState)
-def get_session_state(session_id: str, db: Session = DB, token: str = BEARER):
-    row = _session(db, session_id)
-    _require_room_access(db, row, token)
+def _state(db: Session, row: SessionRow) -> SessionState:
     members = db.scalars(select(ParticipantRow).where(ParticipantRow.session_id == row.id)
                          .order_by(ParticipantRow.name)).all()
     script = _current_script(db, row.id)
@@ -191,6 +188,31 @@ def get_session_state(session_id: str, db: Session = DB, token: str = BEARER):
                                                        profile_confirmed=p.profile_confirmed is not None)
                                       for p in members],
                         script=_snapshot(script) if script else None)
+
+
+@router.get("/sessions/{session_id}", response_model=SessionState)
+def get_session_state(session_id: str, db: Session = DB, token: str = BEARER):
+    row = _session(db, session_id)
+    _require_room_access(db, row, token)
+    return _state(db, row)
+
+
+@router.delete("/sessions/{session_id}/participants/{participant_id}", response_model=SessionState)
+def remove_participant(session_id: str, participant_id: str,
+                       db: Session = DB, token: str = BEARER):
+    """Organizador remove alguém da sala; o token removido perde o acesso na hora."""
+    row = _session(db, session_id, lock=True)
+    _require_host(row, token)
+    if row.status in {"playing", "finished"}:
+        raise conflict("Não é possível remover participantes depois que a noite começou.")
+    participant = db.get(ParticipantRow, participant_id)
+    if participant is None or participant.session_id != row.id:
+        raise not_found("Participante não encontrado nesta sala.")
+    db.delete(participant)
+    # O roteiro atual citava essa pessoa: perde a aprovação e precisa ser gerado de novo.
+    _invalidate(db, row)
+    db.commit()
+    return _state(db, row)
 
 
 @router.get("/catalog", response_model=CatalogResponse)
@@ -255,6 +277,10 @@ def confirm_profile(participant_id: str, request: ConfirmProfileRequest,
     participant = _participant(db, participant_id)
     _require_owner(participant, token)
     row = _session(db, participant.session_id, lock=True)
+    # O organizador pode ter removido a pessoa enquanto esperávamos o lock:
+    # reler do banco em vez do objeto em cache evita UPDATE em linha apagada (500).
+    db.expire(participant)
+    participant = _participant(db, participant_id)
     if participant.profile_draft is None:
         raise conflict("Interprete as preferências antes de confirmar o perfil.")
     participant.profile_confirmed = request.profile.model_dump(mode="json")
