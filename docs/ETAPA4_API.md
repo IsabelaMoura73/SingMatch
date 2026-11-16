@@ -59,7 +59,7 @@ Cuidado: um campo `OPENAI_API_KEY=` vazio em `.env` pode sobrescrever sua variá
 Use o modelo já testado na organização da disciplina:
 
 ```bash
-export OPENAI_MODEL=gpt-5-mini
+export OPENAI_MODEL=gpt-4o-mini
 ```
 
 Faça a migração e importe o piloto:
