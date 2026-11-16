@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState, type FormEvent } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from 'react'
 import { ArrowLeft, Play } from 'lucide-react'
 import {
   api, ApiError, type Catalog, type KaraokeVersion, type OwnProfile, type Song,
@@ -360,7 +360,10 @@ function App() {
     const host = identity, hostToken = identity.hostToken
     await execute('reopen', async () => {
       setRoom(await api.reopen(host.sessionId, hostToken))
-      setMessage('Sala reaberta: quem chegar agora pode entrar (o roteiro precisará ser aprovado de novo).')
+      autoStartedFor.current = null  // voltar ao Player depois fecha a sala de novo
+      // Na tela Player a sala fecharia de novo; na Sala o organizador acompanha quem chega.
+      go('sala')
+      setMessage('Sala reaberta: quem chegar agora pode entrar (o roteiro precisará ser aprovado de novo). Depois, abra o player outra vez.')
     })
   }
 
@@ -403,6 +406,17 @@ function App() {
   const myName = room?.participants.find(p => p.id === me?.id)?.name || own?.name || ''
   const allReady = !!room && room.participants.length > 0 && room.participants.every(p => p.profile_confirmed)
   const participantName = (ids: string[]) => ids.map(id => room?.participants.find(p => p.id === id)?.name || 'Participante').join(' + ')
+
+  // Chegar ao Player por qualquer caminho (etapa, endereço #player, F5) fecha a sala,
+  // como o botão "Abrir o player". Uma tentativa por roteiro/revisão, para não repetir em erro.
+  const autoStartedFor = useRef<string | null>(null)
+  useEffect(() => {
+    if (screen !== 'player' || !room || !script || playing || !canPlay || pending !== null) return
+    const key = `${room.session.id}:${script.version}:${room.session.revision}`
+    if (autoStartedFor.current === key) return
+    autoStartedFor.current = key
+    void openPlayer()
+  }, [screen, room, script, playing, canPlay, pending])
 
   return (
     <Shell code={identity && !atHome ? room?.session.code : undefined} onExit={identity ? exitRoom : undefined} onHome={goHome}>
