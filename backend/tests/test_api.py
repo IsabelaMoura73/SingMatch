@@ -36,7 +36,15 @@ def client(monkeypatch):
         return ProfileDraft(likes=[{"category": "genre", "value": "forro",
                                     "evidence": "Gosto de forró"}])
 
-    def fake_script(genre, intention, profiles, songs, versions):
+    def fake_script(
+        genre,
+        intention,
+        profiles,
+        songs,
+        versions,
+        *,
+        previous_video_ids=(),
+    ):
         ids = list(profiles)
         return ScriptProposal(title="Forró progressivo", items=[
             ScriptItem(position=i+1, karaoke_version_id=vid, participant_ids=[pid],

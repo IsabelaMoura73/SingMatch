@@ -18,6 +18,9 @@ import json
 import sys
 from pathlib import Path
 
+import csv
+from urllib.parse import parse_qs, urlparse
+
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "backend"))
 
@@ -30,6 +33,7 @@ from app.schemas import KaraokeVersion, Song  # noqa: E402
 PILOT = ROOT / "data" / "catalogo_piloto.json"
 EXPANDED = ROOT / "data" / "catalogo_forro.json"
 VERIFIED = ROOT / "data" / "fontes" / "videos_verificados.json"
+AUDIT = ROOT / "data" / "fontes" / "auditoria_karaoke.csv"
 # Campos do JSON que não fazem parte do contrato KaraokeVersion.
 FILE_ONLY_FIELDS = ("lyrics_file", "video_origin")
 
@@ -46,6 +50,77 @@ def _read_lyrics(base: Path, raw: dict) -> str | None:
         raise ValueError(f"Arquivo de letra vazio: {rel}")
     return text + "\n"
 
+def load_audit(path: Path = AUDIT) -> dict[str, str]:
+    """Retorna {version_id: youtube_video_id} para karaokês aprovados."""
+
+    if not path.is_file():
+        raise FileNotFoundError(
+            f"Arquivo de auditoria não encontrado: {path}"
+        )
+
+    approved = {}
+    seen = set()
+
+    required = {
+        "version_id",
+        "youtube_url",
+        "instrumental",
+        "letra_correta",
+        "reproducao",
+        "status",
+    }
+
+    with path.open(encoding="utf-8", newline="") as f:
+        reader = csv.DictReader(f)
+
+        if not required.issubset(set(reader.fieldnames or [])):
+            raise ValueError("CSV de auditoria sem colunas obrigatórias.")
+
+        for row in reader:
+            version_id = row["version_id"].strip()
+            status = row["status"].strip().lower()
+
+            if not version_id or version_id in seen:
+                raise ValueError(
+                    f"ID vazio ou duplicado na auditoria: {version_id!r}"
+                )
+
+            seen.add(version_id)
+
+            if status not in {"aprovado", "rejeitado", "pendente"}:
+                raise ValueError(
+                    f"Status inválido para {version_id}: {status}"
+                )
+
+            if status != "aprovado":
+                continue
+
+            checks = (
+                "instrumental",
+                "letra_correta",
+                "reproducao",
+            )
+
+            if any(row[field].strip().lower() != "sim" for field in checks):
+                raise ValueError(
+                    f"{version_id}: aprovado sem passar em todas as verificações."
+                )
+
+            parsed = urlparse(row["youtube_url"].strip())
+            video_id = parse_qs(parsed.query).get("v", [""])[0]
+
+            if not video_id or parsed.hostname not in {
+                "youtube.com",
+                "www.youtube.com",
+                "m.youtube.com",
+            }:
+                raise ValueError(
+                    f"URL do YouTube inválida para {version_id}"
+                )
+
+            approved[version_id] = video_id
+
+    return approved
 
 def seed_catalog(db: Session, path: Path | None = None, blocked: set[str] | None = None) -> tuple[int, int]:
     path = path or PILOT
@@ -79,7 +154,8 @@ def seed_catalog(db: Session, path: Path | None = None, blocked: set[str] | None
             # bloqueado (/verificar.html) e o JSON traz um substituto verificado.
             if (blocked and existing.youtube_video_id in blocked and v.youtube_video_id not in blocked
                     and existing.youtube_video_id != v.youtube_video_id):
-                existing.youtube_video_id, existing.approved = v.youtube_video_id, v.approved
+                existing.youtube_video_id = v.youtube_video_id
+                existing.approved = existing.approved and v.approved
                 existing.verified_at, existing.duration_seconds = v.verified_at, v.duration_seconds
             if existing.lyrics_lrc is None and lyrics[v.id]:
                 existing.lyrics_lrc, existing.lyrics_source = lyrics[v.id], v.lyrics_source
@@ -109,6 +185,42 @@ def revoke_blocked(db: Session, blocked: set[str]) -> list[str]:
         row.approved = False
     db.flush()
     return [row.id for row in rows]
+
+def revoke_unreviewed(
+    db: Session,
+    audited: dict[str, str],
+    blocked: set[str],
+) -> list[str]:
+    """Desabilita karaokês sem auditoria válida."""
+
+    rows = db.scalars(select(KaraokeVersionRow)).all()
+    revoked = []
+
+    for row in rows:
+        kind = row.kind or "karaoke"
+
+        # As versões com letra sincronizada não são karaokês.
+        if kind != "karaoke":
+            continue
+
+        # Não reativar vídeos desabilitados anteriormente.
+        if not row.approved:
+            continue
+
+        audited_video_id = audited.get(row.id)
+
+        valid_audit = (
+            audited_video_id == row.youtube_video_id
+            and row.youtube_video_id not in blocked
+        )
+
+        if not valid_audit:
+            row.approved = False
+            revoked.append(row.id)
+
+    db.flush()
+
+    return revoked
 
 
 def seed_all(db: Session, blocked: set[str] | None = None) -> dict[str, tuple[int, int]]:

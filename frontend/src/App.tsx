@@ -116,7 +116,7 @@ function SongName({versionId, catalog}: {versionId: string; catalog: Catalog | n
   const video = catalog?.karaoke_versions.find(v => v.id === versionId)
   const song = catalog?.songs.find(s => s.id === video?.song_id)
   if (!song) return <strong>{versionId}</strong>
-  return <><strong>{song.title}</strong><span className="muted">{song.artists.join(', ')} · Energia {song.energy ?? '?'} / 5 {song.mood ? `· ${song.mood}` : ''}{video?.kind === 'letra_sincronizada' ? ' · letra na tela' : ''}</span></>
+  return <><strong>{song.title}</strong><span className="muted">{song.artists.join(', ')} · Energia {song.energy ?? '?'} / 5 {song.mood ? `· ${song.mood}` : ''}{' (karaokê)'}</span></>
 }
 
 function App() {
@@ -306,7 +306,15 @@ function App() {
 
   const songsById = useMemo(() => new Map<string, Song>((catalog?.songs ?? []).map(song => [song.id, song] as const)), [catalog])
   const versionsById = useMemo(() => new Map<string, KaraokeVersion>((catalog?.karaoke_versions ?? []).map(video => [video.id, video] as const)), [catalog])
-  const eligibleVideos = useMemo(() => (catalog?.karaoke_versions || []).filter(v => v.approved && songsById.get(v.song_id)?.genre === 'forro'), [catalog, songsById])
+  const eligibleVideos = useMemo(
+    () => (catalog?.karaoke_versions || []).filter(
+      v =>
+        v.approved &&
+        v.kind === 'karaoke' &&
+        songsById.get(v.song_id)?.genre === 'forro'
+    ),
+    [catalog, songsById]
+  )
   const participantName = (ids: string[]) => ids.map(id => room?.participants.find(p => p.id === id)?.name || 'Participante').join(' + ')
 
   return (
@@ -432,7 +440,15 @@ function App() {
   )
 }
 
-function Player({script, index, versions, catalog, participantName, onSelect}: {
+
+function Player({
+  script,
+  index,
+  versions,
+  catalog,
+  participantName,
+  onSelect,
+}: {
   script: Script
   index: number
   versions: Map<string, KaraokeVersion>
@@ -441,12 +457,104 @@ function Player({script, index, versions, catalog, participantName, onSelect}: {
   onSelect: (index: number) => void
 }) {
   const item = script.items[index]
-  const version = versions.get(item?.karaoke_version_id)
-  return <div className="player-layout"><div><div className="player-meta"><span>APRESENTAÇÃO {index+1} / {script.items.length}</span><strong>{participantName(item.participant_ids)}</strong></div>
-    {version ? <><KaraokePlayer key={version.id} version={version}/><a className="youtube-link" href={`https://www.youtube.com/watch?v=${version.youtube_video_id}`} target="_blank" rel="noopener noreferrer">Vídeo não carregou? Abrir no YouTube ↗</a></> : <div className="notice warn">Não há versão de vídeo disponível. Confira o catálogo.</div>}
-    <div className="inline-actions"><button type="button" className="btn outline" disabled={index === 0} onClick={() => onSelect(index-1)}>← Anterior</button><button type="button" className="btn secondary" disabled={index === script.items.length-1} onClick={() => onSelect(index+1)}>Próxima apresentação →</button></div>
-    </div><aside className="queue"><h3>Fila de apresentações</h3>{script.items.map((current, i) => <button key={i} type="button" className={`queue-item ${i === index ? 'selected' : ''}`} onClick={() => onSelect(i)}><span>{String(i+1).padStart(2, '0')}</span><div><strong>{participantName(current.participant_ids)}</strong><SongName versionId={current.karaoke_version_id} catalog={catalog}/></div></button>)}</aside>
-  </div>
+  const version = versions.get(item.karaoke_version_id)
+
+  // Somente versões aprovadas e do tipo karaoke.
+  const isPlayable =
+    version?.approved === true &&
+    version.kind === 'karaoke'
+
+  return (
+    <div className="player-layout">
+      <div>
+        <div className="player-meta">
+          <span>
+            APRESENTAÇÃO {index + 1} / {script.items.length}
+          </span>
+          <strong>
+            {participantName(item.participant_ids)}
+          </strong>
+        </div>
+
+        {isPlayable && version ? (
+          <>
+            <KaraokePlayer
+              key={version.id}
+              version={version}
+            />
+
+            <a
+              className="youtube-link"
+              href={`https://www.youtube.com/watch?v=${version.youtube_video_id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Vídeo não carregou? Abrir no YouTube ↗
+            </a>
+          </>
+        ) : (
+          <div className="notice warn">
+            Esta música não possui uma versão de
+            karaokê aprovada.
+
+            Edite ou gere um novo roteiro para
+            selecionar um karaokê válido.
+          </div>
+        )}
+
+        <div className="inline-actions">
+          <button
+            type="button"
+            className="btn outline"
+            disabled={index === 0}
+            onClick={() => onSelect(index - 1)}
+          >
+            ← Anterior
+          </button>
+
+          <button
+            type="button"
+            className="btn secondary"
+            disabled={index === script.items.length - 1}
+            onClick={() => onSelect(index + 1)}
+          >
+            Próxima apresentação →
+          </button>
+        </div>
+      </div>
+
+      <aside className="queue">
+        <h3>Fila de apresentações</h3>
+
+        {script.items.map((current, i) => (
+          <button
+            key={i}
+            type="button"
+            className={`queue-item ${
+              i === index ? 'selected' : ''
+            }`}
+            onClick={() => onSelect(i)}
+          >
+            <span>
+              {String(i + 1).padStart(2, '0')}
+            </span>
+
+            <div>
+              <strong>
+                {participantName(current.participant_ids)}
+              </strong>
+
+              <SongName
+                versionId={current.karaoke_version_id}
+                catalog={catalog}
+              />
+            </div>
+          </button>
+        ))}
+      </aside>
+    </div>
+  )
 }
+
 
 export default App
