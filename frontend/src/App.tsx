@@ -53,9 +53,11 @@ function storedIdentity(): Identity | null {
 }
 
 const SCREENS: Screen[] = ['preferencias', 'perfil', 'sala', 'roteiro', 'player']
+type Page = Screen | 'inicio'
 /** Tela pedida no endereço (#sala, #roteiro...), para o "voltar" do navegador e o F5 funcionarem. */
-function screenFromHash(): Screen | null {
+function screenFromHash(): Page | null {
   const hash = window.location.hash.slice(1)
+  if (hash === 'inicio') return 'inicio'
   return (SCREENS as string[]).includes(hash) ? hash as Screen : null
 }
 
@@ -78,9 +80,8 @@ function App() {
   const [draft, setDraft] = useState<Profile | null>(null)
   const [initialCode] = useState(() => new URLSearchParams(window.location.search).get('code') || '')
   const [hostJoinName, setHostJoinName] = useState('')
-  /** Tela inicial aberta pelo logo enquanto a aba ainda tem acesso a uma sala. */
-  const [atHome, setAtHome] = useState(false)
-  const [requestedScreen, setRequestedScreen] = useState<Screen | null>(screenFromHash)
+  const [requestedScreen, setRequestedScreen] = useState<Page | null>(screenFromHash)
+  const atHome = requestedScreen === 'inicio'
   const [ownLoaded, setOwnLoaded] = useState(false)
 
   useEffect(() => {
@@ -88,7 +89,7 @@ function App() {
     window.addEventListener('hashchange', onHashChange)
     return () => window.removeEventListener('hashchange', onHashChange)
   }, [])
-  const go = (screen: Screen) => {
+  const go = (screen: Page) => {
     setRequestedScreen(screen)
     if (window.location.hash !== `#${screen}`) window.location.hash = screen
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -108,7 +109,6 @@ function App() {
     setOwn(null)
     setDraft(null)
     setIdentity(newIdentity)
-    setAtHome(false)
     setRequestedScreen(null)
     window.history.replaceState(null, '', window.location.pathname)
     setError('')
@@ -170,6 +170,8 @@ function App() {
     await execute('create', async () => {
       const result = await api.create(intention)
       const created: Identity = { sessionId: result.session.id, hostToken: result.host_token }
+      // Preserva o acesso à sala mesmo se a aba recarregar durante o /join.
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(created))
       if (hostName) {
         // Segunda chamada: o organizador entra como participante para também cantar.
         try {
@@ -205,14 +207,13 @@ function App() {
     })
   }
   const goHome = () => {
-    setAtHome(!!identity)
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    go('inicio')
   }
   const exitRoom = () => {
     if (!window.confirm('Sair apaga deste navegador o acesso à sala. Sem o token, não será possível recuperar o papel de organizador ou este participante. Deseja sair?')) return
     sessionStorage.removeItem(STORAGE_KEY)
     setIdentity(null); setRoom(null); setOwn(null); setDraft(null)
-    setPlayingIndex(null); setEditing(false); setError(''); setMessage(''); setAtHome(false)
+    setPlayingIndex(null); setEditing(false); setError(''); setMessage('')
     setRequestedScreen(null)
     window.history.replaceState(null, '', window.location.pathname)
   }
@@ -331,7 +332,13 @@ function App() {
           : screen === 'roteiro' ? !!script
             : canPlay
   const defaultScreen: Screen = me && !own?.confirmed ? (draft ? 'perfil' : 'preferencias') : script ? 'roteiro' : 'sala'
-  const screen = requestedScreen && available(requestedScreen) ? requestedScreen : defaultScreen
+  const screen = requestedScreen && requestedScreen !== 'inicio' && available(requestedScreen) ? requestedScreen : defaultScreen
+  useEffect(() => {
+    if (!identity || !room || (me && !ownLoaded) || requestedScreen !== null) return
+    // Fixa a primeira etapa no histórico antes que a confirmação mude a tela padrão.
+    window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}#${defaultScreen}`)
+    setRequestedScreen(defaultScreen)
+  }, [identity, room, me, ownLoaded, requestedScreen, defaultScreen])
   const stepScreens = SCREENS.filter(s => (s === 'preferencias' || s === 'perfil') ? !!me : s === 'player' ? isHost : true)
   const myName = room?.participants.find(p => p.id === me?.id)?.name || own?.name || ''
   const allReady = !!room && room.participants.length > 0 && room.participants.every(p => p.profile_confirmed)
@@ -350,7 +357,7 @@ function App() {
                   <p className="m-0 font-semibold">Você tem uma sala aberta{room ? <> · <span className="font-mono tracking-widest text-accent">{room.session.code}</span></> : null}</p>
                   <p className="m-0 text-sm text-muted-foreground">Criar ou entrar em outra sala substitui o acesso a esta neste dispositivo.</p>
                 </div>
-                <button type="button" className="sm-btn-primary shrink-0" onClick={() => setAtHome(false)}>Voltar para a sala</button>
+                <button type="button" className="sm-btn-primary shrink-0" onClick={() => go(screen)}>Voltar para a sala</button>
               </div>
             </div>
           )}
