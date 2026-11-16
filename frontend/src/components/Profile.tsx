@@ -23,6 +23,12 @@ function Steps({ step }: { step: number }) {
   )
 }
 
+/** Mesma normalização de backend/app/matching.py (norm): sem acentos, minúsculas. */
+function norm(value: string) {
+  return value.toLowerCase().trim().normalize('NFKD').replace(/\p{M}/gu, '')
+    .replace(/[_-]/g, ' ').split(/\s+/).filter(Boolean).join(' ')
+}
+
 /** Lista editável de gostos ou vetos: cada item mostra categoria e a evidência no texto. */
 function LabelList({ labels, tone, addLabel, tagSuggestions, onChange }: {
   labels: PreferenceLabel[]
@@ -35,6 +41,10 @@ function LabelList({ labels, tone, addLabel, tagSuggestions, onChange }: {
   const [category, setCategory] = useState<PreferenceCategory>('tag')
   const [value, setValue] = useState('')
   const toneClass = tone === 'like' ? 'border-primary/30 bg-primary/10' : 'border-destructive/30 bg-destructive/10'
+  // Veto de característica só funciona com termos que o matching conhece; outros bloqueiam todas as músicas.
+  const known = new Set(tagSuggestions.map(norm))
+  const closedTags = tone === 'veto' && category === 'tag'
+  const unknownVeto = (label: PreferenceLabel) => tone === 'veto' && label.category === 'tag' && known.size > 0 && !known.has(norm(label.value))
   const add = () => {
     const cleaned = value.trim()
     if (!cleaned || cleaned.length > 150) return
@@ -55,6 +65,11 @@ function LabelList({ labels, tone, addLabel, tagSuggestions, onChange }: {
                   <span className="text-xs text-muted-foreground break-words">
                     {label.origin === 'texto' ? `“${label.evidence}”` : 'Adicionado por você'}
                   </span>
+                  {unknownVeto(label) && (
+                    <span className="mt-1 text-xs font-semibold text-destructive" role="status">
+                      Característica desconhecida: remova e escolha uma da lista.
+                    </span>
+                  )}
                 </span>
                 <button
                   type="button"
@@ -72,30 +87,44 @@ function LabelList({ labels, tone, addLabel, tagSuggestions, onChange }: {
           className="rounded-full border border-border bg-secondary px-3 py-1.5 text-xs text-foreground"
           aria-label={`Categoria para ${addLabel}`}
           value={category}
-          onChange={e => setCategory(e.target.value as PreferenceCategory)}
+          onChange={e => { setCategory(e.target.value as PreferenceCategory); setValue('') }}
         >
           {Object.entries(CATEGORY_NAMES).map(([key, name]) => <option key={key} value={key}>{name}</option>)}
         </select>
-        <input
-          className="min-w-40 flex-1 rounded-full border border-dashed border-border bg-transparent px-3 py-1.5 text-xs text-foreground outline-none placeholder:text-muted-foreground focus:border-primary"
-          aria-label={addLabel}
-          placeholder={`+ ${addLabel}`}
-          maxLength={150}
-          value={value}
-          onChange={e => setValue(e.target.value)}
-          onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); add() } }}
-          list={category === 'tag' ? `sugestoes-${tone}` : undefined}
-        />
-        <datalist id={`sugestoes-${tone}`}>
-          {tagSuggestions.map(tag => <option key={tag} value={tag} />)}
-        </datalist>
+        {closedTags ? (
+          <select
+            className="min-w-40 flex-1 rounded-full border border-dashed border-border bg-transparent px-3 py-1.5 text-xs text-foreground focus:border-primary"
+            aria-label={addLabel}
+            value={value}
+            onChange={e => setValue(e.target.value)}
+          >
+            <option value="">Escolha uma característica…</option>
+            {tagSuggestions.map(tag => <option key={tag} value={tag}>{tag}</option>)}
+          </select>
+        ) : (
+          <>
+            <input
+              className="min-w-40 flex-1 rounded-full border border-dashed border-border bg-transparent px-3 py-1.5 text-xs text-foreground outline-none placeholder:text-muted-foreground focus:border-primary"
+              aria-label={addLabel}
+              placeholder={`+ ${addLabel}`}
+              maxLength={150}
+              value={value}
+              onChange={e => setValue(e.target.value)}
+              onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); add() } }}
+              list={category === 'tag' ? `sugestoes-${tone}` : undefined}
+            />
+            <datalist id={`sugestoes-${tone}`}>
+              {tagSuggestions.map(tag => <option key={tag} value={tag} />)}
+            </datalist>
+          </>
+        )}
         <button type="button" className="sm-btn-ghost px-3 py-1.5 text-xs" onClick={add} disabled={!value.trim()}>
           <Plus className="h-3.5 w-3.5" aria-hidden="true" />Adicionar
         </button>
       </div>
-      {tone === 'veto' && category === 'tag' && tagSuggestions.length > 0 && (
+      {closedTags && (
         <p className="mb-0 text-xs text-muted-foreground">
-          Use uma das características do catálogo: {tagSuggestions.join(', ')}. Outras palavras bloqueiam todas as músicas.
+          Para vetar uma característica, escolha uma das que o catálogo usa. Para vetar uma música ou artista, troque a categoria.
         </p>
       )}
     </div>
