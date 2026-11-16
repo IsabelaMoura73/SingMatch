@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36">
+  <!-- Barras de música com o gradiente usado na página inicial. -->
+  <defs>
+    <linearGradient id="hot" x1="0.07" y1="0.25" x2="0.93" y2="0.75">
+      <stop offset="0" stop-color="#ff35a0"/>
+      <stop offset="0.6" stop-color="#ff773c"/>
+      <stop offset="1" stop-color="#ffbc19"/>
+    </linearGradient>
+  </defs>
+  <g fill="url(#hot)">
+    <rect x="1" y="20" width="4" height="12" rx="2"/>
+    <rect x="6" y="11" width="4" height="21" rx="2"/>
+    <rect x="11" y="4" width="4" height="28" rx="2"/>
+    <rect x="16" y="14" width="4" height="18" rx="2"/>
+    <rect x="21" y="8" width="4" height="24" rx="2"/>
+    <rect x="26" y="17" width="4" height="15" rx="2"/>
+    <rect x="31" y="23" width="4" height="9" rx="2"/>
+  </g>
+</svg>

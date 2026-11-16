@@ -1,0 +1,101 @@
+/*
+ * Identidade visual do SingMatch (baseada no protótipo do Lovable).
+ * Tailwind v4 completo: cores e fontes em @theme, base em @layer base e
+ * componentes reutilizáveis (sm-card, sm-btn-*, sm-input...) como @utility.
+ */
+@import "tailwindcss" source("../src");
+
+@theme inline {
+  --font-display: "Bricolage Grotesque", sans-serif;
+  --font-sans: "DM Sans", system-ui, sans-serif;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-neon: var(--neon);
+  --color-energy: var(--energy);
+}
+
+:root {
+  --radius: 1rem;
+  --background: oklch(0.16 0.03 280);
+  --foreground: oklch(0.97 0.01 90);
+  --card: oklch(0.21 0.035 280);
+  --card-foreground: oklch(0.97 0.01 90);
+  --primary: oklch(0.68 0.25 355);
+  --primary-foreground: oklch(0.15 0.03 280);
+  --secondary: oklch(0.27 0.04 280);
+  --secondary-foreground: oklch(0.97 0.01 90);
+  --muted: oklch(0.25 0.03 280);
+  --muted-foreground: oklch(0.72 0.03 280);
+  --accent: oklch(0.84 0.17 80);
+  --accent-foreground: oklch(0.15 0.03 280);
+  --neon: oklch(0.85 0.15 190);
+  --energy: oklch(0.75 0.2 40);
+  --destructive: oklch(0.65 0.22 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.32 0.04 280);
+  --input: oklch(0.3 0.04 280);
+  --ring: oklch(0.68 0.25 355);
+
+  --gradient-stage:
+    radial-gradient(ellipse at 20% 0%, color-mix(in oklab, var(--primary) 28%, transparent), transparent 55%),
+    radial-gradient(ellipse at 90% 10%, color-mix(in oklab, var(--neon) 18%, transparent), transparent 50%);
+  --gradient-hot: linear-gradient(120deg, var(--primary), var(--energy) 60%, var(--accent));
+  --shadow-glow: 0 0 40px -8px color-mix(in oklab, var(--primary) 70%, transparent);
+}
+
+@layer base {
+  html {
+    /* 15px mantém a escala usada desde o início da migração. */
+    font-size: 15px;
+    background: var(--background);
+    color-scheme: dark;
+    scroll-behavior: smooth;
+  }
+  body {
+    min-height: 100vh;
+    background: var(--gradient-stage), var(--background);
+    background-attachment: fixed;
+    color: var(--foreground);
+    font-family: var(--font-sans);
+  }
+  h1, h2, h3 { font-family: var(--font-display); letter-spacing: -0.035em; }
+  button:not(:disabled), [role="button"]:not(:disabled) { cursor: pointer; }
+  :focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+  textarea { resize: vertical; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+}
+
+@utility sm-card { @apply rounded-2xl border border-border bg-card/80 p-6 backdrop-blur; }
+@utility sm-btn { @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition disabled:pointer-events-none disabled:opacity-40; }
+@utility sm-btn-primary { @apply sm-btn border-0 bg-primary text-primary-foreground hover:brightness-110; box-shadow: var(--shadow-glow); }
+@utility sm-btn-ghost { @apply sm-btn border border-border bg-secondary text-secondary-foreground hover:border-primary; }
+@utility sm-input { @apply w-full rounded-xl border border-input bg-background/60 px-4 py-3 text-foreground outline-none placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-ring/30; }
+@utility sm-chip { @apply inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-medium; }
+@utility text-hot { background: var(--gradient-hot); -webkit-background-clip: text; background-clip: text; color: transparent; }
+@utility bg-hot { background: var(--gradient-hot); }
+
+@keyframes eq { 0%, 100% { transform: scaleY(.3) } 50% { transform: scaleY(1) } }
+.eq-bar { animation: eq 0.9s ease-in-out infinite; transform-origin: bottom; }
+@media (prefers-reduced-motion: reduce) { .eq-bar { animation: none; } }
