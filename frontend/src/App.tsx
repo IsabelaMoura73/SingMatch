@@ -4,10 +4,10 @@ import {
   type Profile, type Room,
   type Script, type ScriptItem, type ScriptProposal,
 } from './api'
-import { KaraokePlayer } from './KaraokePlayer'
 import { Shell } from './components/Shell'
 import { Home } from './components/Home'
 import { ProfileCard } from './components/Profile'
+import { PlayerCard } from './components/Player'
 import { HostScriptCard, ParticipantScriptCard, ParticipantsCard, RoomHeader, type SongLookup } from './components/Room'
 
 const STORAGE_KEY = 'singmatch:mvp:identity'
@@ -57,12 +57,6 @@ function cloneProposal(script: Script): ScriptProposal {
 }
 
 
-function SongName({versionId, catalog}: {versionId: string; catalog: Catalog | null}) {
-  const video = catalog?.karaoke_versions.find(v => v.id === versionId)
-  const song = catalog?.songs.find(s => s.id === video?.song_id)
-  if (!song) return <strong>{versionId}</strong>
-  return <><strong>{song.title}</strong><span className="muted">{song.artists.join(', ')} · Energia {song.energy ?? '?'} / 5 {song.mood ? `· ${song.mood}` : ''}{' (karaokê)'}</span></>
-}
 
 function App() {
   const [identity, setIdentity] = useState<Identity | null>(storedIdentity)
@@ -360,10 +354,9 @@ function App() {
                 onMoveItem={moveItem}
               />}
 
-              {isHost && room.script?.approved && room.script.input_revision === room.session.revision && !editing && <section className="paper-card player-card"><div className="card-title-row"><div><span className="eyebrow">03 · HORA DE CANTAR</span><h2>Player do organizador</h2></div><span className="state-tag done">Repertório aprovado</span></div><p className="muted">Reproduza na ordem do roteiro. Músicas com letra sincronizada mostram a letra abaixo do vídeo; use “Tela cheia” na TV ou projetor. O player aparece apenas aqui, no dispositivo do organizador.</p>
-                {playingIndex === null ? <button className="btn primary" type="button" onClick={() => setPlayingIndex(0)}>▶ Abrir o player</button> : <Player script={room.script} index={playingIndex} versions={versionsById} catalog={catalog} participantName={participantName} onSelect={setPlayingIndex}/>}
-                <p className="muted smaller">Vídeos incorporados via YouTube. A disponibilidade e permissões de reprodução podem mudar; a aprovação do piloto não equivale a revisão de direitos.</p>
-              </section>}
+              {isHost && room.script?.approved && room.script.input_revision === room.session.revision && !editing && (
+                <PlayerCard script={room.script} index={playingIndex} lookup={lookup} participantName={participantName} onSelect={setPlayingIndex} />
+              )}
             </>}
           </div>
         )}
@@ -371,122 +364,6 @@ function App() {
         {message && <div className="feedback success" role="status"><span>{message}</span><button type="button" onClick={() => setMessage('')} aria-label="Fechar aviso">×</button></div>}
       </main>
     </Shell>
-  )
-}
-
-
-function Player({
-  script,
-  index,
-  versions,
-  catalog,
-  participantName,
-  onSelect,
-}: {
-  script: Script
-  index: number
-  versions: Map<string, KaraokeVersion>
-  catalog: Catalog | null
-  participantName: (ids: string[]) => string
-  onSelect: (index: number) => void
-}) {
-  const item = script.items[index]
-  const version = versions.get(item.karaoke_version_id)
-
-  // Somente versões aprovadas e do tipo karaoke.
-  const isPlayable =
-    version?.approved === true &&
-    version.kind === 'karaoke'
-
-  return (
-    <div className="player-layout">
-      <div>
-        <div className="player-meta">
-          <span>
-            APRESENTAÇÃO {index + 1} / {script.items.length}
-          </span>
-          <strong>
-            {participantName(item.participant_ids)}
-          </strong>
-        </div>
-
-        {isPlayable && version ? (
-          <>
-            <KaraokePlayer
-              key={version.id}
-              version={version}
-            />
-
-            <a
-              className="youtube-link"
-              href={`https://www.youtube.com/watch?v=${version.youtube_video_id}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Vídeo não carregou? Abrir no YouTube ↗
-            </a>
-          </>
-        ) : (
-          <div className="notice warn">
-            Esta música não possui uma versão de
-            karaokê aprovada.
-
-            Edite ou gere um novo roteiro para
-            selecionar um karaokê válido.
-          </div>
-        )}
-
-        <div className="inline-actions">
-          <button
-            type="button"
-            className="btn outline"
-            disabled={index === 0}
-            onClick={() => onSelect(index - 1)}
-          >
-            ← Anterior
-          </button>
-
-          <button
-            type="button"
-            className="btn secondary"
-            disabled={index === script.items.length - 1}
-            onClick={() => onSelect(index + 1)}
-          >
-            Próxima apresentação →
-          </button>
-        </div>
-      </div>
-
-      <aside className="queue">
-        <h3>Fila de apresentações</h3>
-
-        {script.items.map((current, i) => (
-          <button
-            key={i}
-            type="button"
-            className={`queue-item ${
-              i === index ? 'selected' : ''
-            }`}
-            onClick={() => onSelect(i)}
-          >
-            <span>
-              {String(i + 1).padStart(2, '0')}
-            </span>
-
-            <div>
-              <strong>
-                {participantName(current.participant_ids)}
-              </strong>
-
-              <SongName
-                versionId={current.karaoke_version_id}
-                catalog={catalog}
-              />
-            </div>
-          </button>
-        ))}
-      </aside>
-    </div>
   )
 }
 
