@@ -7,7 +7,7 @@ export const CATEGORY_NAMES: Record<PreferenceCategory, string> = {
 }
 
 /** Sugestões que o participante pode juntar ao texto com um clique. */
-const EXAMPLES = ['Amo Luiz Gonzaga', 'Forró pé de serra', 'Nada de música romântica', 'Prefiro cantar solo']
+const EXAMPLES = ['Amo Luiz Gonzaga', 'Quero música animada', 'Nada de música romântica', 'Prefiro cantar solo']
 
 /** Mesma normalização de backend/app/matching.py (norm): sem acentos, minúsculas. */
 function norm(value: string) {
