@@ -6,13 +6,22 @@ import {
 } from './api'
 import { KaraokePlayer } from './KaraokePlayer'
 import { Shell } from './components/Shell'
+import { Home } from './components/Home'
 
 const STORAGE_KEY = 'singmatch:mvp:identity'
-type Identity =
-  | { role: 'host'; sessionId: string; token: string }
-  | { role: 'participant'; sessionId: string; participantId: string; token: string }
+/**
+ * Acesso desta aba à sala. O organizador pode também ser participante (cantar):
+ * nesse caso guardamos os dois tokens. Pelo menos um dos dois existe.
+ */
+type Identity = {
+  sessionId: string
+  hostToken?: string
+  participant?: { id: string; token: string }
+}
+/** Token usado para ler o estado da sala (qualquer papel serve). */
+const roomToken = (identity: Identity) => identity.hostToken ?? identity.participant!.token
 
-type ActiveTask = 'create' | 'join' | 'interpret' | 'confirm' | 'generate' | 'save' | 'approve' | null
+type ActiveTask = 'create' | 'join' | 'join-host' | 'interpret' | 'confirm' | 'generate' | 'save' | 'approve' | null
 const CATEGORY_NAMES: Record<PreferenceCategory, string> = {
   genre: 'Gênero', artist: 'Artista', song: 'Música', tag: 'Característica',
 }
@@ -24,11 +33,19 @@ function storedIdentity(): Identity | null {
     const parsed: unknown = JSON.parse(raw)
     if (!parsed || typeof parsed !== 'object') return null
     const data = parsed as Record<string, unknown>
-    if (typeof data.sessionId !== 'string' || typeof data.token !== 'string') return null
-    if (data.role === 'host') return { role: 'host', sessionId: data.sessionId, token: data.token }
-    if (data.role === 'participant' && typeof data.participantId === 'string') {
-      return { role: 'participant', sessionId: data.sessionId, participantId: data.participantId, token: data.token }
+    if (typeof data.sessionId !== 'string') return null
+    // Formato antigo (um papel por aba), salvo antes da credencial dupla.
+    if (typeof data.token === 'string') {
+      if (data.role === 'host') return { sessionId: data.sessionId, hostToken: data.token }
+      if (data.role === 'participant' && typeof data.participantId === 'string') {
+        return { sessionId: data.sessionId, participant: { id: data.participantId, token: data.token } }
+      }
+      return null
     }
+    const hostToken = typeof data.hostToken === 'string' ? data.hostToken : undefined
+    const p = data.participant as Record<string, unknown> | undefined
+    const participant = p && typeof p.id === 'string' && typeof p.token === 'string' ? { id: p.id, token: p.token } : undefined
+    if (hostToken || participant) return { sessionId: data.sessionId, hostToken, participant }
   } catch { /* sessão antiga inválida */ }
   return null
 }
@@ -128,10 +145,8 @@ function App() {
   const [rawText, setRawText] = useState('')
   const [interpretedText, setInterpretedText] = useState('')
   const [draft, setDraft] = useState<Profile | null>(null)
-  const [mode, setMode] = useState<'create' | 'join'>('create')
-  const [intention, setIntention] = useState('Começar tranquilo e terminar animado')
-  const [joinCode, setJoinCode] = useState(new URLSearchParams(window.location.search).get('code')?.toUpperCase() || '')
-  const [joinName, setJoinName] = useState('')
+  const [initialCode] = useState(() => new URLSearchParams(window.location.search).get('code') || '')
+  const [hostJoinName, setHostJoinName] = useState('')
   const [pending, setPending] = useState<ActiveTask>(null)
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
@@ -153,7 +168,7 @@ function App() {
   }
 
   const refresh = useCallback(async (target: Identity) => {
-    const data = await api.room(target.sessionId, target.token)
+    const data = await api.room(target.sessionId, roomToken(target))
     setRoom(data)
     setConnected(true)
     return data
@@ -169,7 +184,7 @@ function App() {
     if (!identity) return
     let alive = true
     const poll = () => {
-      api.room(identity.sessionId, identity.token)
+      api.room(identity.sessionId, roomToken(identity))
         .then(data => { if (alive) { setRoom(data); setConnected(true) } })
         .catch(() => { if (alive) setConnected(false) })
     }
@@ -178,10 +193,11 @@ function App() {
     return () => { alive = false; window.clearInterval(timer) }
   }, [identity])
 
+  const me = identity?.participant
   useEffect(() => {
-    if (!identity || identity.role !== 'participant') return
+    if (!me) return
     let alive = true
-    api.ownProfile(identity.participantId, identity.token).then(profile => {
+    api.ownProfile(me.id, me.token).then(profile => {
       if (!alive) return
       setOwn(profile)
       setRawText(profile.text || '')
@@ -189,7 +205,7 @@ function App() {
       setDraft(profile.confirmed || profile.draft)
     }).catch(err => { if (alive) setError(displayError(err)) })
     return () => { alive = false }
-  }, [identity])
+  }, [me?.id, me?.token])
 
   const execute = async (task: NonNullable<ActiveTask>, fn: () => Promise<void>) => {
     setPending(task)
@@ -200,18 +216,42 @@ function App() {
     finally { setPending(null) }
   }
 
-  const createRoom = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
+  const createRoom = async (intention: string, hostName: string | null) => {
     await execute('create', async () => {
-      const result = await api.create(intention.trim())
-      saveIdentity({ role: 'host', sessionId: result.session.id, token: result.host_token })
+      const result = await api.create(intention)
+      const created: Identity = { sessionId: result.session.id, hostToken: result.host_token }
+      if (hostName) {
+        // Segunda chamada: o organizador entra como participante para também cantar.
+        try {
+          const joined = await api.join(result.session.code, hostName)
+          created.participant = { id: joined.participant_id, token: joined.participant_token }
+        } catch (err) {
+          // A sala já existe: entra como organizador e oferece tentar de novo na sala.
+          saveIdentity(created)
+          setHostJoinName(hostName)
+          throw new Error(`Sala criada, mas não foi possível incluir você como participante. ${displayError(err)} Tente de novo em “Entrar também como participante”.`)
+        }
+      }
+      saveIdentity(created)
     })
   }
-  const joinRoom = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
+  const joinRoom = async (code: string, name: string) => {
     await execute('join', async () => {
-      const data = await api.join(joinCode.trim().toUpperCase(), joinName.trim())
-      saveIdentity({ role: 'participant', sessionId: data.session_id, participantId: data.participant_id, token: data.participant_token })
+      const data = await api.join(code, name)
+      saveIdentity({ sessionId: data.session_id, participant: { id: data.participant_id, token: data.participant_token } })
+    })
+  }
+  const joinAsHost = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (!identity?.hostToken || !room || identity.participant) return
+    const current = identity
+    await execute('join-host', async () => {
+      const joined = await api.join(room.session.code, hostJoinName.trim())
+      const updated: Identity = { ...current, participant: { id: joined.participant_id, token: joined.participant_token } }
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(updated))
+      setIdentity(updated)
+      await refresh(updated)
+      setMessage('Pronto! Agora conte o que você gosta de cantar.')
     })
   }
   const exitRoom = () => {
@@ -227,35 +267,35 @@ function App() {
   }
   const interpret = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    if (!identity || identity.role !== 'participant') return
-    const person = identity
+    if (!identity || !identity.participant) return
+    const current = identity, person = identity.participant
     await execute('interpret', async () => {
-      const result = await api.interpret(person.participantId, person.token, rawText.trim())
+      const result = await api.interpret(person.id, person.token, rawText.trim())
       setDraft(result.draft)
       setInterpretedText(rawText.trim())
       setOwn(old => old ? { ...old, text: rawText.trim(), draft: result.draft, confirmed: null } : null)
-      await refresh(person)
+      await refresh(current)
       setMessage('Perfil interpretado. Revise e confirme abaixo.')
     })
   }
   const confirm = async () => {
-    if (!identity || identity.role !== 'participant' || !draft) return
-    const person = identity
+    if (!identity || !identity.participant || !draft) return
+    const current = identity, person = identity.participant
     if (rawText.trim() !== interpretedText) { setError('O texto mudou. Clique em “Interpretar com IA” novamente antes de confirmar.'); return }
     await execute('confirm', async () => {
-      const result = await api.confirm(person.participantId, person.token, draft)
+      const result = await api.confirm(person.id, person.token, draft)
       setOwn(result)
       setDraft(result.confirmed)
-      await refresh(person)
+      await refresh(current)
       setMessage('Preferências confirmadas! Você já pode aguardar o roteiro.')
     })
   }
   const generate = async () => {
-    if (!identity || identity.role !== 'host') return
+    if (!identity?.hostToken) return
     if (room?.script?.approved && !window.confirm('Gerar outro roteiro invalidará a aprovação atual. Continuar?')) return
-    const host = identity
+    const host = identity, hostToken = identity.hostToken
     await execute('generate', async () => {
-      await api.generate(host.sessionId, host.token)
+      await api.generate(host.sessionId, hostToken)
       await refresh(host)
       setEditing(false); setPlayingIndex(null)
       setMessage('Roteiro gerado! Confira antes de aprovar.')
@@ -283,23 +323,23 @@ function App() {
     })
   }
   const saveEdit = async () => {
-    if (!identity || identity.role !== 'host' || !proposal || editVersion === null) return
+    if (!identity?.hostToken || !proposal || editVersion === null) return
     if (new Set(proposal.items.map(i => i.karaoke_version_id)).size !== proposal.items.length) {
       setError('Uma música não pode se repetir no roteiro. Escolha vídeos diferentes.'); return
     }
-    const host = identity
+    const host = identity, hostToken = identity.hostToken
     await execute('save', async () => {
-      await api.edit(host.sessionId, host.token, editVersion, proposal)
+      await api.edit(host.sessionId, hostToken, editVersion, proposal)
       await refresh(host)
       setEditing(false); setPlayingIndex(null)
       setMessage('Nova versão do roteiro salva. Aprove-a para reproduzir.')
     })
   }
   const approve = async () => {
-    if (!identity || identity.role !== 'host' || !room?.script) return
-    const host = identity
+    if (!identity?.hostToken || !room?.script) return
+    const host = identity, hostToken = identity.hostToken
     await execute('approve', async () => {
-      await api.approve(host.sessionId, host.token, room.script!.version)
+      await api.approve(host.sessionId, hostToken, room.script!.version)
       await refresh(host)
       setMessage('Roteiro aprovado! O player está liberado neste dispositivo.')
     })
@@ -316,6 +356,7 @@ function App() {
     ),
     [catalog, songsById]
   )
+  const isHost = !!identity?.hostToken
   const participantName = (ids: string[]) => ids.map(id => room?.participants.find(p => p.id === id)?.name || 'Participante').join(' + ')
 
   return (
@@ -323,55 +364,35 @@ function App() {
 
       <main className="main-container">
         {!identity ? (
-          <div className="home-layout">
-            <div className="hero">
-              <div className="eyebrow"><span className="eyebrow-rule"/> SUA NOITE, SEU REPERTÓRIO</div>
-              <h1>Todo mundo<br/>entra no <em>ritmo.</em></h1>
-              <p className="hero-copy">Reúna seus amigos, conte seus gostos musicais e deixe a IA propor uma noite de karaokê com a cara do grupo.</p>
-              <div className="hero-art" aria-hidden="true"><div className="vinyl"><div className="vinyl-label">SM<span>♫</span></div></div><div className="music-doodle">♫</div></div>
-              <div className="hero-foot"><span>01 · ENTRAR</span><span>02 · CRIAR JUNTOS</span><span>03 · CANTAR</span></div>
-            </div>
-            <section className="entry-card" aria-label="Acessar SingMatch">
-              <div className="segmented">
-                <button type="button" className={mode === 'create' ? 'active' : ''} onClick={() => setMode('create')}>Criar sala</button>
-                <button type="button" className={mode === 'join' ? 'active' : ''} onClick={() => setMode('join')}>Entrar com código</button>
-              </div>
-              {mode === 'create' ? <form onSubmit={createRoom} className="entry-form">
-                <span className="eyebrow">PARA O ORGANIZADOR</span>
-                <h2>Comece a noite</h2>
-                <p className="muted">Crie um espaço para seu grupo. Os amigos entram usando um código.</p>
-                <label className="field">Gênero musical <select disabled value="forro"><option value="forro">Forró · piloto</option></select></label>
-                <label className="field">Qual é a intenção da noite?
-                  <textarea value={intention} maxLength={500} rows={4} onChange={e => setIntention(e.target.value)} placeholder="Ex.: começar tranquilo e terminar animado"/>
-                </label>
-                <button className="btn primary full" disabled={pending !== null}>{pending === 'create' ? 'Criando sala...' : 'Criar minha sala →'}</button>
-                <p className="form-foot">O organizador controla o roteiro e o player. Sem cadastro.</p>
-              </form> : <form onSubmit={joinRoom} className="entry-form">
-                <span className="eyebrow">PARA OS PARTICIPANTES</span>
-                <h2>Entre na roda</h2>
-                <p className="muted">Peça o código ao organizador. Depois, conte o que você gosta de cantar.</p>
-                <label className="field">Código da sala
-                  <input required maxLength={8} className="code-input" value={joinCode} onChange={e => setJoinCode(e.target.value.toUpperCase())} placeholder="AB12CD34"/>
-                </label>
-                <label className="field">Seu nome
-                  <input required maxLength={80} value={joinName} onChange={e => setJoinName(e.target.value)} placeholder="Como vamos chamar você?"/>
-                </label>
-                <button className="btn primary full" disabled={pending !== null || !joinCode.trim() || !joinName.trim()}>{pending === 'join' ? 'Entrando...' : 'Entrar na sala →'}</button>
-                <p className="form-foot">Cada pessoa tem seu próprio acesso e confirma suas preferências.</p>
-              </form>}
-            </section>
-          </div>
+          <Home
+            busy={pending !== null}
+            creating={pending === 'create'}
+            joining={pending === 'join'}
+            initialCode={initialCode}
+            onCreate={(intention, hostName) => { void createRoom(intention, hostName) }}
+            onJoin={(code, name) => { void joinRoom(code, name) }}
+          />
         ) : (
           <div className="room-layout">
             <div className="room-header">
               <div>
-                <span className="eyebrow">{identity.role === 'host' ? 'PAINEL DO ORGANIZADOR' : 'MEU ESPAÇO NO KARAOKÊ'}</span>
-                <h1>{identity.role === 'host' ? 'A noite é nossa.' : 'Sua voz faz parte.'}</h1>
+                <span className="eyebrow">{isHost ? 'PAINEL DO ORGANIZADOR' : 'MEU ESPAÇO NO KARAOKÊ'}</span>
+                <h1>{isHost ? 'A noite é nossa.' : 'Sua voz faz parte.'}</h1>
                 <p className="muted">Forró · {room?.session.intention || 'Uma noite de música criada em grupo'}</p>
               </div>
-              <div className="code-panel"><span>CÓDIGO DA SALA</span><strong>{room?.session.code || '········'}</strong>{identity.role === 'host' && <button type="button" onClick={copyCode} className="text-button">Copiar código ↗</button>}</div>
+              <div className="code-panel"><span>CÓDIGO DA SALA</span><strong>{room?.session.code || '········'}</strong>{isHost && <button type="button" onClick={copyCode} className="text-button">Copiar código ↗</button>}</div>
             </div>
             {!connected && <div className="alert error" role="alert">Conexão com a API indisponível. Tentando reconectar...</div>}
+            {isHost && !me && room && !['playing', 'finished'].includes(room.session.status) && (
+              <form onSubmit={joinAsHost} className="sm-card flex flex-col gap-3 sm:flex-row sm:items-center">
+                <div className="flex-1">
+                  <p className="mb-0 font-semibold">Vai cantar também?</p>
+                  <p className="mb-0 text-sm text-muted-foreground">Entre na roda com seu nome. Você ganha uma música no roteiro, como os amigos.</p>
+                </div>
+                <input className="sm-input sm:max-w-56" aria-label="Seu nome" placeholder="Seu nome" maxLength={80} required value={hostJoinName} onChange={e => setHostJoinName(e.target.value)} />
+                <button className="sm-btn-primary shrink-0" disabled={pending !== null || !hostJoinName.trim()}>{pending === 'join-host' ? 'Entrando...' : 'Entrar também como participante'}</button>
+              </form>
+            )}
             {!room ? <div className="paper-card">Carregando informações da sala...</div> : <>
               <section className="paper-card participants-card">
                 <div className="card-title-row"><div><span className="eyebrow">QUEM ESTÁ NA RODA</span><h2>Participantes <span className="title-count">({room.participants.length})</span></h2></div><button className="btn outline small" type="button" onClick={() => { void refresh(identity).catch(err => setError(displayError(err))) }}>↻ Atualizar</button></div>
@@ -379,7 +400,7 @@ function App() {
                 <div className="status-line"><span>Atualização automática a cada 7 segundos</span><span>{room.participants.filter(p => p.profile_confirmed).length}/{room.participants.length} perfis prontos</span></div>
               </section>
 
-              {identity.role === 'participant' ? <section className="paper-card profile-card">
+              {me && <section className="paper-card profile-card">
                 <span className="eyebrow">01 · PREFERÊNCIAS</span>
                 <h2>O que você gosta de cantar?</h2>
                 <p className="muted">Escreva de um jeito natural. A IA transforma sua resposta em preferências e restrições, mas você decide o que confirmar.</p>
@@ -394,8 +415,10 @@ function App() {
                   {rawText.trim() !== interpretedText && <div className="notice warn">Você alterou o texto. Interprete novamente antes de confirmar o perfil.</div>}
                   <div className="profile-footer"><button type="button" className="btn primary" disabled={pending !== null || rawText.trim() !== interpretedText} onClick={confirm}>{pending === 'confirm' ? 'Salvando...' : own?.confirmed ? 'Salvar correções do perfil ✓' : 'Confirmar meu perfil ✓'}</button>{own?.confirmed && <span className="confirmed-mark">✓ Seu perfil já foi confirmado. Alterações exigem nova confirmação.</span>}</div>
                 </div>}
-                {room.script && <div className="participant-script"><span className="eyebrow">02 · ROTEIRO DA NOITE</span><h3>{room.script.title}</h3><p className="muted">{room.script.approved ? 'O organizador aprovou este roteiro.' : 'Esta ainda é uma proposta. O organizador pode editá-la.'}</p><ol>{room.script.items.map(item => <li key={item.position}><b>{participantName(item.participant_ids)}</b> — <SongName versionId={item.karaoke_version_id} catalog={catalog}/></li>)}</ol><div className="notice">O player fica disponível apenas no dispositivo do organizador.</div></div>}
-              </section> : <section className="paper-card script-card">
+                {!isHost && room.script && <div className="participant-script"><span className="eyebrow">02 · ROTEIRO DA NOITE</span><h3>{room.script.title}</h3><p className="muted">{room.script.approved ? 'O organizador aprovou este roteiro.' : 'Esta ainda é uma proposta. O organizador pode editá-la.'}</p><ol>{room.script.items.map(item => <li key={item.position}><b>{participantName(item.participant_ids)}</b> — <SongName versionId={item.karaoke_version_id} catalog={catalog}/></li>)}</ol><div className="notice">O player fica disponível apenas no dispositivo do organizador.</div></div>}
+              </section>}
+
+              {isHost && <section className="paper-card script-card">
                 <div className="card-title-row"><div><span className="eyebrow">02 · COMPOSIÇÃO COLETIVA</span><h2>Roteiro da noite</h2></div>{room.script && <span className={`state-tag ${room.script.approved ? 'done' : ''}`}>{room.script.approved ? '✓ Aprovado' : '✧ Proposta · v' + room.script.version}</span>}</div>
                 {!room.participants.length ? <div className="notice">Compartilhe o código e aguarde seus amigos entrarem.</div> : !room.participants.every(p => p.profile_confirmed) ? <div className="notice">Aguardando a confirmação das preferências de todos os participantes antes de gerar o roteiro.</div> : <div className="inline-actions"><button type="button" className="btn secondary" onClick={generate} disabled={pending !== null || editing}>{pending === 'generate' ? 'Criando roteiro...' : room.script ? '✧ Gerar outro roteiro' : '✧ Gerar roteiro com IA'}</button><span className="muted smaller">Gera uma apresentação solo por pessoa usando músicas aprovadas do catálogo.</span></div>}
                 {room.script && <div className="script-area">
@@ -419,7 +442,7 @@ function App() {
                 </div>}
               </section>}
 
-              {identity.role === 'host' && room.script?.approved && room.script.input_revision === room.session.revision && !editing && <section className="paper-card player-card"><div className="card-title-row"><div><span className="eyebrow">03 · HORA DE CANTAR</span><h2>Player do organizador</h2></div><span className="state-tag done">Repertório aprovado</span></div><p className="muted">Reproduza na ordem do roteiro. Músicas com letra sincronizada mostram a letra abaixo do vídeo; use “Tela cheia” na TV ou projetor. O player aparece apenas aqui, no dispositivo do organizador.</p>
+              {isHost && room.script?.approved && room.script.input_revision === room.session.revision && !editing && <section className="paper-card player-card"><div className="card-title-row"><div><span className="eyebrow">03 · HORA DE CANTAR</span><h2>Player do organizador</h2></div><span className="state-tag done">Repertório aprovado</span></div><p className="muted">Reproduza na ordem do roteiro. Músicas com letra sincronizada mostram a letra abaixo do vídeo; use “Tela cheia” na TV ou projetor. O player aparece apenas aqui, no dispositivo do organizador.</p>
                 {playingIndex === null ? <button className="btn primary" type="button" onClick={() => setPlayingIndex(0)}>▶ Abrir o player</button> : <Player script={room.script} index={playingIndex} versions={versionsById} catalog={catalog} participantName={participantName} onSelect={setPlayingIndex}/>}
                 <p className="muted smaller">Vídeos incorporados via YouTube. A disponibilidade e permissões de reprodução podem mudar; a aprovação do piloto não equivale a revisão de direitos.</p>
               </section>}

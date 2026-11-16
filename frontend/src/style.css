@@ -16,33 +16,13 @@ h2{font-size:clamp(1.8rem,3vw,2.3rem);line-height:1.12;margin-bottom:12px}
 h3{font-size:1.15rem}
 p{line-height:1.65}
 .main-container{max-width:1210px;margin:0 auto;padding:10px 28px 75px}
-.home-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(390px,460px);gap:58px;align-items:center;min-height:630px}
-.hero{position:relative;align-self:stretch;padding-top:72px}
 .eyebrow{font-size:.72rem;color:#9a4951;letter-spacing:.18em;font-weight:800;display:inline-block;margin-bottom:17px}
-.eyebrow-rule{display:inline-block;vertical-align:middle;height:2px;width:28px;background:#b36e68;margin-right:10px}
-.hero h1{color:#6b2437;font-size:clamp(3.8rem,6.5vw,6.9rem);letter-spacing:-.065em;margin:6px 0 23px}
-.hero h1 em{color:#ad5c5a;font-weight:400}
-.hero-copy{font-size:1.15rem;color:#705454;max-width:460px;line-height:1.65}
-.hero-art{width:310px;height:205px;position:relative;margin:25px 20px 25px auto}
-.vinyl{position:absolute;left:34px;top:0;width:208px;height:208px;border-radius:50%;background:repeating-radial-gradient(circle at 50% 50%,#3d2c30 0 3px,#47343a 4px 6px,#30252a 7px 10px);box-shadow:12px 14px 0 #eacbbb,20px 22px 36px #90676b55;display:grid;place-items:center;transform:rotate(-18deg)}
-.vinyl-label{width:87px;height:87px;border-radius:50%;display:flex;flex-direction:column;justify-content:center;align-items:center;background:#e5a47e;color:#702c3a;font-family:var(--font-display);font-size:1.7rem;letter-spacing:-.03em;border:5px solid #d78b72}
-.vinyl-label span{font-size:.9rem}
-.music-doodle{position:absolute;right:15px;top:8px;transform:rotate(22deg);font-size:5.2rem;color:#af675e}
-.hero-foot{display:flex;flex-wrap:wrap;gap:20px;font-size:.66rem;font-weight:800;letter-spacing:.13em;color:#a07e74;margin-top:30px}
-.entry-card,.paper-card{background:#fffaf0;border:1px solid #e6d4c4;border-radius:19px;box-shadow:0 18px 42px rgba(100,49,48,.075)}
-.entry-card{padding:19px}
-.segmented{display:grid;grid-template-columns:1fr 1fr;gap:5px;background:#f2e5d9;border-radius:11px;padding:5px}
-.segmented button{border:0;border-radius:8px;background:transparent;padding:13px 5px;color:#8b6762;font-weight:800;font-size:.82rem}
-.segmented button.active{background:#fffaf1;color:#742b3d;box-shadow:0 3px 8px #6a2a3a18}
-.entry-form{padding:35px 19px 12px}
-.entry-form h2{color:#68273a;font-size:2.5rem}
+.paper-card{background:#fffaf0;border:1px solid #e6d4c4;border-radius:19px;box-shadow:0 18px 42px rgba(100,49,48,.075)}
 .muted{color:#806863}
 .smaller{font-size:.78rem}
-.entry-form>.muted{margin-bottom:28px}
 .field{display:flex;flex-direction:column;gap:9px;font-size:.84rem;font-weight:800;color:#6e3440;margin-bottom:20px}
 .field input,.field textarea,.field select{width:100%;font-weight:500}
 .field select:disabled{background:#f2e9df;color:#866863}
-.entry-form .code-input{font-size:1.45rem;letter-spacing:.2em;text-transform:uppercase;font-weight:800}
 .btn{padding:12px 19px;min-height:44px;border:1px solid #753044;border-radius:9px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;gap:7px;line-height:1.3;transition:background-color .15s ease,transform .15s ease;max-width:100%}
 .btn:not(:disabled):hover{transform:translateY(-1px)}
 .btn.primary{color:#fff8ed;background:#752b40;border-color:#752b40}
@@ -53,7 +33,6 @@ p{line-height:1.65}
 .btn.outline:hover,.btn.subtle:hover{background:#f7e8da}
 .btn.small{padding:8px 12px;min-height:36px;font-size:.78rem}
 .btn.full{width:100%}
-.form-foot{text-align:center;font-size:.75rem;margin:18px 0 4px;color:#978079}
 .room-layout{display:flex;flex-direction:column;gap:22px}
 .room-header{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:12px 0 8px}
 .room-header h1{color:#692438;margin-bottom:9px}
@@ -175,16 +154,14 @@ p{line-height:1.65}
 .feedback button{position:absolute;right:10px;top:8px;border:0;background:transparent;font-size:1.35rem;color:inherit}
 .feedback.error{background:#fff0ed;border:1px solid #daaea5;color:#8b3943}
 .feedback.success{background:#e8f4e7;border:1px solid #a6ccac;color:#2f6444}
-@media (max-width:940px){.home-layout{grid-template-columns:1fr;gap:20px}.hero{padding-top:25px}.hero-art{display:none}.hero h1{font-size:clamp(3.5rem,10vw,6rem)}.entry-card{max-width:620px;width:100%;margin:10px auto}.main-container{padding-top:24px}.player-layout{grid-template-columns:1fr}}
-@media (max-width:640px){.main-container{padding:6px 14px 60px}.hero{padding-top:14px}.hero h1{font-size:3.55rem}.hero-copy{font-size:1rem}.hero-foot{gap:10px}.entry-form{padding:24px 10px 8px}.room-header{flex-direction:column;align-items:stretch}.room-header h1{font-size:2.8rem}.code-panel{align-self:flex-start;width:100%}.paper-card{padding:22px 17px}.review-grid,.form-grid.two{grid-template-columns:1fr}.add-label{grid-template-columns:1fr 1fr}.add-label input{grid-column:1 / -1;grid-row:2}.add-label button{grid-column:2;grid-row:1}.script-item{padding:12px;gap:10px}.script-pos{width:32px;height:32px}.player-meta{flex-direction:column;align-items:flex-start}.lyrics-panel{padding:14px 12px;min-height:120px}.stage-controls>.btn:last-child{margin-left:0}.feedback{right:16px;bottom:16px}}
+@media (max-width:940px){.main-container{padding-top:24px}.player-layout{grid-template-columns:1fr}}
+@media (max-width:640px){.main-container{padding:6px 14px 60px}.room-header{flex-direction:column;align-items:stretch}.room-header h1{font-size:2.8rem}.code-panel{align-self:flex-start;width:100%}.paper-card{padding:22px 17px}.review-grid,.form-grid.two{grid-template-columns:1fr}.add-label{grid-template-columns:1fr 1fr}.add-label input{grid-column:1 / -1;grid-row:2}.add-label button{grid-column:2;grid-row:1}.script-item{padding:12px;gap:10px}.script-pos{width:32px;height:32px}.player-meta{flex-direction:column;align-items:flex-start}.lyrics-panel{padding:14px 12px;min-height:120px}.stage-controls>.btn:last-child{margin-left:0}.feedback{right:16px;bottom:16px}}
 
 /* ---------------------------------------------------------------------------
  * Transição para o visual novo (Parte 1). Textos que ficam direto sobre o fundo
  * escuro. Remover cada bloco quando a tela correspondente for migrada.
  * ------------------------------------------------------------------------- */
-.entry-card,.paper-card{color:#452b2e}
-.hero .eyebrow,.room-header .eyebrow{color:var(--accent)}
-.hero .eyebrow-rule{background:var(--accent)}
-.hero h1,.room-header h1{color:var(--foreground);letter-spacing:-.04em}
-.hero h1 em{font-style:normal;background:var(--gradient-hot);-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero-copy,.room-header .muted,.hero-foot{color:var(--muted-foreground)}
+.paper-card{color:#452b2e}
+.room-header .eyebrow{color:var(--accent)}
+.room-header h1{color:var(--foreground);letter-spacing:-.04em}
+.room-header .muted{color:var(--muted-foreground)}
