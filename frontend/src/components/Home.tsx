@@ -48,15 +48,16 @@ export function Home({ busy, creating, joining, initialCode, onCreate, onJoin }:
           Ninguém briga<br /><span className="text-hot">pelo microfone.</span>
         </h1>
         <p className="mx-auto mt-4 mb-0 max-w-md text-muted-foreground">
-          Cada amigo conta o que curte, a IA monta o roteiro da noite — do mais tranquilo ao mais animado.
+          Cada amigo conta o que curte, a IA monta o roteiro da noite
         </p>
       </section>
 
-      <div className="grid items-start gap-5 md:grid-cols-2">
-        <form className="sm-card space-y-3" onSubmit={submitCreate} aria-labelledby="criar-sala">
+      <div className="grid gap-5 md:grid-cols-2">
+        <form className="sm-card flex min-h-[30rem] flex-col gap-4 sm:p-7" onSubmit={submitCreate} aria-labelledby="criar-sala">
           <h2 id="criar-sala" className="flex items-center gap-2 text-xl font-bold">
             <Sparkles className="h-5 w-5 text-accent" aria-hidden="true" />Criar sala
           </h2>
+          <p className="text-sm text-muted-foreground">Para quem organiza: crie a sala e compartilhe o código com o grupo.</p>
           <p className="flex items-center gap-2 text-xs text-muted-foreground">
             Gênero <span className="sm-chip border border-border text-foreground">Forró · piloto</span>
           </p>
@@ -68,17 +69,14 @@ export function Home({ busy, creating, joining, initialCode, onCreate, onJoin }:
             value={intention}
             onChange={e => setIntention(e.target.value)}
           />
-          <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-border bg-background/40 px-4 py-3">
+          <label className="flex cursor-pointer items-center gap-3 rounded-xl border border-border bg-background/40 px-4 py-3">
             <input
               type="checkbox"
-              className="mt-1 h-4 w-4 shrink-0 p-0 accent-primary"
+              className="h-4 w-4 shrink-0 accent-primary"
               checked={willSing}
               onChange={e => setWillSing(e.target.checked)}
             />
-            <span className="flex flex-col gap-0.5">
-              <span className="text-sm font-semibold">Também vou cantar</span>
-              <span className="text-xs text-muted-foreground">Você entra na roda e ganha uma música, como os amigos.</span>
-            </span>
+            <span className="text-sm font-semibold">Também vou cantar</span>
           </label>
           {willSing && (
             <input
@@ -91,16 +89,24 @@ export function Home({ busy, creating, joining, initialCode, onCreate, onJoin }:
               onChange={e => setHostName(e.target.value)}
             />
           )}
-          <button className="sm-btn-primary w-full" disabled={busy || !canCreate}>
+          <button className="sm-btn-primary mt-auto w-full" disabled={busy || !canCreate}>
             {creating ? 'Criando sala...' : 'Criar e pegar código'}
           </button>
-          <p className="mb-0 text-xs text-muted-foreground">Sem cadastro. Você controla o roteiro e o player.</p>
         </form>
 
-        <form className="sm-card space-y-3" onSubmit={submitJoin} aria-labelledby="entrar-sala">
+        <form className="sm-card flex min-h-[30rem] flex-col gap-4 sm:p-7" onSubmit={submitJoin} aria-labelledby="entrar-sala">
           <h2 id="entrar-sala" className="flex items-center gap-2 text-xl font-bold">
             <Users className="h-5 w-5 text-neon" aria-hidden="true" />Entrar com código
           </h2>
+          <p className="text-sm text-muted-foreground">Recebeu um código? Entre com seu nome e se&nbsp;divirta!</p>
+          <ol className="flex flex-col gap-2 text-sm text-muted-foreground">
+            {['Conte seus gostos', 'Confirme o que a IA entendeu', 'Cante quando chegar sua vez'].map((step, i) => (
+              <li key={step} className="flex items-center gap-2">
+                <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-secondary text-[11px] font-bold text-foreground">{i + 1}</span>
+                {step}
+              </li>
+            ))}
+          </ol>
           <input
             className="sm-input"
             aria-label="Seu nome"
@@ -122,10 +128,13 @@ export function Home({ busy, creating, joining, initialCode, onCreate, onJoin }:
             value={code}
             onChange={e => setCode(cleanCode(e.target.value))}
           />
-          <p className="text-xs text-muted-foreground">Sem cadastro. Só nome e código.</p>
-          <button className="sm-btn-ghost w-full" disabled={busy || !canJoin}>
-            {joining ? 'Entrando...' : 'Entrar na sala'}
-          </button>
+          {/* Texto e botão no fim do card, alinhados com o botão de "Criar sala". */}
+          <div className="mt-auto flex flex-col gap-4">
+            <p className="text-xs text-muted-foreground">Sem cadastro. Só nome e código.</p>
+            <button className="sm-btn-ghost w-full" disabled={busy || !canJoin}>
+              {joining ? 'Entrando...' : 'Entrar na sala'}
+            </button>
+          </div>
         </form>
       </div>
     </div>
