@@ -61,7 +61,7 @@ function PlayerView({ script, index, lookup, participantName, onSelect }: {
       <div className="flex min-w-0 flex-col gap-4">
         <div className="text-center">
           <p className="m-0 text-xs tracking-widest text-accent uppercase">Apresentação {index + 1} de {script.items.length}</p>
-          <p className="mt-3 mb-0 text-sm text-muted-foreground">No microfone</p>
+          <p className="mt-3 mb-0 text-sm text-muted-foreground">{item.participant_ids.length === 2 ? 'No microfone, em dueto' : 'No microfone'}</p>
           <p className="m-0 font-display text-3xl font-extrabold text-primary sm:text-4xl">{participantName(item.participant_ids)}</p>
           <h3 className="mt-3 mb-0 text-2xl font-extrabold sm:text-3xl">{song?.title ?? item.karaoke_version_id}</h3>
           {song && <p className="mt-1 mb-0 text-muted-foreground">{song.artists.join(', ')}</p>}
@@ -115,7 +115,7 @@ function PlayerView({ script, index, lookup, participantName, onSelect }: {
                   <span className="font-display font-extrabold opacity-60">{String(i + 1).padStart(2, '0')}</span>
                   <span className="flex min-w-0 flex-col">
                     <span className={`font-semibold ${i < index ? 'line-through' : ''}`}>{s?.title ?? entry.karaoke_version_id}</span>
-                    <span className="text-xs text-muted-foreground">{participantName(entry.participant_ids)}{s ? ` · ${s.artists.join(', ')}` : ''}</span>
+                    <span className="text-xs text-muted-foreground">{participantName(entry.participant_ids)}{entry.participant_ids.length === 2 ? ' · dueto' : ''}{s ? ` · ${s.artists.join(', ')}` : ''}</span>
                   </span>
                 </button>
               </li>

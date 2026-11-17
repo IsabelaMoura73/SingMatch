@@ -276,7 +276,9 @@ def test_mixed_script_composes_one_duet_and_fallback_solo(catalog):
     proposal = compor_roteiro_misto("forro", "", ps, songs, versions, client=fake)
     assert [item.participant_ids for item in proposal.items] == [["A", "B"], ["C"]]
     data = json.loads(fake.requests[0]["input"])
-    assert "B" in data["participants"]["A"]["eligible_duet_partners"]
+    # O backend já define a dupla e o solo; o modelo só escolhe música e ordem.
+    assert [slot["participant_ids"] for slot in data["slots"]] == [["A", "B"], ["C"]]
+    assert data["slots"][0]["format"] == "dueto" and data["required_item_count"] == 2
 
 
 def test_mixed_script_rejects_duet_without_bilateral_consent(catalog):
@@ -288,3 +290,148 @@ def test_mixed_script_rejects_duet_without_bilateral_consent(catalog):
     ]})
     with pytest.raises(LLMServiceError, match="consentimento explícito"):
         compor_roteiro_misto("forro", "", ps, songs, versions, client=fake)
+
+
+class SequenceClient:
+    """Devolve uma resposta diferente a cada chamada (simula reparo do modelo)."""
+
+    def __init__(self, *payloads):
+        self.payloads = list(payloads)
+        self.requests = []
+        self.responses = SimpleNamespace(parse=self.parse)
+
+    def parse(self, **kwargs):
+        self.requests.append(kwargs)
+        parsed = kwargs["text_format"].model_validate(self.payloads[len(self.requests) - 1])
+        return SimpleNamespace(status="completed", output_parsed=parsed)
+
+
+REPEATED_PARTICIPANT = {"title": "Forró", "items": [
+    {"position": 1, "karaoke_version_id": "KAR-FOR-001", "participant_ids": ["P1"], "justification": "Início."},
+    {"position": 2, "karaoke_version_id": "KAR-FOR-002", "participant_ids": ["P1"], "justification": "De novo."},
+]}
+ONE_SONG = {"title": "Forró", "items": [
+    {"position": 1, "karaoke_version_id": "KAR-FOR-002", "participant_ids": ["P1"], "justification": "Uma música."},
+]}
+
+
+def test_roteiro_repara_participante_repetido_com_uma_nova_tentativa(catalog):
+    songs, versions = catalog
+    fake = SequenceClient(REPEATED_PARTICIPANT, ONE_SONG)
+    proposal = compor_roteiro_solo("forro", "", {"P1": ProfileConfirmed()}, songs, versions, client=fake)
+
+    assert [item.participant_ids for item in proposal.items] == [["P1"]]
+    assert len(fake.requests) == 2
+    primeira = json.loads(fake.requests[0]["input"])
+    segunda = json.loads(fake.requests[1]["input"])
+    assert primeira["required_item_count"] == 1
+    assert primeira["required_participant_ids"] == ["P1"]
+    assert "previous_attempt_rejected_because" not in primeira
+    # O modelo recebe só o motivo curto, não a resposta anterior inteira.
+    assert segunda["previous_attempt_rejected_because"] == "cada participante deve aparecer uma única vez na rodada"
+
+
+def test_roteiro_desiste_apos_uma_tentativa_de_reparo(catalog):
+    songs, versions = catalog
+    fake = SequenceClient(REPEATED_PARTICIPANT, REPEATED_PARTICIPANT, ONE_SONG)
+    with pytest.raises(LLMServiceError, match="cada participante deve aparecer uma única vez") as error:
+        compor_roteiro_solo("forro", "", {"P1": ProfileConfirmed()}, songs, versions, client=fake)
+    assert len(fake.requests) == 2
+    # A mensagem não despeja a resposta do modelo (input_value) na tela.
+    assert "input_value" not in str(error.value)
+
+
+class ApiErrorClient:
+    def __init__(self, status_code):
+        self.status_code = status_code
+        self.calls = 0
+        self.responses = SimpleNamespace(parse=self.parse)
+
+    def parse(self, **kwargs):
+        self.calls += 1
+        exc = RuntimeError("erro do provedor")
+        exc.status_code = self.status_code
+        raise exc
+
+
+@pytest.mark.parametrize("status, trecho", [(401, "não reconheceu a chave"), (402, "falta de créditos"), (429, "Limite de uso")])
+def test_roteiro_nao_repete_chamada_em_erro_de_api(catalog, status, trecho):
+    songs, versions = catalog
+    fake = ApiErrorClient(status)
+    with pytest.raises(LLMServiceError, match=trecho):
+        compor_roteiro_solo("forro", "", {"P1": ProfileConfirmed()}, songs, versions, client=fake)
+    assert fake.calls == 1
+
+
+
+def test_roteiro_misto_tambem_tem_tentativa_de_reparo(catalog):
+    songs, versions = catalog
+    ps = {"A": ProfileConfirmed(duet_allowed=True), "B": ProfileConfirmed(duet_allowed=True)}
+    repeated = {"title": "Dupla", "items": [
+        {"position": 1, "karaoke_version_id": "KAR-FOR-002", "participant_ids": ["A", "B"], "justification": "Dueto."},
+        {"position": 2, "karaoke_version_id": "KAR-FOR-001", "participant_ids": ["A"], "justification": "De novo."},
+    ]}
+    fixed = {"title": "Dupla", "items": [
+        {"position": 1, "karaoke_version_id": "KAR-FOR-002", "participant_ids": ["A", "B"], "justification": "Dueto."},
+    ]}
+    fake = SequenceClient(repeated, fixed)
+    proposal = compor_roteiro_misto("forro", "", ps, songs, versions,
+                                    previous_video_ids=["KAR-FOR-005"], client=fake)
+    assert [item.participant_ids for item in proposal.items] == [["A", "B"]]
+    assert len(fake.requests) == 2
+    first = json.loads(fake.requests[0]["input"])
+    assert [slot["participant_ids"] for slot in first["slots"]] == [["A", "B"]]
+    assert first["previous_script_karaoke_version_ids"] == ["KAR-FOR-005"]
+    assert "previous_attempt_rejected_because" in json.loads(fake.requests[1]["input"])
+
+
+
+def test_roteiro_misto_recusa_dueto_mais_solo_da_mesma_pessoa(catalog):
+    """O erro real: o modelo dava o dueto E solos para quem já estava na dupla."""
+    songs, versions = catalog
+    songs = [song.model_copy(update={"duet_possible": song.id == "FOR-002"}) for song in songs]
+    ps = {"K": ProfileConfirmed(duet_allowed=True), "O": ProfileConfirmed(duet_allowed=True),
+          "P": ProfileConfirmed(duet_allowed=False)}
+    duet_and_solos = {"title": "Noite", "items": [
+        {"position": 1, "karaoke_version_id": "KAR-FOR-002", "participant_ids": ["K", "O"], "justification": "Dupla."},
+        {"position": 2, "karaoke_version_id": "KAR-FOR-001", "participant_ids": ["K"], "justification": "Solo."},
+        {"position": 3, "karaoke_version_id": "KAR-FOR-004", "participant_ids": ["P"], "justification": "Solo."},
+    ]}
+    fixed = {"title": "Noite", "items": [
+        {"position": 1, "karaoke_version_id": "KAR-FOR-002", "participant_ids": ["K", "O"], "justification": "Dupla."},
+        {"position": 2, "karaoke_version_id": "KAR-FOR-004", "participant_ids": ["P"], "justification": "Solo."},
+    ]}
+    fake = SequenceClient(duet_and_solos, fixed)
+    proposal = compor_roteiro_misto("forro", "", ps, songs, versions, client=fake)
+    assert [item.participant_ids for item in proposal.items] == [["K", "O"], ["P"]]
+    data = json.loads(fake.requests[0]["input"])
+    duet_slot = data["slots"][0]
+    assert duet_slot["participant_ids"] == ["K", "O"]
+    assert duet_slot["allowed_karaoke_version_ids"] == ["KAR-FOR-002"]  # só música de dueto
+    assert data["slots"][1]["participant_ids"] == ["P"]
+
+
+def test_roteiro_misto_recusa_separar_a_dupla_planejada(catalog):
+    songs, versions = catalog
+    songs = [song.model_copy(update={"duet_possible": True}) for song in songs]
+    ps = {"A": ProfileConfirmed(duet_allowed=True), "B": ProfileConfirmed(duet_allowed=True)}
+    only_solos = {"title": "Solos", "items": [
+        {"position": 1, "karaoke_version_id": "KAR-FOR-001", "participant_ids": ["A"], "justification": "Solo."},
+        {"position": 2, "karaoke_version_id": "KAR-FOR-002", "participant_ids": ["B"], "justification": "Solo."},
+    ]}
+    with pytest.raises(LLMServiceError, match="slots"):
+        compor_roteiro_misto("forro", "", ps, songs, versions, client=SequenceClient(only_solos, only_solos))
+
+
+def test_planejamento_forma_par_por_afinidade_e_deixa_quem_sobra_solo(catalog):
+    from app.llm import _plan_mixed_slots
+    songs, _ = catalog
+    like = lambda v: {"category": "song", "value": v, "evidence": v}
+    ps = {
+        "A": ProfileConfirmed(duet_allowed=True, likes=[like("Asa Branca")]),
+        "B": ProfileConfirmed(duet_allowed=True),
+        "C": ProfileConfirmed(duet_allowed=True, likes=[like("Asa Branca")]),
+    }
+    songs = [song.model_copy(update={"duet_possible": True}) for song in songs]
+    options = {frozenset(p): ["X"] for p in (("A", "B"), ("A", "C"), ("B", "C"))}
+    assert _plan_mixed_slots(ps, options, songs) == [["A", "C"], ["B"]]

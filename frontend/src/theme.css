@@ -66,6 +66,7 @@
 }
 
 @layer base {
+  * { @apply sm-scrollbar; }
   html {
     /* 15px mantém a escala usada desde o início da migração. */
     font-size: 15px;
@@ -95,6 +96,20 @@
 @utility sm-chip { @apply inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-medium; }
 @utility text-hot { background: var(--gradient-hot); -webkit-background-clip: text; background-clip: text; color: transparent; }
 @utility bg-hot { background: var(--gradient-hot); }
+
+@utility sm-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in oklab, var(--primary) 30%, var(--muted-foreground)) transparent;
+  scrollbar-gutter: stable;
+
+  &::-webkit-scrollbar { width: 6px; height: 6px; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: color-mix(in oklab, var(--primary) 30%, var(--muted-foreground));
+  }
+  &::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+}
 
 @keyframes eq { 0%, 100% { transform: scaleY(.3) } 50% { transform: scaleY(1) } }
 .eq-bar { animation: eq 0.9s ease-in-out infinite; transform-origin: bottom; }

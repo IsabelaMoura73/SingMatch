@@ -1,7 +1,8 @@
 import { useState, type ReactNode } from 'react'
 import {
-  ArrowDown, ArrowUp, Check, CheckCircle2, Clock, Copy, Crown, Pencil, RefreshCw, Sparkles, Trash2, TriangleAlert, X,
+  ArrowDown, ArrowUp, Check, CheckCircle2, Clock, Copy, Crown, Pencil, RefreshCw, Sparkles, Trash2, TriangleAlert, Users, X,
 } from 'lucide-react'
+import { characteristicLabel } from '../labels'
 import type { KaraokeVersion, Participant, Room, Script, ScriptItem, ScriptProposal, Song } from '../api'
 
 export type SongLookup = {
@@ -21,6 +22,11 @@ function Note({ tone = 'info', children }: { tone?: 'info' | 'warn' | 'error'; c
     error: 'border-destructive/40 bg-destructive/10 text-destructive',
   }[tone]
   return <p role={tone === 'info' ? undefined : 'status'} className={`mb-0 rounded-xl border px-4 py-3 text-sm ${toneClass}`}>{children}</p>
+}
+
+/** Selo para apresentações em dupla. */
+export function DuetChip() {
+  return <span className="sm-chip bg-neon/15 text-neon"><Users className="h-3 w-3" aria-hidden="true" />Dueto</span>
 }
 
 export function EnergyBar({ level }: { level: number | null }) {
@@ -123,8 +129,8 @@ export function ParticipantsCard({ participants, meId, hostParticipantId, onRefr
               ) : (
                 <span className="flex shrink-0 items-center gap-2">
                   {person.profile_confirmed
-                    ? <span className="sm-chip bg-neon/15 text-neon"><Check className="h-3 w-3" aria-hidden="true" />confirmado</span>
-                    : <span className="sm-chip bg-muted text-muted-foreground"><Clock className="h-3 w-3" aria-hidden="true" />escrevendo…</span>}
+                    ? <span className="sm-chip bg-neon/15 text-neon"><Check className="h-3 w-3" aria-hidden="true" />CONFIRMADO</span>
+                    : <span className="sm-chip bg-muted text-muted-foreground"><Clock className="h-3 w-3" aria-hidden="true" />EDITANDO...</span>}
                   {onRemove && (
                     <button type="button" disabled={busy} onClick={() => setConfirmingId(person.id)}
                       aria-label={`Remover ${person.name} da sala`} title="Remover da sala"
@@ -162,6 +168,7 @@ function ScriptRow({ item, index, personName, lookup }: {
             {song && <span className="font-normal text-muted-foreground"> — {song.artists.join(', ')}</span>}
           </p>
           <span className="flex items-center gap-2">
+            {item.participant_ids.length === 2 && <DuetChip />}
             <EnergyBar level={song?.energy ?? null} />
             {item.participant_ids.length === 2 && <span className="sm-chip bg-secondary text-secondary-foreground">Dueto</span>}
             <span className={`sm-chip ${item.origin === 'ia' ? 'bg-primary/15 text-primary' : 'bg-secondary text-secondary-foreground'}`}>
@@ -171,7 +178,7 @@ function ScriptRow({ item, index, personName, lookup }: {
         </div>
         <p className="mb-0 text-sm">
           <span className="text-primary">{personName}</span>
-          {song?.mood && <span className="text-muted-foreground"> · {song.mood}</span>}
+          {song?.mood && <span className="text-muted-foreground"> · {characteristicLabel(song.mood)}</span>}
         </p>
         <p className="mt-1 mb-0 text-xs text-muted-foreground">
           {item.justification || (item.origin === 'manual' ? 'Escolha editada pelo organizador.' : 'Apresentação sugerida.')}
@@ -260,7 +267,7 @@ export function HostScriptCard({
         <div>
           <h2 id="roteiro-titulo" className="m-0 text-2xl font-bold">Roteiro da noite</h2>
           <p className="mt-1 mb-0 text-sm text-muted-foreground">
-            {script ? `${script.title} · versão ${script.version} · ${script.items.length} músicas` : 'Uma apresentação por pessoa, solo ou em dueto quando os dois toparem, com músicas aprovadas do catálogo.'}
+            {script ? `${script.title} · versão ${script.version} · ${script.items.length} músicas` : 'Uma apresentação por pessoa, solo ou em dueto, com músicas aprovadas do catálogo.'}
           </p>
         </div>
         {script && <StatusChip script={script} />}
@@ -269,7 +276,7 @@ export function HostScriptCard({
 
       {script && editing && proposal && (
         <div className="flex flex-col gap-3">
-          <Note tone="warn">Modo de edição: troque músicas ou mude a ordem. Ninguém pode ser removido da rodada.</Note>
+          <Note tone="warn">Modo de edição: troque músicas ou mude a ordem. Ninguém pode ser removido da rodada, e as duplas continuam as mesmas.</Note>
           {conflict && <Note tone="error">Outra versão foi salva enquanto você editava. Cancele e atualize a sala antes de continuar.</Note>}
           <label className="block text-sm font-semibold">
             Título do roteiro
@@ -279,18 +286,22 @@ export function HostScriptCard({
             {proposal.items.map((item, i) => {
               const name = participantName(item.participant_ids)
               const taken = new Set(proposal.items.filter((_, j) => j !== i).map(x => x.karaoke_version_id))
+              const duet = item.participant_ids.length === 2
+              // Dueto: só músicas marcadas para dueto (o servidor recusa as outras).
+              const options = eligibleVideos.filter(v => v.id === item.karaoke_version_id || (
+                !taken.has(v.id) && (!duet || lookup.songsById.get(v.song_id)?.duet_possible === true)))
               return (
                 <li key={item.participant_ids.join('-')} className="flex list-none gap-3 rounded-2xl border border-border bg-background/40 p-4">
                   <span className="font-display text-2xl font-extrabold text-muted-foreground">{String(i + 1).padStart(2, '0')}</span>
                   <div className="min-w-0 flex-1">
-                    <p className="mb-1 text-sm text-primary">{name}</p>
+                    <p className="mb-1 flex items-center gap-2 text-sm text-primary">{name}{duet && <DuetChip />}</p>
                     <select
                       className="sm-input py-2 text-sm"
                       aria-label={`Música de ${name}`}
                       value={item.karaoke_version_id}
                       onChange={e => onChangeItem(i, { karaoke_version_id: e.target.value })}
                     >
-                      {eligibleVideos.filter(v => v.id === item.karaoke_version_id || (!taken.has(v.id) && (item.participant_ids.length < 2 || lookup.songsById.get(v.song_id)?.duet_possible))).map(video => {
+                      {options.map(video => {
                         const song = lookup.songsById.get(video.song_id)
                         return <option key={video.id} value={video.id}>{song?.title || video.id} — {song?.artists.join(', ')}{song?.energy ? ` (energia ${song.energy})` : ''}</option>
                       })}
@@ -310,7 +321,7 @@ export function HostScriptCard({
               )
             })}
           </ol>
-          <p className="mb-0 text-xs text-muted-foreground">O servidor confere os vetos de cada pessoa ao salvar e recusa músicas vetadas.</p>
+          <p className="mb-0 text-xs text-muted-foreground">O servidor confere os vetos de cada pessoa ao salvar e recusa músicas vetadas. Num dueto, a música precisa servir para as duas pessoas.</p>
           <div className="flex flex-wrap gap-2">
             <button type="button" className="sm-btn-ghost" onClick={onCancelEdit}><X className="h-4 w-4" aria-hidden="true" />Cancelar</button>
             <button type="button" className="sm-btn-primary flex-1" onClick={onSaveEdit} disabled={busy || conflict || !proposal.title.trim()}>

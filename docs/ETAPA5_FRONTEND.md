@@ -30,7 +30,7 @@ Este pacote altera apenas `frontend/index.html`, `frontend/src/App.tsx`, `fronte
 
 ## Rodar em desenvolvimento (dois terminais)
 
-**Terminal 1 — API**: primeiro, certifique-se de que PostgreSQL está `healthy` e o backend tem as variáveis `DATABASE_URL`, `OPENAI_API_KEY` e `OPENAI_MODEL=gpt-5-mini` no ambiente do processo servidor. Se a API já está funcionando, pode mantê-la aberta.
+**Terminal 1 — API**: primeiro, certifique-se de que PostgreSQL está `healthy` e o backend tem as variáveis `DATABASE_URL`, `OPENAI_API_KEY` e `OPENAI_MODEL=gpt-4o-mini` no ambiente do processo servidor. Se a API já está funcionando, pode mantê-la aberta.
 
 ```bash
 cd ~/Downloads/SingMatch

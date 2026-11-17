@@ -58,7 +58,7 @@ git push
 3. Em **Environment** do Web Service, configure:
    - `DATABASE_URL`: **Internal Database URL** do PostgreSQL Render (não a URL local `localhost`), armazenada como variável secreta.
    - `OPENAI_API_KEY`: chave de projeto autorizada (nunca no GitHub).
-   - `OPENAI_MODEL`: `gpt-5-mini` (modelo validado antes; sujeito a permissões/créditos).
+   - `OPENAI_MODEL`: `gpt-4o-mini` (modelo em uso no piloto; sujeito a permissões/créditos). A OpenAI desliga o `gpt-4o-mini` em 14/01/2027; a substituta indicada é o `gpt-6-luna`.
 4. Inicie o deploy e acompanhe o log. O comando inicial roda `alembic upgrade head`, importa as cinco músicas sem duplicar e inicia o Uvicorn ouvindo em `0.0.0.0:$PORT`.
 5. Acesse `https://<seu-servico>.onrender.com/api/health`, depois `/api/catalog` e `/`.
 6. Teste primeiro com dados fictícios em aparelhos/abas distintos; teste vídeos do YouTube no domínio real.

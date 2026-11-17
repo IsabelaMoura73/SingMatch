@@ -77,12 +77,14 @@ async function request<T>(url: string, options: RequestInit = {}, token?: string
   }
   if (!response.ok) {
     let message = `Erro HTTP ${response.status}`
+    let fromServer = false
     try {
       const body = await response.json() as { detail?: string | { msg?: string }[] }
-      if (typeof body.detail === 'string') message = body.detail
-      else if (Array.isArray(body.detail)) message = body.detail.map(x => x.msg || 'Campo inválido').join('; ')
+      if (typeof body.detail === 'string') { message = body.detail; fromServer = true }
+      else if (Array.isArray(body.detail)) { message = body.detail.map(x => x.msg || 'Campo inválido').join('; '); fromServer = true }
     } catch { /* Resposta sem JSON */ }
-    if (response.status === 409) message += ' Atualize a sala ou revise sua escolha.'
+    // As mensagens 409 do servidor já dizem o que fazer; a dica genérica fica só para resposta sem detalhe.
+    if (response.status === 409 && !fromServer) message += ' Atualize a sala ou revise sua escolha.'
     throw new ApiError(message, response.status)
   }
   return await response.json() as T
@@ -115,6 +117,10 @@ export const api = {
   }, token),
   removeParticipant: (id: string, token: string, participantId: string) => request<Room>(
     `/api/sessions/${encodeURIComponent(id)}/participants/${encodeURIComponent(participantId)}`, { method: 'DELETE' }, token),
+  /** Abre o player: a sala fecha para entradas, remoções e mudanças de perfil. */
+  start: (id: string, token: string) => request<Room>(`/api/sessions/${encodeURIComponent(id)}/start`, { method: 'POST' }, token),
+  /** Reabre a sala depois de aberto o player (ex.: chegou alguém atrasado). */
+  reopen: (id: string, token: string) => request<Room>(`/api/sessions/${encodeURIComponent(id)}/reopen`, { method: 'POST' }, token),
   approve: (id: string, token: string, expected_version: number) => request<{script: Script}>(`/api/sessions/${encodeURIComponent(id)}/script/approve`, {
     method: 'POST', body: json({expected_version}),
   }, token),
