@@ -53,7 +53,7 @@ def client(monkeypatch):
         ])
 
     monkeypatch.setattr(routes, "interpretar_perfil", fake_profile)
-    monkeypatch.setattr(routes, "compor_roteiro_solo", fake_script)
+    monkeypatch.setattr(routes, "compor_roteiro_misto", fake_script)
     with TestClient(app) as api:
         yield api, engine
     app.dependency_overrides.clear()

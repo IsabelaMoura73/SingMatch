@@ -170,6 +170,7 @@ function ScriptRow({ item, index, personName, lookup }: {
           <span className="flex items-center gap-2">
             {item.participant_ids.length === 2 && <DuetChip />}
             <EnergyBar level={song?.energy ?? null} />
+            {item.participant_ids.length === 2 && <span className="sm-chip bg-secondary text-secondary-foreground">Dueto</span>}
             <span className={`sm-chip ${item.origin === 'ia' ? 'bg-primary/15 text-primary' : 'bg-secondary text-secondary-foreground'}`}>
               {item.origin === 'ia' ? '✧ IA' : 'Manual'}
             </span>
