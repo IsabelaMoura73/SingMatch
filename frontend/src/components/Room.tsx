@@ -266,7 +266,7 @@ export function HostScriptCard({
         <div>
           <h2 id="roteiro-titulo" className="m-0 text-2xl font-bold">Roteiro da noite</h2>
           <p className="mt-1 mb-0 text-sm text-muted-foreground">
-            {script ? `${script.title} · versão ${script.version} · ${script.items.length} músicas` : 'Uma apresentação por pessoa, solo ou em dueto, com músicas aprovadas do catálogo.'}
+            {script ? `${script.title} · versão ${script.version} · ${script.items.length} músicas` : 'Uma apresentação por pessoa, solo ou em dueto quando os dois toparem, com músicas aprovadas do catálogo.'}
           </p>
         </div>
         {script && <StatusChip script={script} />}

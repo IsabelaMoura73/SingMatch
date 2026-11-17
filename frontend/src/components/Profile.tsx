@@ -338,6 +338,7 @@ export function ReviewScreen({ name, own, rawText, interpretedText, draft, busy,
             options={[{ value: 'true', label: 'Sim' }, { value: 'false', label: 'Não' }, { value: 'unknown', label: 'Não informei' }]}
             onChange={v => onDraftChange({ ...draft, duet_allowed: v === 'unknown' ? null : v === 'true' })}
           />
+          <p className="mb-0 text-xs text-muted-foreground">Duetos só acontecem se os dois participantes toparem.</p>
         </div>
       </div>
 
