@@ -16,8 +16,8 @@ from sqlalchemy.orm import Session
 from app.api_schemas import CatalogResponse, ParticipantPrivate, ScriptResponse, SessionState
 from app.catalog import get_catalog, get_lyrics
 from app.database import get_db
-from app.llm import LLMServiceError, compor_roteiro_solo, interpretar_perfil
-from app.matching import MatchingError, eligible_candidates, norm, validate_solo_script
+from app.llm import LLMServiceError, compor_roteiro_misto, interpretar_perfil
+from app.matching import MatchingError, eligible_candidates, norm, validate_mixed_script
 from app.models import ParticipantRow, ScriptRow, SessionRow
 from app.schemas import (
     ApproveScriptRequest, ConfirmProfileRequest, CreateSessionRequest,
@@ -118,7 +118,7 @@ def _valid_solo(proposal: ScriptProposal, profiles: dict[str, ProfileConfirmed],
     songs, videos = get_catalog(db, genre)
     try:
         allowed = eligible_candidates(genre, profiles, songs, videos)
-        validate_solo_script(proposal, profiles, allowed)
+        validate_mixed_script(proposal, profiles, allowed, songs, videos)
     except MatchingError as exc:
         raise conflict(str(exc)) from exc
 
@@ -317,7 +317,7 @@ def generate_script(session_id: str, db: Session = DB, token: str = BEARER):
     except MatchingError as exc:
         raise conflict(str(exc)) from exc
     try:
-        proposal = compor_roteiro_solo(row.genre, row.intention, profiles, songs, videos, previous_video_ids=previous_video_ids,)
+        proposal = compor_roteiro_misto(row.genre, row.intention, profiles, songs, videos, previous_video_ids=previous_video_ids,)
     except LLMServiceError as exc:
         raise HTTPException(status_code=502, detail=str(exc)) from exc
     db.expire_all()

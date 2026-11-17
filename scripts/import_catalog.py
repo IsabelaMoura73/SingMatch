@@ -141,6 +141,8 @@ def seed_catalog(db: Session, path: Path | None = None, blocked: set[str] | None
         if existing:
             if existing.id != s.id:
                 raise ValueError(f"Fonte/ID {s.source}/{s.source_id} já pertence a {existing.id}")
+            if s.duet_possible and not existing.duet_possible:
+                existing.duet_possible = True  # só habilita; nunca desabilita edição curatorial
             continue  # Não apagar edições curatoriais com reimportação
         if db.get(SongRow, s.id):
             raise ValueError(f"ID {s.id} já existe em outra fonte")
