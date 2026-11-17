@@ -276,7 +276,9 @@ def test_mixed_script_composes_one_duet_and_fallback_solo(catalog):
     proposal = compor_roteiro_misto("forro", "", ps, songs, versions, client=fake)
     assert [item.participant_ids for item in proposal.items] == [["A", "B"], ["C"]]
     data = json.loads(fake.requests[0]["input"])
-    assert "B" in data["participants"]["A"]["eligible_duet_partners"]
+    # O backend já define a dupla e o solo; o modelo só escolhe música e ordem.
+    assert [slot["participant_ids"] for slot in data["slots"]] == [["A", "B"], ["C"]]
+    assert data["slots"][0]["format"] == "dueto" and data["required_item_count"] == 2
 
 
 def test_mixed_script_rejects_duet_without_bilateral_consent(catalog):
@@ -378,6 +380,58 @@ def test_roteiro_misto_tambem_tem_tentativa_de_reparo(catalog):
     assert [item.participant_ids for item in proposal.items] == [["A", "B"]]
     assert len(fake.requests) == 2
     first = json.loads(fake.requests[0]["input"])
-    assert first["required_participant_ids"] == ["A", "B"]
+    assert [slot["participant_ids"] for slot in first["slots"]] == [["A", "B"]]
     assert first["previous_script_karaoke_version_ids"] == ["KAR-FOR-005"]
     assert "previous_attempt_rejected_because" in json.loads(fake.requests[1]["input"])
+
+
+
+def test_roteiro_misto_recusa_dueto_mais_solo_da_mesma_pessoa(catalog):
+    """O erro real: o modelo dava o dueto E solos para quem já estava na dupla."""
+    songs, versions = catalog
+    songs = [song.model_copy(update={"duet_possible": song.id == "FOR-002"}) for song in songs]
+    ps = {"K": ProfileConfirmed(duet_allowed=True), "O": ProfileConfirmed(duet_allowed=True),
+          "P": ProfileConfirmed(duet_allowed=False)}
+    duet_and_solos = {"title": "Noite", "items": [
+        {"position": 1, "karaoke_version_id": "KAR-FOR-002", "participant_ids": ["K", "O"], "justification": "Dupla."},
+        {"position": 2, "karaoke_version_id": "KAR-FOR-001", "participant_ids": ["K"], "justification": "Solo."},
+        {"position": 3, "karaoke_version_id": "KAR-FOR-004", "participant_ids": ["P"], "justification": "Solo."},
+    ]}
+    fixed = {"title": "Noite", "items": [
+        {"position": 1, "karaoke_version_id": "KAR-FOR-002", "participant_ids": ["K", "O"], "justification": "Dupla."},
+        {"position": 2, "karaoke_version_id": "KAR-FOR-004", "participant_ids": ["P"], "justification": "Solo."},
+    ]}
+    fake = SequenceClient(duet_and_solos, fixed)
+    proposal = compor_roteiro_misto("forro", "", ps, songs, versions, client=fake)
+    assert [item.participant_ids for item in proposal.items] == [["K", "O"], ["P"]]
+    data = json.loads(fake.requests[0]["input"])
+    duet_slot = data["slots"][0]
+    assert duet_slot["participant_ids"] == ["K", "O"]
+    assert duet_slot["allowed_karaoke_version_ids"] == ["KAR-FOR-002"]  # só música de dueto
+    assert data["slots"][1]["participant_ids"] == ["P"]
+
+
+def test_roteiro_misto_recusa_separar_a_dupla_planejada(catalog):
+    songs, versions = catalog
+    songs = [song.model_copy(update={"duet_possible": True}) for song in songs]
+    ps = {"A": ProfileConfirmed(duet_allowed=True), "B": ProfileConfirmed(duet_allowed=True)}
+    only_solos = {"title": "Solos", "items": [
+        {"position": 1, "karaoke_version_id": "KAR-FOR-001", "participant_ids": ["A"], "justification": "Solo."},
+        {"position": 2, "karaoke_version_id": "KAR-FOR-002", "participant_ids": ["B"], "justification": "Solo."},
+    ]}
+    with pytest.raises(LLMServiceError, match="slots"):
+        compor_roteiro_misto("forro", "", ps, songs, versions, client=SequenceClient(only_solos, only_solos))
+
+
+def test_planejamento_forma_par_por_afinidade_e_deixa_quem_sobra_solo(catalog):
+    from app.llm import _plan_mixed_slots
+    songs, _ = catalog
+    like = lambda v: {"category": "song", "value": v, "evidence": v}
+    ps = {
+        "A": ProfileConfirmed(duet_allowed=True, likes=[like("Asa Branca")]),
+        "B": ProfileConfirmed(duet_allowed=True),
+        "C": ProfileConfirmed(duet_allowed=True, likes=[like("Asa Branca")]),
+    }
+    songs = [song.model_copy(update={"duet_possible": True}) for song in songs]
+    options = {frozenset(p): ["X"] for p in (("A", "B"), ("A", "C"), ("B", "C"))}
+    assert _plan_mixed_slots(ps, options, songs) == [["A", "C"], ["B"]]
