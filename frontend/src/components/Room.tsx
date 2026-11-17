@@ -163,6 +163,7 @@ function ScriptRow({ item, index, personName, lookup }: {
           </p>
           <span className="flex items-center gap-2">
             <EnergyBar level={song?.energy ?? null} />
+            {item.participant_ids.length === 2 && <span className="sm-chip bg-secondary text-secondary-foreground">Dueto</span>}
             <span className={`sm-chip ${item.origin === 'ia' ? 'bg-primary/15 text-primary' : 'bg-secondary text-secondary-foreground'}`}>
               {item.origin === 'ia' ? '✧ IA' : 'Manual'}
             </span>
@@ -259,7 +260,7 @@ export function HostScriptCard({
         <div>
           <h2 id="roteiro-titulo" className="m-0 text-2xl font-bold">Roteiro da noite</h2>
           <p className="mt-1 mb-0 text-sm text-muted-foreground">
-            {script ? `${script.title} · versão ${script.version} · ${script.items.length} músicas` : 'Uma apresentação solo por pessoa, com músicas aprovadas do catálogo.'}
+            {script ? `${script.title} · versão ${script.version} · ${script.items.length} músicas` : 'Uma apresentação por pessoa, solo ou em dueto quando os dois toparem, com músicas aprovadas do catálogo.'}
           </p>
         </div>
         {script && <StatusChip script={script} />}
@@ -289,7 +290,7 @@ export function HostScriptCard({
                       value={item.karaoke_version_id}
                       onChange={e => onChangeItem(i, { karaoke_version_id: e.target.value })}
                     >
-                      {eligibleVideos.filter(v => v.id === item.karaoke_version_id || !taken.has(v.id)).map(video => {
+                      {eligibleVideos.filter(v => v.id === item.karaoke_version_id || (!taken.has(v.id) && (item.participant_ids.length < 2 || lookup.songsById.get(v.song_id)?.duet_possible))).map(video => {
                         const song = lookup.songsById.get(video.song_id)
                         return <option key={video.id} value={video.id}>{song?.title || video.id} — {song?.artists.join(', ')}{song?.energy ? ` (energia ${song.energy})` : ''}</option>
                       })}
