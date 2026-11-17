@@ -6,6 +6,7 @@ Valores ajustáveis por variável de ambiente.
 """
 from __future__ import annotations
 
+import math
 import os
 import threading
 import time
@@ -45,13 +46,31 @@ class HourlyLimit:
         """Registra um uso ou levanta 429 se o limite da última hora já foi atingido."""
         now = time.monotonic() if now is None else now
         with self._lock:
+            self._prune(now)
+            hits = self._hits[key]
+            if len(hits) >= self.limit:
+                remaining = WINDOW_SECONDS - (now - hits[0])
+                minutes = max(1, math.ceil(remaining / 60))
+                raise HTTPException(status_code=429, detail=f"{self.message} Tente de novo em {minutes} min.")
+            hits.append(now)
+
+    def refund(self, key: str) -> None:
+        """Desfaz o último uso da chave (ex.: o serviço de IA falhou e nada foi gerado)."""
+        with self._lock:
+            hits = self._hits.get(key)
+            if hits:
+                hits.pop()
+                if not hits:
+                    del self._hits[key]
+
+    def _prune(self, now: float) -> None:
+        """Descarta usos fora da janela e chaves vazias (salas antigas não ficam na memória)."""
+        for key in list(self._hits):
             hits = self._hits[key]
             while hits and now - hits[0] >= WINDOW_SECONDS:
                 hits.popleft()
-            if len(hits) >= self.limit:
-                minutes = max(1, int((WINDOW_SECONDS - (now - hits[0])) // 60) + 1)
-                raise HTTPException(status_code=429, detail=f"{self.message} Tente de novo em {minutes} min.")
-            hits.append(now)
+            if not hits:
+                del self._hits[key]
 
     def reset(self) -> None:
         with self._lock:

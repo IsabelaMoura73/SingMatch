@@ -15,11 +15,11 @@ from pydantic import BaseModel, ConfigDict, ValidationError
 
 from app.matching import (
     MatchingError,
+    assignment_possible,
     duet_affinity,
     duet_eligible_pairs,
     eligible_candidates,
     matches_like,
-    norm,
     validate_mixed_script,
     validate_solo_script,
 )
@@ -38,7 +38,15 @@ DEFAULT_MODEL = "gpt-4o-mini"
 
 
 class LLMServiceError(RuntimeError):
-    """Erro de chamada, recusa ou resposta inválida do modelo."""
+    """Erro de chamada, recusa ou resposta inválida do modelo.
+
+    `charged=False` quando a chamada não chegou a consumir o modelo (configuração,
+    chave, créditos, limite ou rede): só nesses casos o limite de uso é devolvido.
+    """
+
+    def __init__(self, message: str, *, charged: bool = True):
+        super().__init__(message)
+        self.charged = charged
 
 
 # Modelos de transferência restritos ao subconjunto simples de JSON Schema
@@ -77,11 +85,11 @@ def _client_or_default(client: Any | None) -> Any:
     if client is not None:
         return client
     if not os.getenv("OPENAI_API_KEY"):
-        raise LLMServiceError("OPENAI_API_KEY não configurada. Use o modo 'contrato' sem API.")
+        raise LLMServiceError("OPENAI_API_KEY não configurada. Use o modo 'contrato' sem API.", charged=False)
     try:
         from openai import OpenAI
     except ImportError as exc:
-        raise LLMServiceError("Instale a biblioteca: python3 -m pip install 'openai>=2,<3'") from exc
+        raise LLMServiceError("Instale a biblioteca: python3 -m pip install 'openai>=2,<3'", charged=False) from exc
     return OpenAI(timeout=45.0, max_retries=1)
 
 
@@ -105,16 +113,20 @@ def _parse(client: Any, prompt: str, data: dict, output_type: type[BaseModel], m
         raise
     except Exception as exc:
         # Não expor conteúdo pessoal ou chaves em erros de interface/logs.
+        # Erros da API/rede: o modelo não gerou resposta, então não contam no limite de uso.
         status = getattr(exc, "status_code", None)
+        # A OpenAI sinaliza saldo esgotado como 429 com code="insufficient_quota".
+        code = getattr(exc, "code", None)
         if status == 401:
             raise LLMServiceError("O serviço de IA não reconheceu a chave (401). "
-                                  "Confira se OPENAI_API_KEY é válida e não foi revogada.") from exc
-        if status == 402:
-            raise LLMServiceError("O serviço de IA recusou a chamada por falta de créditos (402). "
-                                  "Confira o saldo da conta usada em OPENAI_API_KEY.") from exc
+                                  "Confira se OPENAI_API_KEY é válida e não foi revogada.", charged=False) from exc
+        if status == 402 or code == "insufficient_quota":
+            raise LLMServiceError("O serviço de IA recusou a chamada por falta de créditos. "
+                                  "Confira o saldo da conta usada em OPENAI_API_KEY.", charged=False) from exc
         if status == 429:
-            raise LLMServiceError("Limite de uso do serviço de IA atingido (429). Aguarde um pouco e tente de novo.") from exc
-        raise LLMServiceError(f"Falha na chamada OpenAI ({type(exc).__name__}).") from exc
+            raise LLMServiceError("Limite de uso do serviço de IA atingido (429). Aguarde um pouco e tente de novo.",
+                                  charged=False) from exc
+        raise LLMServiceError(f"Falha na chamada OpenAI ({type(exc).__name__}).", charged=False) from exc
 
 
 def _rule_violation(exc: Exception) -> str:
@@ -146,7 +158,7 @@ def _compose_with_repair(llm: Any, prompt: str, data: dict, model: str | None,
             )
             validate(proposal)
             return proposal
-        except (ValueError, MatchingError) as exc:
+        except ValueError as exc:  # inclui MatchingError e ValidationError do pydantic
             reason = _rule_violation(exc)
             if attempt == SCRIPT_REPAIR_ATTEMPTS:
                 raise LLMServiceError(f"Roteiro gerado não atende às regras do SingMatch: {reason}") from exc
@@ -211,13 +223,17 @@ Retorne APENAS os campos do esquema estruturado recebido.
     all_labels = parsed.likes + parsed.vetoes
     if any(not _evidence_exists(input_text, item.evidence) for item in all_labels):
         raise LLMServiceError("O modelo apresentou evidência que não aparece no texto de entrada.")
-    profile = ProfileDraft(
-        likes=[PreferenceLabel(**label.model_dump(), origin="texto") for label in parsed.likes],
-        vetoes=[PreferenceLabel(**label.model_dump(), origin="texto") for label in parsed.vetoes],
-        preferred_format=parsed.preferred_format,
-        duet_allowed=parsed.duet_allowed,
-        questions=parsed.questions,
-    )
+    try:
+        profile = ProfileDraft(
+            likes=[PreferenceLabel(**label.model_dump(), origin="texto") for label in parsed.likes],
+            vetoes=[PreferenceLabel(**label.model_dump(), origin="texto") for label in parsed.vetoes],
+            preferred_format=parsed.preferred_format,
+            duet_allowed=parsed.duet_allowed,
+            questions=parsed.questions,
+        )
+    except ValidationError as exc:
+        # Ex.: evidência acima do tamanho máximo. Vira 502 em vez de erro 500.
+        raise LLMServiceError(f"Perfil interpretado fora do formato esperado: {_rule_violation(exc)}") from exc
     return profile
 
 
@@ -396,10 +412,28 @@ def compor_roteiro_misto(
             if ids:
                 duet_options[pair] = ids
     slots = _plan_mixed_slots(profiles, duet_options, songs)
+
+    def slot_ids(slot: list[str]) -> list[str]:
+        return duet_options[frozenset(slot)] if len(slot) == 2 else allowed[slot[0]]
+
+    # O plano com duplas precisa de um vídeo distinto por slot. eligible_candidates só
+    # garantiu isso para a rodada SÓ de solos. Enquanto as duplas não fecharem, desfaz a
+    # de menor afinidade (a última planejada), em vez de gastar duas chamadas da IA num
+    # roteiro impossível ou de descartar duetos que cabem.
+    while not assignment_possible({"|".join(slot): slot_ids(slot) for slot in slots}):
+        duets = [slot for slot in slots if len(slot) == 2]
+        if not duets:
+            break
+        slots.remove(duets[-1])
+        slots.extend([pid] for pid in duets[-1])
+    if all(len(slot) == 1 for slot in slots):
+        # Sem dueto viável: o fluxo solo tem regras de afinidade próprias e mais completas.
+        return compor_roteiro_solo(genre, intention, profiles, songs, versions,
+                                   previous_video_ids=previous_video_ids, client=client, model=model)
     slot_data = [{
         "participant_ids": slot,
         "format": "dueto" if len(slot) == 2 else "solo",
-        "allowed_karaoke_version_ids": duet_options[frozenset(slot)] if len(slot) == 2 else allowed[slot[0]],
+        "allowed_karaoke_version_ids": slot_ids(slot),
     } for slot in slots]
     used_ids = {vid for slot in slot_data for vid in slot["allowed_karaoke_version_ids"]}
     candidates = []

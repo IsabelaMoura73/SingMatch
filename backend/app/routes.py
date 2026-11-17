@@ -77,10 +77,19 @@ def _require_room_access(db: Session, session: SessionRow, token: str) -> None:
     raise HTTPException(status_code=403, detail="Token não pertence a esta sala.")
 
 
-def _require_not_playing(session: SessionRow) -> None:
-    """Durante a noite, mudar perfis derrubaria a aprovação no meio do player."""
+PROFILE_LOCKED = "A noite já começou: peça ao organizador para reabrir a sala antes de mudar o perfil."
+SCRIPT_LOCKED = "A noite já começou: reabra a sala antes de mudar o roteiro."
+
+
+def _require_not_playing(session: SessionRow, message: str = PROFILE_LOCKED) -> None:
+    """Durante a noite, mudar perfis ou roteiro derrubaria a aprovação no meio do player."""
     if session.status in {"playing", "finished"}:
-        raise conflict("A noite já começou: peça ao organizador para reabrir a sala antes de mudar o perfil.")
+        raise conflict(message)
+
+
+def _approved_and_current(script: ScriptRow | None, session: SessionRow) -> bool:
+    """Roteiro aprovado e feito com os perfis atuais da sala."""
+    return script is not None and script.approved and script.input_revision == session.revision
 
 
 def _public(session: SessionRow) -> SessionPublic:
@@ -170,8 +179,7 @@ def join_session(request: JoinSessionRequest, db: Session = DB):
     row = db.scalar(select(SessionRow).where(SessionRow.code == code).with_for_update())
     if not row:
         raise not_found("Código de sala não encontrado.")
-    if row.status in {"playing", "finished"}:
-        raise conflict("A noite já começou e a sala não recebe mais participantes. Peça ao organizador para reabrir.")
+    _require_not_playing(row, "A noite já começou e a sala não recebe mais participantes. Peça ao organizador para reabrir.")
     # "Ana " e "Ana" são a mesma pessoa; nome só com espaços não vale.
     name = " ".join(request.name.split())
     if not name:
@@ -215,8 +223,7 @@ def remove_participant(session_id: str, participant_id: str,
     """Organizador remove alguém da sala; o token removido perde o acesso na hora."""
     row = _session(db, session_id, lock=True)
     _require_host(row, token)
-    if row.status in {"playing", "finished"}:
-        raise conflict("Não é possível remover participantes depois que a noite começou.")
+    _require_not_playing(row, "Não é possível remover participantes depois que a noite começou.")
     participant = db.get(ParticipantRow, participant_id)
     if participant is None or participant.session_id != row.id:
         raise not_found("Participante não encontrado nesta sala.")
@@ -270,12 +277,17 @@ def interpret_preferences(participant_id: str, request: InterpretRequest,
     try:
         draft = interpretar_perfil(request.text, songs)
     except LLMServiceError as exc:
+        # Só devolve o uso se o modelo não chegou a responder (chave, créditos, rede).
+        if not exc.charged:
+            interpret_limit.refund(participant.id)
         raise HTTPException(status_code=502, detail=str(exc)) from exc
     # A IA roda SEM lock: não sobrescrever atualização feita enquanto respondia.
     db.expire_all()
     row = _session(db, session_id, lock=True)
     if row.revision != original_revision:
         raise conflict("A sala mudou durante a chamada da IA. Tente novamente.")
+    # O organizador pode ter aberto o player enquanto a IA respondia (start não muda a revisão).
+    _require_not_playing(row)
     participant = _participant(db, participant_id)
     participant.text = request.text
     participant.profile_draft = draft.model_dump(mode="json")
@@ -316,6 +328,7 @@ def confirm_profile(participant_id: str, request: ConfirmProfileRequest,
 def generate_script(session_id: str, db: Session = DB, token: str = BEARER):
     row = _session(db, session_id)
     _require_host(row, token)
+    _require_not_playing(row, SCRIPT_LOCKED)
     initial_revision = row.revision
     previous_script = _current_script(db, row.id)
 
@@ -345,11 +358,15 @@ def generate_script(session_id: str, db: Session = DB, token: str = BEARER):
         proposal = compose(row.genre, row.intention, profiles, songs, videos,
                            previous_video_ids=previous_video_ids)
     except LLMServiceError as exc:
+        # Só devolve o uso se o modelo não chegou a responder (chave, créditos, rede).
+        if not exc.charged:
+            script_limit.refund(row.id)
         raise HTTPException(status_code=502, detail=str(exc)) from exc
     db.expire_all()
     row = _session(db, session_id, lock=True)
     if row.revision != initial_revision:
         raise conflict("A sala mudou durante a geração; resposta antiga descartada.")
+    _require_not_playing(row, SCRIPT_LOCKED)
     # Revalidar na persistência para não confiar no modelo.
     _valid_script(proposal, profiles, row.genre, db)
     current = _current_script(db, row.id)
@@ -376,6 +393,7 @@ def edit_script(session_id: str, request: EditScriptRequest,
                 db: Session = DB, token: str = BEARER):
     row = _session(db, session_id, lock=True)
     _require_host(row, token)
+    _require_not_playing(row, SCRIPT_LOCKED)
     current = _current_script(db, row.id)
     if current is None:
         raise conflict("Gere um roteiro antes de editar.")
@@ -395,8 +413,7 @@ def start_night(session_id: str, db: Session = DB, token: str = BEARER):
     """Organizador abre o player: a sala fecha para entradas, remoções e mudanças de perfil."""
     row = _session(db, session_id, lock=True)
     _require_host(row, token)
-    current = _current_script(db, row.id)
-    if current is None or not current.approved or current.input_revision != row.revision:
+    if not _approved_and_current(_current_script(db, row.id), row):
         raise conflict("Aprove o roteiro atual antes de abrir o player.")
     row.status = "playing"
     db.commit()
@@ -409,9 +426,7 @@ def reopen_room(session_id: str, db: Session = DB, token: str = BEARER):
     row = _session(db, session_id, lock=True)
     _require_host(row, token)
     if row.status in {"playing", "finished"}:
-        current = _current_script(db, row.id)
-        approved = current is not None and current.approved and current.input_revision == row.revision
-        row.status = "ready" if approved else "lobby"
+        row.status = "ready" if _approved_and_current(_current_script(db, row.id), row) else "lobby"
         db.commit()
     return _state(db, row)
 
@@ -421,6 +436,7 @@ def approve_script(session_id: str, request: ApproveScriptRequest,
                    db: Session = DB, token: str = BEARER):
     row = _session(db, session_id, lock=True)
     _require_host(row, token)
+    _require_not_playing(row, SCRIPT_LOCKED)
     current = _current_script(db, row.id)
     if current is None:
         raise conflict("Não há roteiro para aprovar.")

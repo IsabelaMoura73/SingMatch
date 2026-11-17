@@ -138,12 +138,13 @@ def eligible_candidates(
         result[participant_id] = [v.id for v in eligible]
         if not result[participant_id]:
             raise MatchingError(f"Participante {participant_id}: nenhuma música elegível; revisar vetos.")
-    if not _assignment_possible(result):
+    if not assignment_possible(result):
         raise MatchingError("Sem solução: não há vídeos distintos suficientes para todos; revisar perfis.")
     return result
 
 
-def _assignment_possible(candidates: dict[str, list[str]]) -> bool:
+def assignment_possible(candidates: dict[str, list[str]]) -> bool:
+    """Cada chave consegue um vídeo distinto da sua lista? (emparelhamento bipartido)"""
     # Algoritmo de caminhos aumentantes, suficiente para o pequeno catálogo do MVP.
     ownership: dict[str, str] = {}
     def assign(person_id: str, visited: set[str]) -> bool:

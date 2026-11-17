@@ -387,6 +387,86 @@ def test_abrir_player_fecha_a_sala_e_reabrir_aceita_entradas(client):
     assert api.post("/api/join", json={"code": room["code"], "name": "Duda"}).status_code == 201
 
 
+def test_roteiro_nao_muda_com_o_player_aberto(client):
+    api, _ = client
+    room, host, _ = ready_room(api)
+    base = f"/api/sessions/{room['id']}"
+    script = api.post(f"{base}/script", headers=auth(host)).json()["script"]
+    assert api.post(f"{base}/script/approve", json={"expected_version": 1}, headers=auth(host)).status_code == 200
+    assert api.post(f"{base}/start", headers=auth(host)).status_code == 200
+
+    assert api.post(f"{base}/script", headers=auth(host)).status_code == 409
+    proposal = {"title": script["title"], "items": script["items"]}
+    assert api.put(f"{base}/script", json={"expected_version": 1, "proposal": proposal},
+                   headers=auth(host)).status_code == 409
+    assert api.post(f"{base}/script/approve", json={"expected_version": 1},
+                    headers=auth(host)).status_code == 409
+    state = api.get(base, headers=auth(host)).json()
+    assert state["session"]["status"] == "playing" and state["script"]["approved"] is True
+
+
+def test_interpretacao_em_andamento_nao_reabre_sala_que_comecou(client, monkeypatch):
+    """O organizador abre o player enquanto a IA interpreta o texto de alguém."""
+    api, _ = client
+    room, host, members = ready_room(api)
+    base = f"/api/sessions/{room['id']}"
+    api.post(f"{base}/script", headers=auth(host))
+    api.post(f"{base}/script/approve", json={"expected_version": 1}, headers=auth(host))
+
+    def profile_while_host_starts(text, songs):
+        assert api.post(f"{base}/start", headers=auth(host)).status_code == 200
+        return ProfileDraft()
+
+    monkeypatch.setattr(routes, "interpretar_perfil", profile_while_host_starts)
+    me = members[1]
+    late = api.post(f"/api/participants/{me['participant_id']}/interpret", json={"text": "Mudei de ideia"},
+                    headers=auth(me["participant_token"]))
+    assert late.status_code == 409
+    state = api.get(base, headers=auth(host)).json()
+    assert state["session"]["status"] == "playing" and state["script"]["approved"] is True
+
+
+@pytest.mark.parametrize("charged, segunda_tentativa", [(False, 200), (True, 429)])
+def test_limite_so_devolve_uso_quando_a_ia_nao_respondeu(client, monkeypatch, limites_zerados,
+                                                        charged, segunda_tentativa):
+    """Erro de rede/chave não gasta o limite; resposta do modelo recusada (já cobrada) gasta."""
+    from app.llm import LLMServiceError
+    api, _ = client
+    monkeypatch.setenv("SINGMATCH_MAX_INTERPRETACOES_HORA", "1")
+    room, _ = start_room(api)
+    me = join(api, room["code"], "Ana")
+    url = f"/api/participants/{me['participant_id']}/interpret"
+
+    def broken(text, songs):
+        raise LLMServiceError("Falha de teste.", charged=charged)
+
+    with monkeypatch.context() as patch:
+        patch.setattr(routes, "interpretar_perfil", broken)
+        assert api.post(url, json={"text": "Gosto de forró"}, headers=auth(me["participant_token"])).status_code == 502
+    again = api.post(url, json={"text": "Gosto de forró"}, headers=auth(me["participant_token"]))
+    assert again.status_code == segunda_tentativa
+
+
+def test_limite_esquece_chaves_sem_uso_recente():
+    from app.limits import HourlyLimit
+    limit = HourlyLimit("SINGMATCH_TESTE_INEXISTENTE", 2, "Limite.")
+    limit.hit("sala-antiga", now=0)
+    limit.hit("sala-nova", now=3600)
+    assert set(limit._hits) == {"sala-nova"}
+    limit.refund("sala-nova")
+    assert limit._hits == {}
+
+
+def test_limite_informa_minutos_restantes_sem_somar_um_a_mais():
+    from fastapi import HTTPException
+    from app.limits import HourlyLimit
+    limit = HourlyLimit("SINGMATCH_TESTE_INEXISTENTE", 1, "Limite.")
+    limit.hit("x", now=0)
+    with pytest.raises(HTTPException) as error:
+        limit.hit("x", now=3600 - 120)  # faltam exatamente 120 s
+    assert "2 min" in error.value.detail
+
+
 def test_limite_de_interpretacoes_por_hora(client, monkeypatch, limites_zerados):
     api, _ = client
     monkeypatch.setenv("SINGMATCH_MAX_INTERPRETACOES_HORA", "2")

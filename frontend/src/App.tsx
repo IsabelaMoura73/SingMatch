@@ -351,7 +351,13 @@ function App() {
     if (room.session.status === 'playing') { go('player'); return }
     const host = identity, hostToken = identity.hostToken
     await execute('start', async () => {
-      setRoom(await api.start(host.sessionId, hostToken))
+      try {
+        setRoom(await api.start(host.sessionId, hostToken))
+      } catch (err) {
+        // Sem fechar a sala, o player não abre (nem pelo endereço #player ou F5).
+        go('roteiro')
+        throw err
+      }
       go('player')
     })
   }
@@ -363,7 +369,7 @@ function App() {
       autoStartedFor.current = null  // voltar ao Player depois fecha a sala de novo
       // Na tela Player a sala fecharia de novo; na Sala o organizador acompanha quem chega.
       go('sala')
-      setMessage('Sala reaberta: quem chegar agora pode entrar (o roteiro precisará ser aprovado de novo). Depois, abra o player outra vez.')
+      setMessage('Sala reaberta: quem chegar agora pode entrar. O roteiro continua aprovado; se alguém entrar ou mudar o perfil, será preciso gerar e aprovar de novo. Depois, abra o player outra vez.')
     })
   }
 
@@ -450,7 +456,8 @@ function App() {
             {!room || (me && !ownLoaded) ? <div className="sm-card text-muted-foreground">Carregando informações da sala...</div> : <>
               <Steps screens={stepScreens} current={screen} available={available} onSelect={s => { if (s === 'player') void openPlayer(); else go(s) }} />
 
-              {playing && (screen === 'sala' || screen === 'player') && (
+              {/* Em todas as etapas: roteiro e perfil ficam travados, então o organizador precisa do botão aqui também. */}
+              {playing && (
                 <div className="sm-card flex flex-col gap-3 border-accent/40 sm:flex-row sm:items-center">
                   <p className="m-0 flex-1 text-sm text-muted-foreground">
                     <strong className="text-accent">A noite começou.</strong>{' '}

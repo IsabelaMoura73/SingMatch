@@ -129,8 +129,8 @@ export function ParticipantsCard({ participants, meId, hostParticipantId, onRefr
               ) : (
                 <span className="flex shrink-0 items-center gap-2">
                   {person.profile_confirmed
-                    ? <span className="sm-chip bg-neon/15 text-neon"><Check className="h-3 w-3" aria-hidden="true" />CONFIRMADO</span>
-                    : <span className="sm-chip bg-muted text-muted-foreground"><Clock className="h-3 w-3" aria-hidden="true" />EDITANDO...</span>}
+                    ? <span className="sm-chip bg-neon/15 text-neon uppercase"><Check className="h-3 w-3" aria-hidden="true" />confirmado</span>
+                    : <span className="sm-chip bg-muted text-muted-foreground uppercase"><Clock className="h-3 w-3" aria-hidden="true" />editando…</span>}
                   {onRemove && (
                     <button type="button" disabled={busy} onClick={() => setConfirmingId(person.id)}
                       aria-label={`Remover ${person.name} da sala`} title="Remover da sala"

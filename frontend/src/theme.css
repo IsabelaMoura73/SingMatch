@@ -66,8 +66,11 @@
 }
 
 @layer base {
+  /* Só a cor/espessura vale para todos; reservar a calha (gutter) em todo elemento
+     abria uma faixa vazia em caixas overflow-hidden, como o vídeo do player. */
   * { @apply sm-scrollbar; }
   html {
+    scrollbar-gutter: stable;
     /* 15px mantém a escala usada desde o início da migração. */
     font-size: 15px;
     background: var(--background);
@@ -100,7 +103,6 @@
 @utility sm-scrollbar {
   scrollbar-width: thin;
   scrollbar-color: color-mix(in oklab, var(--primary) 30%, var(--muted-foreground)) transparent;
-  scrollbar-gutter: stable;
 
   &::-webkit-scrollbar { width: 6px; height: 6px; }
   &::-webkit-scrollbar-track { background: transparent; }

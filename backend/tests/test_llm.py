@@ -288,7 +288,8 @@ def test_mixed_script_rejects_duet_without_bilateral_consent(catalog):
     fake = FakeClient({"title": "Roteiro inválido", "items": [
         {"position": 1, "karaoke_version_id": "KAR-FOR-001", "participant_ids": ["A", "B"], "justification": "X."},
     ]})
-    with pytest.raises(LLMServiceError, match="consentimento explícito"):
+    # Sem consentimento dos dois não há dupla: a rodada segue o fluxo solo, que recusa o dueto.
+    with pytest.raises(LLMServiceError, match="SOLO"):
         compor_roteiro_misto("forro", "", ps, songs, versions, client=fake)
 
 
@@ -421,6 +422,68 @@ def test_roteiro_misto_recusa_separar_a_dupla_planejada(catalog):
     ]}
     with pytest.raises(LLMServiceError, match="slots"):
         compor_roteiro_misto("forro", "", ps, songs, versions, client=SequenceClient(only_solos, only_solos))
+
+
+def test_saldo_esgotado_da_openai_tem_mensagem_propria_e_nao_conta_uso():
+    from app.llm import _parse
+
+    class NoQuota(Exception):
+        status_code, code = 429, "insufficient_quota"
+
+    class Client:
+        responses = SimpleNamespace(parse=lambda **kw: (_ for _ in ()).throw(NoQuota()))
+
+    with pytest.raises(LLMServiceError, match="falta de créditos") as error:
+        _parse(Client(), "p", {}, _ScriptOut, "m")
+    assert error.value.charged is False
+
+
+def test_perfil_com_evidencia_longa_demais_vira_erro_de_ia(catalog):
+    songs, _ = catalog
+    text = "Gosto de forró. " + "a" * 600
+    fake = FakeClient({"likes": [{"category": "genre", "value": "forro", "evidence": text}],
+                       "vetoes": [], "preferred_format": "indiferente", "duet_allowed": None, "questions": []})
+    with pytest.raises(LLMServiceError, match="fora do formato"):
+        interpretar_perfil(text, songs, client=fake)
+
+
+def test_roteiro_misto_volta_para_solos_quando_as_duplas_nao_fecham(catalog):
+    """A dupla e a pessoa solo só têm a MESMA música: o plano com dueto é impossível."""
+    songs, versions = catalog
+    versions = [v for v in versions if v.id in {"KAR-FOR-001", "KAR-FOR-002", "KAR-FOR-004"}]
+    veto = lambda title: {"category": "song", "value": title, "evidence": title}
+    ps = {
+        "A": ProfileConfirmed(duet_allowed=True),
+        "B": ProfileConfirmed(duet_allowed=True),
+        # C só pode cantar "Eu Só Quero um Xodó" (KAR-FOR-002), a única música de dueto.
+        "C": ProfileConfirmed(vetoes=[veto("Asa Branca"), veto("O Xote das Meninas")]),
+    }
+    fake = FakeClient({"title": "Só solos", "items": [
+        {"position": 1, "karaoke_version_id": "KAR-FOR-001", "participant_ids": ["A"], "justification": "Solo."},
+        {"position": 2, "karaoke_version_id": "KAR-FOR-004", "participant_ids": ["B"], "justification": "Solo."},
+        {"position": 3, "karaoke_version_id": "KAR-FOR-002", "participant_ids": ["C"], "justification": "Solo."},
+    ]})
+    proposal = compor_roteiro_misto("forro", "", ps, songs, versions, client=fake)
+    assert all(len(item.participant_ids) == 1 for item in proposal.items)
+    data = json.loads(fake.requests[0]["input"])
+    # Sem dueto viável, usa o fluxo solo (com suas regras de afinidade).
+    assert "slots" not in data and data["required_participant_ids"] == ["A", "B", "C"]
+    assert len(fake.requests) == 1  # nenhuma chamada gasta num plano impossível
+
+
+def test_roteiro_misto_desfaz_so_a_dupla_que_nao_cabe(catalog):
+    """Duas duplas disputam a única música de dueto: fica uma dupla e dois solos."""
+    songs, versions = catalog
+    songs = [song.model_copy(update={"duet_possible": song.id == "FOR-002"}) for song in songs]
+    ps = {pid: ProfileConfirmed(duet_allowed=True) for pid in ("A", "B", "C", "D")}
+    fake = FakeClient({"title": "Misto", "items": [
+        {"position": 1, "karaoke_version_id": "KAR-FOR-002", "participant_ids": ["A", "B"], "justification": "Dueto."},
+        {"position": 2, "karaoke_version_id": "KAR-FOR-001", "participant_ids": ["C"], "justification": "Solo."},
+        {"position": 3, "karaoke_version_id": "KAR-FOR-004", "participant_ids": ["D"], "justification": "Solo."},
+    ]})
+    compor_roteiro_misto("forro", "", ps, songs, versions, client=fake)
+    data = json.loads(fake.requests[0]["input"])
+    assert [slot["participant_ids"] for slot in data["slots"]] == [["A", "B"], ["C"], ["D"]]
 
 
 def test_planejamento_forma_par_por_afinidade_e_deixa_quem_sobra_solo(catalog):
