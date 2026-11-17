@@ -280,7 +280,7 @@
       "genre": "forro",
       "energy": 3,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -358,7 +358,7 @@
       "genre": "forro",
       "energy": 3,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -384,7 +384,7 @@
       "genre": "forro",
       "energy": 3,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -410,7 +410,7 @@
       "genre": "forro",
       "energy": 3,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -462,7 +462,7 @@
       "genre": "forro",
       "energy": 3,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -488,7 +488,7 @@
       "genre": "forro",
       "energy": 2,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -514,7 +514,7 @@
       "genre": "forro",
       "energy": 3,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -540,7 +540,7 @@
       "genre": "forro",
       "energy": 3,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -856,7 +856,7 @@
       "genre": "forro",
       "energy": 4,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -918,7 +918,7 @@
       "genre": "forro",
       "energy": 4,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -980,7 +980,7 @@
       "genre": "forro",
       "energy": 3,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -1352,7 +1352,7 @@
       "genre": "forro",
       "energy": 4,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -1446,7 +1446,7 @@
       "genre": "forro",
       "energy": 3,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -1477,7 +1477,7 @@
       "genre": "forro",
       "energy": 4,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -1913,7 +1913,7 @@
       "genre": "forro",
       "energy": 3,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -1939,7 +1939,7 @@
       "genre": "forro",
       "energy": 3,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -1965,7 +1965,7 @@
       "genre": "forro",
       "energy": 2,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -2069,7 +2069,7 @@
       "genre": "forro",
       "energy": 3,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -2199,7 +2199,7 @@
       "genre": "forro",
       "energy": 3,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -2329,7 +2329,7 @@
       "genre": "forro",
       "energy": 3,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -2355,7 +2355,7 @@
       "genre": "forro",
       "energy": 3,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -2381,7 +2381,7 @@
       "genre": "forro",
       "energy": 3,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -2407,7 +2407,7 @@
       "genre": "forro",
       "energy": 3,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -2433,7 +2433,7 @@
       "genre": "forro",
       "energy": 3,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -2485,7 +2485,7 @@
       "genre": "forro",
       "energy": 3,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -2641,7 +2641,7 @@
       "genre": "forro",
       "energy": 3,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -2693,7 +2693,7 @@
       "genre": "forro",
       "energy": 4,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -2771,7 +2771,7 @@
       "genre": "forro",
       "energy": 3,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -2797,7 +2797,7 @@
       "genre": "forro",
       "energy": 3,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -2875,7 +2875,7 @@
       "genre": "forro",
       "energy": 3,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -2927,7 +2927,7 @@
       "genre": "forro",
       "energy": 2,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -2953,7 +2953,7 @@
       "genre": "forro",
       "energy": 4,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -2979,7 +2979,7 @@
       "genre": "forro",
       "energy": 3,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -3005,7 +3005,7 @@
       "genre": "forro",
       "energy": 2,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -3031,7 +3031,7 @@
       "genre": "forro",
       "energy": 4,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -3057,7 +3057,7 @@
       "genre": "forro",
       "energy": 3,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -3291,7 +3291,7 @@
       "genre": "forro",
       "energy": 3,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -3317,7 +3317,7 @@
       "genre": "forro",
       "energy": 4,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -3369,7 +3369,7 @@
       "genre": "forro",
       "energy": 3,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -3395,7 +3395,7 @@
       "genre": "forro",
       "energy": 3,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -3447,7 +3447,7 @@
       "genre": "forro",
       "energy": 4,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -3473,7 +3473,7 @@
       "genre": "forro",
       "energy": 3,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -3499,7 +3499,7 @@
       "genre": "forro",
       "energy": 4,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -3883,7 +3883,7 @@
       "genre": "forro",
       "energy": 3,
       "mood": "sofrida",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -3945,7 +3945,7 @@
       "genre": "forro",
       "energy": 4,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -3976,7 +3976,7 @@
       "genre": "forro",
       "energy": 3,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -4193,7 +4193,7 @@
       "genre": "forro",
       "energy": 3,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",
@@ -4317,7 +4317,7 @@
       "genre": "forro",
       "energy": 4,
       "mood": "romantica",
-      "duet_possible": false,
+      "duet_possible": true,
       "tags": [
         {
           "attribute": "clima",

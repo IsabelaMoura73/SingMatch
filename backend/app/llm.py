@@ -300,11 +300,12 @@ def compor_roteiro_misto(
     songs: Sequence[Song],
     versions: Sequence[KaraokeVersion],
     *,
+    previous_video_ids: Sequence[str] = (),
     client: Any | None = None,
     model: str | None = None,
 ) -> ScriptProposal:
     """Gera uma rodada solo/mista; duetos apenas por consentimento bilateral validado."""
-    allowed = eligible_candidates(genre, profiles, songs, versions)
+    allowed = eligible_candidates(genre, profiles, songs, versions, previous_video_ids=previous_video_ids)
     duet_pairs = duet_eligible_pairs(profiles, songs, versions)
     songs_by_id = {song.id: song for song in songs}
     candidates = []
