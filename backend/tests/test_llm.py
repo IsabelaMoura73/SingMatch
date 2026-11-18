@@ -498,3 +498,107 @@ def test_planejamento_forma_par_por_afinidade_e_deixa_quem_sobra_solo(catalog):
     songs = [song.model_copy(update={"duet_possible": True}) for song in songs]
     options = {frozenset(p): ["X"] for p in (("A", "B"), ("A", "C"), ("B", "C"))}
     assert _plan_mixed_slots(ps, options, songs) == [["A", "C"], ["B"]]
+
+
+def test_roteiro_usa_orcamento_maior_de_tokens():
+    from app.llm import _parse, _ScriptOut, SCRIPT_MAX_OUTPUT_TOKENS
+
+    class Client:
+        def __init__(self):
+            self.calls = []
+            self.responses = SimpleNamespace(parse=self.parse)
+
+        def parse(self, **kwargs):
+            self.calls.append(kwargs)
+            return SimpleNamespace(
+                status="completed",
+                output_parsed={"title": "Teste", "items": []},
+            )
+
+    client = Client()
+    result = _parse(client, "prompt", {}, _ScriptOut, "gpt-4o-mini")
+
+    assert result.title == "Teste"
+    assert client.calls[0]["max_output_tokens"] == SCRIPT_MAX_OUTPUT_TOKENS
+    assert client.calls[0]["max_output_tokens"] == 8000
+
+
+def test_resposta_incompleta_informa_limite_de_tokens():
+    from app.llm import _parse, _ScriptOut
+
+    class Client:
+        responses = SimpleNamespace(
+            parse=lambda **kwargs: SimpleNamespace(
+                status="incomplete",
+                incomplete_details=SimpleNamespace(
+                    reason="max_output_tokens"
+                ),
+                output_parsed=None,
+            )
+        )
+
+    with pytest.raises(
+        LLMServiceError,
+        match="limite de tokens",
+    ) as error:
+        _parse(Client(), "prompt", {}, _ScriptOut, "gpt-4o-mini")
+
+    assert error.value.charged is True
+
+
+def test_compact_candidates_reduz_listas_de_12_participantes():
+    from app.llm import _compact_candidates
+    from app.matching import assignment_possible
+
+    original = {
+        f"P{i}": [f"VIDEO-{j}" for j in range(90)]
+        for i in range(12)
+    }
+
+    compact = _compact_candidates(original)
+
+    assert len(compact) == 12
+
+    # Cada apresentação recebe inicialmente 12 opções.
+    assert all(len(ids) == 12 for ids in compact.values())
+
+    # Ainda é possível atribuir um vídeo diferente a cada uma.
+    assert assignment_possible(compact)
+
+    # O conjunto enviado é menor que o original.
+    assert sum(map(len, compact.values())) == 144
+    assert sum(map(len, original.values())) == 1080
+
+
+def test_compact_candidates_expande_quando_necessario():
+    from app.llm import _compact_candidates
+    from app.matching import assignment_possible
+
+    # 13 pessoas disputam as mesmas 13 músicas.
+    # Se limitarmos a 12, uma pessoa ficaria sem música.
+    original = {
+        f"P{i}": [f"VIDEO-{j}" for j in range(13)]
+        for i in range(13)
+    }
+
+    compact = _compact_candidates(original)
+
+    # O algoritmo precisa ampliar as listas.
+    assert all(len(ids) == 13 for ids in compact.values())
+    assert assignment_possible(compact)
+
+
+def test_compact_candidates_preserva_opcoes_restritas():
+    from app.llm import _compact_candidates
+    from app.matching import assignment_possible
+
+    original = {
+        "Ana": ["VIDEO-1"],
+        "Bruno": ["VIDEO-1", "VIDEO-2"],
+        "Cris": ["VIDEO-2", "VIDEO-3"],
+    }
+
+    compact = _compact_candidates(original)
+
+    assert compact == original
+    assert assignment_possible(compact)

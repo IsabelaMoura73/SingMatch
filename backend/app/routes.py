@@ -17,7 +17,7 @@ from app.api_schemas import CatalogResponse, ParticipantPrivate, ScriptResponse,
 from app.catalog import get_catalog, get_lyrics
 from app.database import get_db
 from app.limits import MAX_LIKES, MAX_QUESTIONS, MAX_VETOES, interpret_limit, script_limit
-from app.llm import LLMServiceError, compor_roteiro_misto, compor_roteiro_solo, interpretar_perfil
+from app.llm import LLMServiceError, compor_roteiro_misto, compor_roteiro_solo, compor_roteiro_reserva, interpretar_perfil
 from app.matching import MatchingError, duet_eligible_pairs, eligible_candidates, norm, validate_mixed_script
 from app.models import ParticipantRow, ScriptRow, SessionRow
 from app.schemas import (
@@ -261,39 +261,73 @@ def get_own_profile(participant_id: str, db: Session = DB, token: str = BEARER):
                               if participant.profile_confirmed else None)
 
 
+
 @router.post("/participants/{participant_id}/interpret", response_model=InterpretResponse)
 def interpret_preferences(participant_id: str, request: InterpretRequest,
                           db: Session = DB, token: str = BEARER):
     participant = _participant(db, participant_id)
     _require_owner(participant, token)
+
     session_id = participant.session_id
+
+    # Guardar apenas o estado DESTE participante.
+    # Mudanças em outras pessoas não devem invalidar a interpretação.
+    original_text = participant.text
+    original_draft = participant.profile_draft
+    original_confirmed = participant.profile_confirmed
+
     row = _session(db, session_id)
-    original_revision = row.revision
     _require_not_playing(row)
+
     songs, _ = get_catalog(db, row.genre)
     if not songs:
-        raise conflict("Catálogo vazio. Execute a importação antes de interpretar perfis.")
+        raise conflict(
+            "Catálogo vazio. Execute a importação antes de interpretar perfis."
+        )
+
     interpret_limit.hit(participant.id)
+
     try:
         draft = interpretar_perfil(request.text, songs)
     except LLMServiceError as exc:
-        # Só devolve o uso se o modelo não chegou a responder (chave, créditos, rede).
         if not exc.charged:
             interpret_limit.refund(participant.id)
         raise HTTPException(status_code=502, detail=str(exc)) from exc
-    # A IA roda SEM lock: não sobrescrever atualização feita enquanto respondia.
+
+    # Reconsultar o banco depois da IA.
+    # O bloqueio da sala serializa as alterações persistidas.
     db.expire_all()
     row = _session(db, session_id, lock=True)
-    if row.revision != original_revision:
-        raise conflict("A sala mudou durante a chamada da IA. Tente novamente.")
-    # O organizador pode ter aberto o player enquanto a IA respondia (start não muda a revisão).
+
+    # Não permitir alterações depois que a apresentação começou.
     _require_not_playing(row)
+
+    # O participante pode ter sido removido durante a chamada.
     participant = _participant(db, participant_id)
+    _require_owner(participant, token)
+
+    if participant.session_id != session_id:
+        raise not_found("Participante não pertence mais a esta sala.")
+
+    # Só existe conflito se o PRÓPRIO perfil mudou.
+    # Isso impede uma resposta antiga de sobrescrever outra mais recente.
+    if (
+        participant.text != original_text
+        or participant.profile_draft != original_draft
+        or participant.profile_confirmed != original_confirmed
+    ):
+        raise conflict(
+            "Seu perfil foi alterado em outra aba enquanto a IA trabalhava. "
+            "Confira o perfil mais recente antes de tentar novamente."
+        )
+
     participant.text = request.text
     participant.profile_draft = draft.model_dump(mode="json")
     participant.profile_confirmed = None
+
     _invalidate(db, row)
     db.commit()
+
     return InterpretResponse(draft=draft)
 
 
@@ -358,10 +392,32 @@ def generate_script(session_id: str, db: Session = DB, token: str = BEARER):
         proposal = compose(row.genre, row.intention, profiles, songs, videos,
                            previous_video_ids=previous_video_ids)
     except LLMServiceError as exc:
-        # Só devolve o uso se o modelo não chegou a responder (chave, créditos, rede).
-        if not exc.charged:
-            script_limit.refund(row.id)
-        raise HTTPException(status_code=502, detail=str(exc)) from exc
+        # Erros de autenticação, créditos, rede e demais falhas
+        # não recuperáveis continuam sendo informados.
+        if not exc.recoverable:
+            if not exc.charged:
+                script_limit.refund(row.id)
+
+            raise HTTPException(
+                status_code=502,
+                detail=str(exc),
+            ) from exc
+
+        # A resposta da IA ficou incompleta ou inválida.
+        # Montar um roteiro alternativo usando o catálogo real.
+        try:
+            proposal = compor_roteiro_reserva(
+                row.genre,
+                profiles,
+                songs,
+                videos,
+                previous_video_ids=previous_video_ids,
+            )
+        except MatchingError as fallback_exc:
+            raise conflict(
+                f"Não foi possível montar o roteiro de reserva: "
+                f"{fallback_exc}"
+            ) from fallback_exc
     db.expire_all()
     row = _session(db, session_id, lock=True)
     if row.revision != initial_revision:
