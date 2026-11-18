@@ -27,7 +27,7 @@ export type ScriptItem = {
   karaoke_version_id: string
   participant_ids: string[]
   justification: string | null
-  origin: 'ia' | 'manual'
+  origin: 'ia' | 'manual' | 'automatico'
 }
 export type ScriptProposal = { title: string; items: ScriptItem[] }
 export type Script = ScriptProposal & {
