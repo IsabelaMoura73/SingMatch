@@ -518,3 +518,220 @@ def test_janela_do_limite_libera_depois_de_uma_hora():
         limit.hit("x", now=20)
     assert error.value.status_code == 429
     limit.hit("x", now=3600)  # o primeiro uso saiu da janela
+
+
+def test_interpretacao_nao_falha_quando_outra_pessoa_entra(
+    client, monkeypatch
+):
+    api, _ = client
+
+    room, host = start_room(api)
+    ana = join(api, room["code"], "Ana")
+
+    def interpretar_enquanto_outra_pessoa_entra(text, songs):
+        # Simula alguém entrando enquanto a OpenAI processa.
+        join(api, room["code"], "Bruno")
+        return ProfileDraft()
+
+    monkeypatch.setattr(
+        routes,
+        "interpretar_perfil",
+        interpretar_enquanto_outra_pessoa_entra,
+    )
+
+    response = api.post(
+        f"/api/participants/{ana['participant_id']}/interpret",
+        json={"text": "Gosto de forró"},
+        headers=auth(ana["participant_token"]),
+    )
+
+    assert response.status_code == 200, response.text
+
+    profile = api.get(
+        f"/api/participants/{ana['participant_id']}/profile",
+        headers=auth(ana["participant_token"]),
+    )
+
+    assert profile.status_code == 200
+    assert profile.json()["text"] == "Gosto de forró"
+    assert profile.json()["draft"] is not None
+
+    state = api.get(
+        f"/api/sessions/{room['id']}",
+        headers=auth(host),
+    )
+
+    assert state.status_code == 200
+    assert len(state.json()["participants"]) == 2
+
+
+def test_roteiro_reserva_quando_ia_falha(client, monkeypatch):
+    api, _ = client
+
+    # Sala com três participantes, incluindo pessoas que aceitam dueto.
+    room, host, members = duet_room(api, (True, True, False))
+
+    def falha_recuperavel(*args, **kwargs):
+        raise routes.LLMServiceError(
+            "A IA atingiu o limite de tokens.",
+            recoverable=True,
+        )
+
+    monkeypatch.setattr(
+        routes, "compor_roteiro_solo", falha_recuperavel
+    )
+    monkeypatch.setattr(
+        routes, "compor_roteiro_misto", falha_recuperavel
+    )
+
+    response = api.post(
+        f"/api/sessions/{room['id']}/script",
+        headers=auth(host),
+    )
+
+    assert response.status_code == 201, response.text
+
+    script = response.json()["script"]
+    items = script["items"]
+
+    assert script["approved"] is False
+    assert len(items) == len(members)
+    assert all(item["origin"] == "automatico" for item in items)
+    assert all(len(item["participant_ids"]) == 1 for item in items)
+
+    # Cada pessoa aparece uma vez.
+    actual = [
+        pid for item in items
+        for pid in item["participant_ids"]
+    ]
+
+    expected = [m["participant_id"] for m in members]
+
+    assert set(actual) == set(expected)
+    assert len(actual) == len(set(actual))
+
+    # As músicas não se repetem dentro do roteiro.
+    videos = [item["karaoke_version_id"] for item in items]
+    assert len(videos) == len(set(videos))
+
+    # Mesmo o roteiro automático exige aprovação explícita.
+    approved = api.post(
+        f"/api/sessions/{room['id']}/script/approve",
+        json={"expected_version": script["version"]},
+        headers=auth(host),
+    )
+
+    assert approved.status_code == 200, approved.text
+
+
+def test_roteiro_nao_esconde_erro_de_credenciais(
+    client, monkeypatch
+):
+    api, _ = client
+    room, host, members = ready_room(api)
+
+    def erro_de_credenciais(*args, **kwargs):
+        raise routes.LLMServiceError(
+            "Chave da OpenAI inválida.",
+            charged=False,
+        )
+
+    monkeypatch.setattr(
+        routes, "compor_roteiro_solo", erro_de_credenciais
+    )
+
+    response = api.post(
+        f"/api/sessions/{room['id']}/script",
+        headers=auth(host),
+    )
+
+    assert response.status_code == 502
+    assert "Chave da OpenAI inválida" in response.json()["detail"]
+
+
+def test_12_participantes_com_roteiro_reserva(client, monkeypatch):
+    from scripts.import_catalog import EXPANDED
+
+    api, engine = client
+
+    # O fixture já carrega as 5 músicas do piloto.
+    # Adicionar o catálogo ampliado neste teste.
+    with Session(engine) as db:
+        seed_catalog(db, path=EXPANDED)
+        db.commit()
+
+    room, host = start_room(api)
+
+    # Criar e confirmar 12 participantes.
+    members = [
+        join(api, room["code"], f"Pessoa {i:02d}")
+        for i in range(1, 13)
+    ]
+
+    for i, member in enumerate(members):
+        confirm(
+            api,
+            member["participant_id"],
+            member["participant_token"],
+            duet_allowed=(i % 2 == 0),
+        )
+
+    # Simular a IA falhando por resposta incompleta.
+    def falha_da_ia(*args, **kwargs):
+        raise routes.LLMServiceError(
+            "A IA atingiu o limite de tokens.",
+            recoverable=True,
+        )
+
+    monkeypatch.setattr(
+        routes, "compor_roteiro_solo", falha_da_ia
+    )
+    monkeypatch.setattr(
+        routes, "compor_roteiro_misto", falha_da_ia
+    )
+
+    response = api.post(
+        f"/api/sessions/{room['id']}/script",
+        headers=auth(host),
+    )
+
+    assert response.status_code == 201, response.text
+
+    script = response.json()["script"]
+    items = script["items"]
+
+    # O fallback deve atender as 12 pessoas.
+    assert len(items) == 12
+    assert all(item["origin"] == "automatico" for item in items)
+    assert all(len(item["participant_ids"]) == 1 for item in items)
+
+    participant_ids = [
+        pid
+        for item in items
+        for pid in item["participant_ids"]
+    ]
+    video_ids = [
+        item["karaoke_version_id"]
+        for item in items
+    ]
+
+    assert len(set(participant_ids)) == 12
+    assert set(participant_ids) == {
+        member["participant_id"] for member in members
+    }
+    assert len(set(video_ids)) == 12
+
+    # O organizador ainda precisa aprovar o roteiro.
+    approved = api.post(
+        f"/api/sessions/{room['id']}/script/approve",
+        json={"expected_version": script["version"]},
+        headers=auth(host),
+    )
+    assert approved.status_code == 200, approved.text
+
+    # A apresentação pode começar normalmente.
+    started = api.post(
+        f"/api/sessions/{room['id']}/start",
+        headers=auth(host),
+    )
+    assert started.status_code == 200, started.text

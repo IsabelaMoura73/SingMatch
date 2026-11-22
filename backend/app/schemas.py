@@ -156,7 +156,7 @@ class ScriptItem(ContractModel):
     karaoke_version_id: str = Field(min_length=1)
     participant_ids: list[str] = Field(min_length=1, max_length=2)
     justification: str | None = Field(default=None, max_length=500)
-    origin: Literal["ia", "manual"] = "ia"
+    origin: Literal["ia", "manual", "automatico"] = "ia"
 
     @field_validator("participant_ids")
     @classmethod

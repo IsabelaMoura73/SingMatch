@@ -171,7 +171,11 @@ function ScriptRow({ item, index, personName, lookup }: {
             {item.participant_ids.length === 2 && <DuetChip />}
             <EnergyBar level={song?.energy ?? null} />
             <span className={`sm-chip ${item.origin === 'ia' ? 'bg-primary/15 text-primary' : 'bg-secondary text-secondary-foreground'}`}>
-              {item.origin === 'ia' ? '✧ IA' : 'Manual'}
+              {item.origin === 'ia'
+                ? '✧ IA'
+                : item.origin === 'automatico'
+                  ? 'Automático'
+                  : 'Manual'}
             </span>
           </span>
         </div>

@@ -32,9 +32,16 @@ PROFILE_PROMPT_VERSION = "perfil-v1-2026-11-03"
 SCRIPT_PROMPT_VERSION = "roteiro-solo-v3-reparo-2026-11-16"
 # Novas tentativas quando o roteiro gerado quebra uma regra (não vale para erro de API).
 SCRIPT_REPAIR_ATTEMPTS = 1
+
+SCRIPT_CANDIDATES_PER_SLOT = 12
+SCRIPT_CANDIDATE_EXPANSION_STEP = 4
+
 MIXED_SCRIPT_PROMPT_VERSION = "roteiro-misto-v3-slots-2026-11-16"
 # Mesmo modelo de produção (docs/ETAPA6_PUBLICACAO.md); OPENAI_MODEL no ambiente tem prioridade.
 DEFAULT_MODEL = "gpt-4o-mini"
+
+PROFILE_MAX_OUTPUT_TOKENS = 3500
+SCRIPT_MAX_OUTPUT_TOKENS = 8000
 
 
 class LLMServiceError(RuntimeError):
@@ -44,9 +51,16 @@ class LLMServiceError(RuntimeError):
     chave, créditos, limite ou rede): só nesses casos o limite de uso é devolvido.
     """
 
-    def __init__(self, message: str, *, charged: bool = True):
+    def __init__(
+        self,
+        message: str,
+        *,
+        charged: bool = True,
+        recoverable: bool = False,
+    ):
         super().__init__(message)
         self.charged = charged
+        self.recoverable = recoverable
 
 
 # Modelos de transferência restritos ao subconjunto simples de JSON Schema
@@ -101,10 +115,36 @@ def _parse(client: Any, prompt: str, data: dict, output_type: type[BaseModel], m
             input=json.dumps(data, ensure_ascii=False),
             text_format=output_type,
             store=False,
-            max_output_tokens=3500,
+            max_output_tokens=(
+                SCRIPT_MAX_OUTPUT_TOKENS
+                if output_type is _ScriptOut
+                else PROFILE_MAX_OUTPUT_TOKENS
+            ),
         )
-        if getattr(response, "status", "completed") != "completed":
-            raise LLMServiceError("Resposta incompleta; tente novamente.")
+
+        response_status = getattr(response, "status", "completed")
+
+        if response_status != "completed":
+            details = getattr(response, "incomplete_details", None)
+            reason = getattr(details, "reason", None)
+
+            if reason == "max_output_tokens":
+                raise LLMServiceError(
+                    "A IA atingiu o limite de tokens de saída "
+                    "antes de concluir o roteiro.",
+                    recoverable=(output_type is _ScriptOut),
+                )
+
+            if reason == "content_filter":
+                raise LLMServiceError(
+                    "A resposta da IA foi interrompida por uma "
+                    "restrição de conteúdo."
+                )
+
+            raise LLMServiceError(
+                f"A IA não concluiu a resposta (status: {response_status}; "
+                f"motivo: {reason or 'não informado'})."
+            )
         parsed = getattr(response, "output_parsed", None)
         if parsed is None:
             raise LLMServiceError("O modelo não devolveu resposta estruturada; pode ser recusa ou falha.")
@@ -117,6 +157,16 @@ def _parse(client: Any, prompt: str, data: dict, output_type: type[BaseModel], m
         status = getattr(exc, "status_code", None)
         # A OpenAI sinaliza saldo esgotado como 429 com code="insufficient_quota".
         code = getattr(exc, "code", None)
+
+        if output_type is _ScriptOut and (
+            isinstance(exc, (ValidationError, json.JSONDecodeError))
+            or type(exc).__name__ == "LengthFinishReasonError"
+        ):
+            raise LLMServiceError(
+                "A IA não conseguiu produzir uma resposta estruturada completa.",
+                recoverable=True,
+            ) from exc
+
         if status == 401:
             raise LLMServiceError("O serviço de IA não reconheceu a chave (401). "
                                   "Confira se OPENAI_API_KEY é válida e não foi revogada.", charged=False) from exc
@@ -161,10 +211,52 @@ def _compose_with_repair(llm: Any, prompt: str, data: dict, model: str | None,
         except ValueError as exc:  # inclui MatchingError e ValidationError do pydantic
             reason = _rule_violation(exc)
             if attempt == SCRIPT_REPAIR_ATTEMPTS:
-                raise LLMServiceError(f"Roteiro gerado não atende às regras do SingMatch: {reason}") from exc
+                raise LLMServiceError(
+                    f"Roteiro gerado não atende às regras do SingMatch: {reason}",
+                    recoverable=True,
+                ) from exc
             # O modelo recebe só o motivo da recusa (sem a resposta anterior inteira).
             data = {**data, "previous_attempt_rejected_because": reason}
     raise AssertionError("inalcançável")
+
+
+def _compact_candidates(
+    candidates: dict[str, list[str]],
+) -> dict[str, list[str]]:
+    """Reduz os candidatos enviados à IA sem perder a viabilidade.
+
+    As listas já chegam ordenadas por afinidade e diversidade.
+
+    Começa com até 12 vídeos por apresentação. Se isso não
+    permitir atribuir vídeos distintos a todas as apresentações,
+    expande as listas de quatro em quatro até encontrar uma
+    solução viável.
+    """
+    if not candidates:
+        return {}
+
+    max_available = max(len(ids) for ids in candidates.values())
+    limit = min(SCRIPT_CANDIDATES_PER_SLOT, max_available)
+
+    while True:
+        compact = {
+            slot: ids[:limit]
+            for slot, ids in candidates.items()
+        }
+
+        if assignment_possible(compact):
+            return compact
+
+        if limit >= max_available:
+            raise MatchingError(
+                "Não há vídeos distintos suficientes para "
+                "todas as apresentações."
+            )
+
+        limit = min(
+            max_available,
+            limit + SCRIPT_CANDIDATE_EXPANSION_STEP,
+        )
 
 
 def _normalize_text(value: str) -> str:
@@ -237,6 +329,91 @@ Retorne APENAS os campos do esquema estruturado recebido.
     return profile
 
 
+def compor_roteiro_reserva(
+    genre: str,
+    profiles: dict[str, ProfileConfirmed],
+    songs: Sequence[Song],
+    versions: Sequence[KaraokeVersion],
+    *,
+    previous_video_ids: Sequence[str] = (),
+) -> ScriptProposal:
+    """Cria um roteiro solo sem IA quando a geração principal falha.
+
+    Usa apenas karaokês elegíveis, respeita os vetos e atribui
+    uma música distinta para cada participante.
+    """
+
+    allowed = eligible_candidates(
+        genre,
+        profiles,
+        songs,
+        versions,
+        previous_video_ids=previous_video_ids,
+    )
+
+    # video_id -> participante que recebeu o vídeo.
+    owners: dict[str, str] = {}
+
+    def assign(participant_id: str, visited: set[str]) -> bool:
+        for video_id in allowed[participant_id]:
+            if video_id in visited:
+                continue
+
+            visited.add(video_id)
+            current_owner = owners.get(video_id)
+
+            # Se o vídeo está ocupado, tentar realocar quem o recebeu.
+            if current_owner is None or assign(current_owner, visited):
+                owners[video_id] = participant_id
+                return True
+
+        return False
+
+    # Pessoas com menos alternativas são processadas primeiro.
+    participant_order = sorted(
+        allowed,
+        key=lambda pid: (len(allowed[pid]), pid),
+    )
+
+    for participant_id in participant_order:
+        if not assign(participant_id, set()):
+            raise MatchingError(
+                "Não foi possível atribuir músicas distintas "
+                "a todos os participantes."
+            )
+
+    # Inverter a atribuição para consultar por participante.
+    chosen = {
+        participant_id: video_id
+        for video_id, participant_id in owners.items()
+    }
+
+    proposal = ScriptProposal(
+        title="Roteiro de reserva — seleção automática",
+        items=[
+            ScriptItem(
+                position=index,
+                karaoke_version_id=chosen[participant_id],
+                participant_ids=[participant_id],
+                justification=(
+                    "Seleção automática de contingência. "
+                    "Música elegível para o participante; "
+                    "recomenda-se revisão do organizador."
+                ),
+                origin="automatico",
+            )
+            for index, participant_id in enumerate(
+                participant_order, start=1
+            )
+        ],
+    )
+
+    # Reutilizar a validação independente da IA.
+    validate_solo_script(proposal, profiles, allowed)
+
+    return proposal
+
+
 def compor_roteiro_solo(
     genre: str,
     intention: str,
@@ -259,9 +436,16 @@ def compor_roteiro_solo(
         versions,
         previous_video_ids=previous_video_ids,
     )
+
+    prompt_allowed = _compact_candidates(allowed)
+
     songs_by_id = {s.id: s for s in songs}
     versions_by_id = {v.id: v for v in versions}
-    relevant_ids = {video for values in allowed.values() for video in values}
+    relevant_ids = {
+        video
+        for values in prompt_allowed.values()
+        for video in values
+    }
     candidate_data = []
     for vid in sorted(relevant_ids):
         version = versions_by_id[vid]
@@ -281,7 +465,7 @@ def compor_roteiro_solo(
     for participant_id, profile in profiles.items():
         scores = {}
 
-        for version_id in allowed[participant_id]:
+        for version_id in prompt_allowed[participant_id]:
             version = versions_by_id[version_id]
             song = songs_by_id[version.song_id]
 
@@ -343,14 +527,16 @@ Responda SOMENTE os campos do esquema estruturado.
             "likes": [label.model_dump() for label in p.likes],
             "vetoes": [label.model_dump() for label in p.vetoes],
             "preferred_format": p.preferred_format,
-            "allowed_karaoke_version_ids": allowed[pid],
+            "allowed_karaoke_version_ids": prompt_allowed[pid],
             "affinity_scores": affinity_scores[pid],
         } for pid, p in profiles.items()},
         "catalog_candidates": candidate_data,
     }
     return _compose_with_repair(
         _client_or_default(client), prompt, data, model,
-        lambda proposal: validate_solo_script(proposal, profiles, allowed),
+        lambda proposal: validate_solo_script(
+            proposal, profiles, prompt_allowed
+        ),
     )
 
 
@@ -430,10 +616,20 @@ def compor_roteiro_misto(
         # Sem dueto viável: o fluxo solo tem regras de afinidade próprias e mais completas.
         return compor_roteiro_solo(genre, intention, profiles, songs, versions,
                                    previous_video_ids=previous_video_ids, client=client, model=model)
+
+    def slot_key(slot: list[str]) -> str:
+        return "|".join(sorted(slot))
+
+
+    prompt_options = _compact_candidates({
+        slot_key(slot): slot_ids(slot)
+        for slot in slots
+    })
+
     slot_data = [{
         "participant_ids": slot,
         "format": "dueto" if len(slot) == 2 else "solo",
-        "allowed_karaoke_version_ids": slot_ids(slot),
+        "allowed_karaoke_version_ids": prompt_options[slot_key(slot)],
     } for slot in slots]
     used_ids = {vid for slot in slot_data for vid in slot["allowed_karaoke_version_ids"]}
     candidates = []
@@ -477,5 +673,14 @@ Retorne os campos do esquema estruturado.
         if sorted(tuple(sorted(item.participant_ids)) for item in proposal.items) != planned:
             raise MatchingError("Use exatamente as apresentações definidas em slots (um item por slot, "
                                 "com os mesmos participantes).")
+
+        for item in proposal.items:
+            key = slot_key(item.participant_ids)
+
+            if item.karaoke_version_id not in prompt_options.get(key, []):
+                raise MatchingError(
+                    "Vídeo fora dos candidatos autorizados "
+                    "para esta apresentação."
+                )
 
     return _compose_with_repair(_client_or_default(client), prompt, data, model, validate)
