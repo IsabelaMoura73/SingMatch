@@ -83,7 +83,8 @@ SingMatch/
 │   ├── validate_seed.py
 │   ├── avaliar_perfis.py
 │   ├── avaliar_roteiros.py
-│   └── avaliar_fluxo_integrado.py
+│   ├── avaliar_fluxo_integrado.py
+│   └── medir_tempo_custo.py   # Tempo, tokens e custo por tamanho de sala
 ├── compose.yaml              # PostgreSQL local
 ├── Dockerfile                 # Build e execução para deploy
 └── .env.example               # Exemplo de configuração; sem credenciais reais
@@ -273,6 +274,36 @@ Resultados observados nas avaliações controladas realizadas durante o desenvol
 Esses números descrevem **amostras pequenas e cenários fictícios**: são evidências experimentais, não garantia de desempenho universal ou avaliação estatística conclusiva. As chamadas reais dependem da chave e do modelo configurados.
 
 Os relatórios de execução podem ser gravados em `resultados/`. Revise seu conteúdo antes de compartilhá-los ou versioná-los.
+
+### Medição de tempo e custo
+
+`scripts/medir_tempo_custo.py` mede quanto tempo o usuário espera pela IA e quanto custa uma sala. Cada sala de *N* pessoas faz *N* interpretações de perfil + 1 roteiro, com o mesmo código, prompts e validações do site e participantes fictícios (P1–P5). Para cada chamada, registra:
+
+- **tempo** de ponta a ponta (do pedido à resposta completa, incluindo rede e tentativas de reparo);
+- **tokens** de entrada e saída informados pela própria API (campo `usage`, não é estimativa);
+- **custo** = tokens × preço do modelo por 1 milhão de tokens;
+- e a **qualidade** do resultado: perfis corretos, afinidade, vetos violados e reparos do roteiro.
+
+Não acessa o banco nem aprova roteiros. O modo `simulado` não chama a API e serve só para conferir o script (seus números não valem como medição).
+
+```bash
+# Conferir o script, sem custo
+PYTHONPATH=.:backend python scripts/medir_tempo_custo.py --modo simulado
+
+# Salas de 1 a 5 pessoas (padrão), uma de cada tamanho
+PYTHONPATH=.:backend python scripts/medir_tempo_custo.py --modo real
+
+```
+
+| Opção | Padrão | Descrição |
+| --- | --- | --- |
+| `--modo` | — | `simulado` (sem API) ou `real` |
+| `--pessoas` | `1-5` | tamanhos de sala: `1-5`, `3` ou `1,3,5` (máximo 5) |
+| `--repeticoes` | `1` | salas medidas por tamanho (1 a 5) |
+| `--modelo` | `OPENAI_MODEL` ou `gpt-4o-mini` | modelo usado nas chamadas |
+| `--preco-entrada` / `--preco-saida` | tabela do script | US$ por 1M tokens, para modelos fora da tabela (`gpt-4o-mini`, `gpt-6-luna`, `gpt-6.1-terra`) |
+
+O modo `real` usa `OPENAI_API_KEY` do `.env` e **gera custos** (centavos de dólar por execução). Para medir pelo **OpenRouter**, use uma chave `sk-or-...`, defina `OPENAI_BASE_URL=https://openrouter.ai/api/v1` e passe o modelo no formato `empresa/modelo` (ex.: `--modelo openai/gpt-4o-mini`); o script avisa que a medição não é da OpenAI direta e registra isso no relatório. Ao final, imprime uma tabela por tamanho de sala e grava o relatório completo em `resultados/medicao_tempo_custo_<data>.json`.
 
 ## Publicação no Render
 
